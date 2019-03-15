@@ -23,16 +23,21 @@ public class Main extends Application {
         var scene = new Scene(root, MIDDLE_X * 2, MIDDLE_Y * 2);
         scene.setFill(Color.GRAY);
 
-        var triangle = new Triangle(MIDDLE_X, MIDDLE_Y, INDENT, Color.RED);
-
-        var innerTriangle = new Triangle(
-                MIDDLE_X,
-                MIDDLE_Y - INDENT,
-                INDENT * 3,
-                Color.WHITE
+        root.getChildren().addAll(
+                new Triangle(MIDDLE_X, MIDDLE_Y, INDENT, Color.RED).getPolygon(),
+                new Triangle( // draws inner triangle
+                        MIDDLE_X,
+                        MIDDLE_Y - INDENT,
+                        INDENT * 3,
+                        Color.WHITE
+                ).getPolygon(),
+                new Rectangle( // draws column
+                        MIDDLE_X - (INDENT >> 1),
+                        MIDDLE_Y,
+                        INDENT,
+                        MIDDLE_Y - INDENT
+                )
         );
-
-        root.getChildren().addAll(triangle.getPolygon(), innerTriangle.getPolygon());
 
         IntStream // draw circles
                 .range(0, COLORS.length)
@@ -45,13 +50,6 @@ public class Main extends Application {
                         )
                 ));
 
-        root.getChildren().add(
-                new Rectangle(
-                        MIDDLE_X - (INDENT >> 1),
-                        MIDDLE_Y, INDENT,
-                        MIDDLE_Y - INDENT
-                )
-        );
         stage.setScene(scene);
         stage.show();
     }
