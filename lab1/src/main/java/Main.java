@@ -4,43 +4,54 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.util.stream.IntStream;
 
 public class Main extends Application {
-    private final static int WIDTH = 600;
-    private final static int HEIGHT = 400;
+    private final static int MIDDLE_X = 300;
+    private final static int MIDDLE_Y = 200;
     private final static int INDENT = 20;
+
     private final static Color[] COLORS = {Color.GREEN, Color.YELLOW, Color.RED};
+    private final static double COEFFICIENT = 1.78;
+    private final static int RADIUS = 14;
 
     public void start(Stage stage) {
         var root = new Group();
-        var scene = new Scene(root, WIDTH, HEIGHT);
+        var scene = new Scene(root, MIDDLE_X * 2, MIDDLE_Y * 2);
+        scene.setFill(Color.GRAY);
 
-        var middleX = WIDTH >> 1;
-        var middleY = HEIGHT >> 1;
-
-        var triangle = new Triangle(middleX, middleY, INDENT, Color.RED);
+        var triangle = new Triangle(MIDDLE_X, MIDDLE_Y, INDENT, Color.RED);
 
         var innerTriangle = new Triangle(
-                middleX,
-                middleY - INDENT,
+                MIDDLE_X,
+                MIDDLE_Y - INDENT,
                 INDENT * 3,
                 Color.WHITE
         );
 
         root.getChildren().addAll(triangle.getPolygon(), innerTriangle.getPolygon());
 
-        IntStream
+        IntStream // draw circles
                 .range(0, COLORS.length)
                 .forEach(i -> root.getChildren().add(
                         new Circle(
-                                middleX,
-                                middleY - INDENT * (i + 1) * 2,
-                                10,
-                                COLORS[i])
+                                MIDDLE_X,
+                                MIDDLE_Y - INDENT * (i + 1) * COEFFICIENT,
+                                RADIUS,
+                                COLORS[i]
+                        )
                 ));
+
+        root.getChildren().add(
+                new Rectangle(
+                        MIDDLE_X - (INDENT >> 1),
+                        MIDDLE_Y, INDENT,
+                        MIDDLE_Y - INDENT
+                )
+        );
         stage.setScene(scene);
         stage.show();
     }

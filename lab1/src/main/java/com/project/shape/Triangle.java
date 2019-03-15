@@ -13,7 +13,7 @@ public class Triangle {
          * calculate half of the triangle's side length
          * to find the X coordinates of the remaining tops
          * */
-        var halfLengthSide = calculateHalfSide(middleY - indent);
+        var halfLengthSide = (middleY - indent) / 2;
         var polygon = new Polygon(
                 middleX, indent,
                 middleX - halfLengthSide, middleY,
@@ -36,10 +36,5 @@ public class Triangle {
 
     public int hashCode() {
         return Objects.hash(polygon);
-    }
-
-    // calculates half of the triangle's side length by median length
-    private static double calculateHalfSide(double medianLength) {
-        return medianLength / Math.sqrt(3);
     }
 }
