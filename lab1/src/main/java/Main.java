@@ -1,13 +1,14 @@
+import com.project.shape.Triangle;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.shape.Polygon;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class Main extends Application {
     private final static int WIDTH = 600;
     private final static int HEIGHT = 400;
-    private final static int INDENT = 10;
+    private final static int INDENT = 20;
 
     public void start(Stage stage) {
         var root = new Group();
@@ -15,18 +16,18 @@ public class Main extends Application {
 
         var middleX = WIDTH >> 1;
         var middleY = HEIGHT >> 1;
-        var medianLength = middleY - INDENT;
-        var polygon = new Polygon(
-                middleX, INDENT,
-                middleX - medianLength / Math.sqrt(3), middleY,
-                middleX + medianLength / Math.sqrt(3), middleY
-        );
-        root.getChildren().add(polygon);
 
-        var polygon1 = new Polygon(
+        var triangle = new Triangle(middleX, middleY, INDENT).getPolygon();
 
-        );
+        var innerTriangle = new Triangle(
+                middleX,
+                middleY - (INDENT >> 1),
+                INDENT * 2
+        ).getPolygon();
 
+        innerTriangle.setFill(Color.WHITE);
+
+        root.getChildren().addAll(triangle, innerTriangle);
         stage.setScene(scene);
         stage.show();
     }
