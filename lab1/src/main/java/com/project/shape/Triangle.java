@@ -1,5 +1,6 @@
 package com.project.shape;
 
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 
 import java.util.Objects;
@@ -7,17 +8,19 @@ import java.util.Objects;
 public class Triangle {
     private Polygon polygon;
 
-    public Triangle(double middleX, double middleY, double indent) {
+    public Triangle(double middleX, double middleY, double indent, Color color) {
         /*
          * calculate half of the triangle's side length
          * to find the X coordinates of the remaining tops
          * */
         var halfLengthSide = calculateHalfSide(middleY - indent);
-        this.polygon = new Polygon(
+        var polygon = new Polygon(
                 middleX, indent,
                 middleX - halfLengthSide, middleY,
                 middleX + halfLengthSide, middleY
         );
+        polygon.setFill(color);
+        this.polygon = polygon;
     }
 
     public Polygon getPolygon() {
