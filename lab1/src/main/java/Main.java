@@ -1,9 +1,9 @@
-import com.project.shape.Triangle;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
@@ -18,20 +18,31 @@ public class Main extends Application {
     private final static double COEFFICIENT = 1.78;
     private final static int RADIUS = 14;
 
+    private static Polygon createTriangle(
+            double middleX, double middleY, double indent, Color color) {
+        /*
+         * calculate half of the triangle's side length
+         * to find the X coordinates of the remaining tops
+         * */
+        var halfLengthSide = (middleY - indent) / 2;
+        var polygon = new Polygon(
+                middleX, indent,
+                middleX - halfLengthSide, middleY,
+                middleX + halfLengthSide, middleY
+        );
+        polygon.setFill(color);
+        return polygon;
+    }
+
     public void start(Stage stage) {
         var root = new Group();
         var scene = new Scene(root, MIDDLE_X * 2, MIDDLE_Y * 2);
         scene.setFill(Color.GRAY);
 
         root.getChildren().addAll(
-                new Triangle(MIDDLE_X, MIDDLE_Y, INDENT, Color.RED).getPolygon(),
-                new Triangle( // draws inner triangle
-                        MIDDLE_X,
-                        MIDDLE_Y - INDENT,
-                        INDENT * 3,
-                        Color.WHITE
-                ).getPolygon(),
-                new Rectangle( // draws column
+                createTriangle(MIDDLE_X, MIDDLE_Y, INDENT, Color.RED),
+                createTriangle(MIDDLE_X, MIDDLE_Y - INDENT, INDENT * 3, Color.WHITE),
+                new Rectangle(
                         MIDDLE_X - (INDENT >> 1),
                         MIDDLE_Y,
                         INDENT,
