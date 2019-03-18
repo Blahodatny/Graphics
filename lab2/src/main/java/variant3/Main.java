@@ -1,3 +1,7 @@
+package variant3;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.GradientPaint;
@@ -5,36 +9,21 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.awt.RenderingHints;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.geom.GeneralPath;
 import java.util.Arrays;
 import java.util.stream.IntStream;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.Timer;
 
-class Main extends JPanel implements ActionListener {
+class Main extends JPanel {
     private final static int FRAME_WIDTH = 1500;
     private final static int FRAME_HEIGHT = 1000;
     private final static int INDENT = 20;
 
     private final static Color[] COLORS = {Color.GREEN, Color.YELLOW, Color.RED};
-    private final static int COEFFICIENT = 2;
-    private final static int RADIUS = 20;
+    private final static int COEFFICIENT = 6;
+    private final static int RADIUS = 90;
 
     private static int contentWidth;
     private static int contentHeight;
-
-    private Timer timer;
-
-    private double theta = 0;
-    private double change = 0.1;
-
-    private Main() {
-        timer = new Timer(10, this);
-        timer.start();
-    }
 
     private static Polygon triangle(int topX, int topY, int indent) {
         var halfLengthSide = (topY - indent) / 2;
@@ -60,20 +49,12 @@ class Main extends JPanel implements ActionListener {
         g2d.drawRect(INDENT, INDENT,
                 contentWidth - INDENT * 2, contentHeight - INDENT * 2);
 
-        g2d.translate(contentWidth / 2, contentHeight / 2);
-       double tx = 200 + 50 * Math.cos(theta);
-        double ty = 200 + 50 * Math.sin(theta);
-
-        g2d.translate(tx, ty);
-
-        var middleX = contentWidth / 10;
-        var middleY = contentHeight / 5;
+        var middleX = contentWidth / 2;
+        var middleY = contentHeight / 2;
 
         g2d.setPaint(new GradientPaint(20, 50, Color.RED,
                 10, 300, Color.ORANGE, true));
-//        g2d.fillPolygon(triangle(middleX, middleY, INDENT));
-
-        g2d.fillPolygon(triangle(0, 0, 20));
+        g2d.fillPolygon(triangle(middleX, middleY, INDENT));
 
         g2d.setColor(Color.WHITE);
         g2d.fillPolygon(triangle(middleX, middleY - INDENT, INDENT * 3));
@@ -119,10 +100,5 @@ class Main extends JPanel implements ActionListener {
         var size = frame.getContentPane().getSize();
         contentWidth = size.width;
         contentHeight = size.height;
-    }
-
-    public void actionPerformed(ActionEvent e) {
-        theta += change;
-        repaint();
     }
 }
