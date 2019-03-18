@@ -18,7 +18,7 @@ public class Main extends Application {
     private final static double COEFFICIENT = 1.78;
     private final static int RADIUS = 14;
 
-    private static Polygon createTriangle(
+    private static Polygon triangle(
             double middleX, double middleY, double indent, Color color) {
         /*
          * calculate half of the triangle's side length
@@ -40,13 +40,10 @@ public class Main extends Application {
         scene.setFill(Color.GRAY);
 
         root.getChildren().addAll(
-                createTriangle(MIDDLE_X, MIDDLE_Y, INDENT, Color.RED),
-                createTriangle(MIDDLE_X, MIDDLE_Y - INDENT, INDENT * 3, Color.WHITE),
+                triangle(MIDDLE_X, MIDDLE_Y, INDENT, Color.RED),
+                triangle(MIDDLE_X, MIDDLE_Y - INDENT, INDENT * 3, Color.WHITE),
                 new Rectangle(
-                        MIDDLE_X - (INDENT >> 1),
-                        MIDDLE_Y,
-                        INDENT,
-                        MIDDLE_Y - INDENT
+                        MIDDLE_X - (INDENT >> 1), MIDDLE_Y, INDENT, MIDDLE_Y - INDENT
                 )
         );
 
