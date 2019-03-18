@@ -1,3 +1,5 @@
+package variant3;
+
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -9,7 +11,7 @@ import javafx.stage.Stage;
 
 import java.util.stream.IntStream;
 
-public class Main extends Application {
+public class JavaFX extends Application {
     private final static int MIDDLE_X = 300;
     private final static int MIDDLE_Y = 200;
     private final static int INDENT = 20;
