@@ -54,17 +54,15 @@ class Application extends JPanel {
         g2d.setColor(Color.WHITE);
         g2d.fillPolygon(triangle(middleX, middleY - INDENT, INDENT * 3));
 
-        IntStream // draw circles
-                .range(0, COLORS.length)
-                .forEach(i -> {
-                    g2d.setColor(COLORS[i]);
-                    g2d.fillOval(
-                            middleX - RADIUS / 2,
-                            middleY - INDENT * (i + 1) * COEFFICIENT,
-                            RADIUS,
-                            RADIUS
-                    );
-                });
+        IntStream.range(0, COLORS.length).forEach(i -> {
+            g2d.setColor(COLORS[i]);
+            g2d.fillOval(
+                    middleX - RADIUS / 2,
+                    middleY - INDENT * (i + 1) * COEFFICIENT,
+                    RADIUS,
+                    RADIUS
+            );
+        });
 
         var x1 = middleX - (INDENT >> 1);
         var y3 = 2 * middleY - INDENT;

@@ -49,16 +49,16 @@ public class JavaFX extends Application {
                 )
         );
 
-        IntStream // draw circles
-                .range(0, COLORS.length)
-                .forEach(i -> root.getChildren().add(
+        IntStream.range(0, COLORS.length).forEach(i ->
+                root.getChildren().add(
                         new Circle(
                                 MIDDLE_X,
                                 MIDDLE_Y - INDENT * (i + 1) * COEFFICIENT,
                                 RADIUS,
                                 COLORS[i]
                         )
-                ));
+                )
+        );
 
         stage.setScene(scene);
         stage.show();

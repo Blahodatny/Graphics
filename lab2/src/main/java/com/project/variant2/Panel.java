@@ -2,10 +2,13 @@ package com.project.variant2;
 
 import com.project.Frame;
 import com.project.GraphicsHelper;
+
+import com.project.Program;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.stream.IntStream;
 import javax.swing.JPanel;
 
 public class Panel extends JPanel {
@@ -25,6 +28,14 @@ public class Panel extends JPanel {
                 Color.BLUE, BasicStroke.CAP_ROUND, BasicStroke.JOIN_MITER,
                 INDENT, INDENT, contentWidth - INDENT * 2, contentHeight - INDENT * 2
         );
+
+        var params = Program.getPARAMS();
+
+        IntStream.range(0, params.length).forEach(i -> {
+            g2d.setColor(i == 0 ? Color.DARK_GRAY : Color.YELLOW);
+            g2d.fillRect(params[i][0], params[i][1],
+                    i == 0 ? 3 * params[i][2] : params[i][2], params[i][2]);
+        });
     }
 
     public static void main(String... args) {
