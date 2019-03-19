@@ -22,22 +22,23 @@ public class Panel extends JPanel implements ActionListener {
     private final static byte INDENT = 20;
 
     private final static short[][] PARAMS = {
-            {0, 0, 165},
-            {60, 80, 75},
-            {100, 110, 20}, {170, 110, 20},
-            {65, 30, 8}, {100, 10, 8}, {220, 30, 8}, {255, 10, 8}
+            {-165, -82, 165},
+            {-105, -2, 75},
+            {-65, 28, 20}, {5, 28, 20},
+            {-100, -52, 8}, {-65, -72, 8}, {55, -52, 8}, {90, -72, 8}
     };
     private final static byte TOP = 60;
 
     private static short contentWidth;
     private static short contentHeight;
 
-    private Timer timer;
-    private static double theta = 0;
+    private final static short RADIUS = 350;
+    private double theta = 0;
+    private double scale = 1;
+    private double delta = 0.01;
 
     private Panel() {
-        timer = new Timer(10, this);
-        timer.start();
+        new Timer(40, this).start();
     }
 
     public void paint(Graphics graphics) {
@@ -51,8 +52,8 @@ public class Panel extends JPanel implements ActionListener {
         );
 
         g2d.translate(contentWidth / 2, contentHeight / 2);
-
-        g2d.translate(200 + 50 * Math.sin(theta), 200 + 50 * Math.cos(theta));
+        g2d.translate(RADIUS * Math.sin(theta), RADIUS * Math.cos(theta));
+        g2d.scale(scale, scale);
 
         IntStream.range(0, PARAMS.length).forEach(i -> {
             g2d.setColor(
@@ -79,6 +80,8 @@ public class Panel extends JPanel implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
+        delta = scale < 0.01 || scale > 0.99 ? -delta : delta;
+        scale += delta;
         theta += 0.1;
         repaint();
     }
