@@ -1,13 +1,13 @@
 package com.project.variant3;
 
 import com.project.Frame;
+import com.project.GraphicsHelper;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
-import java.awt.RenderingHints;
 import java.awt.geom.GeneralPath;
 import java.util.Arrays;
 import java.util.stream.IntStream;
@@ -37,17 +37,12 @@ class Application extends JPanel {
     public void paint(Graphics graphics) {
         var g2d = (Graphics2D) graphics;
 
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                RenderingHints.VALUE_ANTIALIAS_ON);
-        g2d.setRenderingHint(RenderingHints.KEY_RENDERING,
-                RenderingHints.VALUE_RENDER_QUALITY);
-
-        g2d.setColor(Color.BLUE);
-        g2d.setStroke(
-                new BasicStroke(16, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND)
+        var helper = new GraphicsHelper(g2d);
+        helper.setRendering();
+        helper.drawFrame(
+                Color.BLUE, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND,
+                INDENT, INDENT, contentWidth - INDENT * 2, contentHeight - INDENT * 2
         );
-        g2d.drawRect(INDENT, INDENT,
-                contentWidth - INDENT * 2, contentHeight - INDENT * 2);
 
         var middleX = contentWidth / 2;
         var middleY = contentHeight / 2;

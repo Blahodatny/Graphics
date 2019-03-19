@@ -10,5 +10,14 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.project</groupId>
+            <artifactId>lab1</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>compile</type>
+        </dependency>
+    </dependencies>
+
     <artifactId>lab2</artifactId>
 </project>
