@@ -1,3 +1,5 @@
+package com.project;
+
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -18,6 +20,10 @@ public class Program extends Application {
             {20, 90, 20}, {110, 40, 20}, {350, 90, 20}, {440, 40, 20}
     };
     private final static byte TOP = 70;
+
+    public static short[][] getPARAMS() {
+        return PARAMS;
+    }
 
     public void start(Stage stage) {
         var root = new Group();

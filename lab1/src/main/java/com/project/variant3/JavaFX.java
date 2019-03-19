@@ -1,4 +1,4 @@
-package variant3;
+package com.project.variant3;
 
 import javafx.application.Application;
 import javafx.scene.Group;

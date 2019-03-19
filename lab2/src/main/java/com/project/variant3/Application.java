@@ -1,7 +1,6 @@
-package variant3;
+package com.project.variant3;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import com.project.Frame;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.GradientPaint;
@@ -12,8 +11,9 @@ import java.awt.RenderingHints;
 import java.awt.geom.GeneralPath;
 import java.util.Arrays;
 import java.util.stream.IntStream;
+import javax.swing.JPanel;
 
-class Main extends JPanel {
+class Application extends JPanel {
     private final static int FRAME_WIDTH = 1500;
     private final static int FRAME_HEIGHT = 1000;
     private final static int INDENT = 20;
@@ -89,15 +89,7 @@ class Main extends JPanel {
     }
 
     public static void main(String... args) {
-        var frame = new JFrame("Lab 2");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
-        frame.setLocationRelativeTo(null);
-        frame.setResizable(false);
-        frame.add(new Main());
-        frame.setVisible(true);
-
-        var size = frame.getContentPane().getSize();
+        var size = Frame.run("Lab 2", FRAME_WIDTH, FRAME_HEIGHT, new Application());
         contentWidth = size.width;
         contentHeight = size.height;
     }
