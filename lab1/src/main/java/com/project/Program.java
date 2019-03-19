@@ -21,10 +21,6 @@ public class Program extends Application {
     };
     private final static byte TOP = 70;
 
-    public static short[][] getPARAMS() {
-        return PARAMS;
-    }
-
     public void start(Stage stage) {
         var root = new Group();
         var scene = new Scene(root, WIDTH, HEIGHT);

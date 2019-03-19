@@ -3,7 +3,6 @@ package com.project.variant2;
 import com.project.Frame;
 import com.project.GraphicsHelper;
 
-import com.project.Program;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -15,6 +14,13 @@ public class Panel extends JPanel {
     private final static int FRAME_WIDTH = 1500;
     private final static int FRAME_HEIGHT = 1000;
     private final static int INDENT = 20;
+
+    private final static short[][] PARAMS = {
+            {50, 175, 100},
+            {130, 210, 45}, {300, 260, 45},
+            {20, 90, 20}, {110, 40, 20}, {350, 90, 20}, {440, 40, 20}
+    };
+    private final static byte TOP = 70;
 
     private static int contentWidth;
     private static int contentHeight;
@@ -29,12 +35,12 @@ public class Panel extends JPanel {
                 INDENT, INDENT, contentWidth - INDENT * 2, contentHeight - INDENT * 2
         );
 
-        var params = Program.getPARAMS();
+//        g2d.translate(contentWidth / 3, contentHeight / 3);
 
-        IntStream.range(0, params.length).forEach(i -> {
+        IntStream.range(0, PARAMS.length).forEach(i -> {
             g2d.setColor(i == 0 ? Color.DARK_GRAY : Color.YELLOW);
-            g2d.fillRect(params[i][0], params[i][1],
-                    i == 0 ? 3 * params[i][2] : params[i][2], params[i][2]);
+            g2d.fillRect(PARAMS[i][0], PARAMS[i][1],
+                    i == 0 ? 3 * PARAMS[i][2] : PARAMS[i][2], PARAMS[i][2]);
         });
     }
 
