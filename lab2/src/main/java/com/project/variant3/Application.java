@@ -2,6 +2,7 @@ package com.project.variant3;
 
 import com.project.Frame;
 import com.project.GraphicsHelper;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.GradientPaint;
@@ -14,16 +15,16 @@ import java.util.stream.IntStream;
 import javax.swing.JPanel;
 
 class Application extends JPanel {
-    private final static int FRAME_WIDTH = 1500;
-    private final static int FRAME_HEIGHT = 1000;
-    private final static int INDENT = 20;
+    private final static short FRAME_WIDTH = 1500;
+    private final static short FRAME_HEIGHT = 1000;
+    private final static byte INDENT = 20;
 
     private final static Color[] COLORS = {Color.GREEN, Color.YELLOW, Color.RED};
-    private final static int COEFFICIENT = 6;
-    private final static int RADIUS = 90;
+    private final static byte COEFFICIENT = 6;
+    private final static byte RADIUS = 90;
 
-    private static int contentWidth;
-    private static int contentHeight;
+    private static short contentWidth;
+    private static short contentHeight;
 
     private static Polygon triangle(int topX, int topY, int indent) {
         var halfLengthSide = (topY - indent) / 2;
@@ -83,7 +84,7 @@ class Application extends JPanel {
 
     public static void main(String... args) {
         var size = Frame.run("Lab 2", FRAME_WIDTH, FRAME_HEIGHT, new Application());
-        contentWidth = size.width;
-        contentHeight = size.height;
+        contentWidth = (short) size.width;
+        contentHeight = (short) size.height;
     }
 }

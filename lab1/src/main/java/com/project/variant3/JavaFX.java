@@ -12,13 +12,13 @@ import javafx.stage.Stage;
 import java.util.stream.IntStream;
 
 public class JavaFX extends Application {
-    private final static int MIDDLE_X = 300;
-    private final static int MIDDLE_Y = 200;
-    private final static int INDENT = 20;
+    private final static short MIDDLE_X = 300;
+    private final static short MIDDLE_Y = 200;
+    private final static byte INDENT = 20;
 
     private final static Color[] COLORS = {Color.GREEN, Color.YELLOW, Color.RED};
     private final static double COEFFICIENT = 1.78;
-    private final static int RADIUS = 14;
+    private final static byte RADIUS = 14;
 
     private static Polygon triangle(
             double middleX, double middleY, double indent, Color color) {

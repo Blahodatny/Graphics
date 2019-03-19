@@ -11,9 +11,9 @@ import java.util.stream.IntStream;
 import javax.swing.JPanel;
 
 public class Panel extends JPanel {
-    private final static int FRAME_WIDTH = 1500;
-    private final static int FRAME_HEIGHT = 1000;
-    private final static int INDENT = 20;
+    private final static short FRAME_WIDTH = 1500;
+    private final static short FRAME_HEIGHT = 1000;
+    private final static byte INDENT = 20;
 
     private final static short[][] PARAMS = {
             {50, 175, 100},
