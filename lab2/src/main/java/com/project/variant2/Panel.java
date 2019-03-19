@@ -16,7 +16,7 @@ import java.util.stream.IntStream;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-public class Panel extends JPanel implements ActionListener {
+class Panel extends JPanel implements ActionListener {
     private final static short FRAME_WIDTH = 1500;
     private final static short FRAME_HEIGHT = 1000;
     private final static byte INDENT = 20;
@@ -32,17 +32,20 @@ public class Panel extends JPanel implements ActionListener {
     private static short contentWidth;
     private static short contentHeight;
 
+    private final static byte DELAY = 50;
     private final static short RADIUS = 350;
     private double theta = 0;
     private double scale = 1;
     private double delta = 0.01;
 
     private Panel() {
-        new Timer(40, this).start();
+        new Timer(DELAY, this).start();
     }
 
     public void paint(Graphics graphics) {
         var g2d = (Graphics2D) graphics;
+        g2d.setBackground(Color.WHITE);
+        g2d.clearRect(0, 0, contentWidth, contentHeight);
 
         var helper = new GraphicsHelper(g2d);
         helper.setRendering();
