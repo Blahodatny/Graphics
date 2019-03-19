@@ -13,6 +13,10 @@ public class GraphicsHelper {
         this.g2d = g2d;
     }
 
+    protected Graphics2D getG2d() {
+        return g2d;
+    }
+
     public void setRendering() {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
