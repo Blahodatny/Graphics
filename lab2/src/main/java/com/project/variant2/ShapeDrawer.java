@@ -14,8 +14,7 @@ class ShapeDrawer extends GraphicsHelper {
         super(g2d);
     }
 
-    void drawRectangles(
-            short[][] params, Color rectangle, Color house, Color square) {
+    void drawRectangles(short[][] params, Color rectangle, Color house, Color square) {
         IntStream.range(0, params.length).forEach(i -> {
             getG2d().setColor(i == 0 ? rectangle : i == 1 ? house : square);
             getG2d().fillRect(params[i][0], params[i][1],
