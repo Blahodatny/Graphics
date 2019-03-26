@@ -83,11 +83,8 @@ class Application extends JPanel {
     }
 
     public static void main(String... args) {
-        var size = Window.configure(
-                "Lab 2",
-                FRAME_WIDTH,
-                FRAME_HEIGHT, new Application()
-        );
+        var size = Window.configure("Lab 2", FRAME_WIDTH, FRAME_HEIGHT,
+                new Application());
         contentWidth = (short) size.width;
         contentHeight = (short) size.height;
     }
