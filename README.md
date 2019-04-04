@@ -10,5 +10,4 @@ Read some beneficial articles before exploring third lab:
 
 * [More detailed exploration of BMP File Format](https://en.wikipedia.org/wiki/BMP_file_format)
 
-
-![alt text](https://upload.wikimedia.org/wikipedia/commons/c/c4/BMPfileFormat.png)
+<img src ="https://upload.wikimedia.org/wikipedia/commons/c/c4/BMPfileFormat.png" alt="Bitmap" align="middle" height="666" width="320"></img>
