@@ -5,15 +5,10 @@ To execute JavaFX Application run:
 mvn compile exec:java -pl {name of module} -Dexec.mainClass={name of Main Class}
 ``````
 
-<div style="display:flex; flex-wrap:nowrap; justify-content:space-between;">
-<div>
 Read some beneficial articles before exploring third lab:
 
 * [*What is Bitmap Picture?* (на русском)](https://ru.wikipedia.org/wiki/BMP)
 
 * [More detailed exploration of BMP File Format](https://en.wikipedia.org/wiki/BMP_file_format)
 
-</div>
-
-<img src ="https://upload.wikimedia.org/wikipedia/commons/c/c4/BMPfileFormat.png" alt="Bitmap" height="666" width="320"></img>
-</div>
+<img src ="https://upload.wikimedia.org/wikipedia/commons/c/c4/BMPfileFormat.png" alt="Bitmap" align="middle" height="666" width="320"></img>
