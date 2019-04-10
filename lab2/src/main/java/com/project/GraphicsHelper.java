@@ -18,22 +18,28 @@ public class GraphicsHelper {
     }
 
     public void setRendering() {
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                RenderingHints.VALUE_ANTIALIAS_ON);
-        g2d.setRenderingHint(RenderingHints.KEY_RENDERING,
-                RenderingHints.VALUE_RENDER_QUALITY);
+        g2d.setRenderingHint(
+                RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON
+        );
+        g2d.setRenderingHint(
+                RenderingHints.KEY_RENDERING,
+                RenderingHints.VALUE_RENDER_QUALITY
+        );
     }
 
-    public void drawFrame(
-            Color color, int cap, int join, int x, int y, int width, int height) {
+    public void drawFrame(Color color, int cap, int join, int x, int y,
+            int width, int height) {
         g2d.setColor(color);
         g2d.setStroke(new BasicStroke(16, cap, join));
         g2d.drawRect(x, y, width, height);
     }
 
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof GraphicsHelper)) return false;
+        if (this == o)
+            return true;
+        if (!(o instanceof GraphicsHelper))
+            return false;
         var that = (GraphicsHelper) o;
         return Objects.equals(g2d, that.g2d);
     }

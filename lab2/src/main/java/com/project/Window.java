@@ -5,7 +5,8 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 
 public class Window {
-    public static Dimension configure(String title, int width, int height, Component component) {
+    public static Dimension configure(String title, int width, int height,
+            Component component) {
         var frame = new JFrame(title);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

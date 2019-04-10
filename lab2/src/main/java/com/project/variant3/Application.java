@@ -19,7 +19,11 @@ class Application extends JPanel {
     private final static short FRAME_HEIGHT = 1000;
     private final static byte INDENT = 20;
 
-    private final static Color[] COLORS = {Color.GREEN, Color.YELLOW, Color.RED};
+    private final static Color[] COLORS = {
+            Color.GREEN,
+            Color.YELLOW,
+            Color.RED
+    };
     private final static byte COEFFICIENT = 6;
     private final static byte RADIUS = 90;
 
@@ -28,11 +32,11 @@ class Application extends JPanel {
 
     private static Polygon triangle(int topX, int topY, int indent) {
         var halfLengthSide = (topY - indent) / 2;
-        return new Polygon(
-                new int[]{topX, topX - halfLengthSide, topX + halfLengthSide},
-                new int[]{indent, topY, topY},
-                3
-        );
+        return new Polygon(new int[]{
+                topX,
+                topX - halfLengthSide,
+                topX + halfLengthSide
+        }, new int[]{indent, topY, topY}, 3);
     }
 
     public void paint(Graphics graphics) {
@@ -41,29 +45,38 @@ class Application extends JPanel {
         var helper = new GraphicsHelper(g2d);
         helper.setRendering();
         helper.drawFrame(
-                Color.BLUE, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND,
-                INDENT, INDENT, contentWidth - INDENT * 2, contentHeight - INDENT * 2
+                Color.BLUE,
+                BasicStroke.CAP_ROUND,
+                BasicStroke.JOIN_ROUND,
+                INDENT,
+                INDENT,
+                contentWidth - INDENT * 2,
+                contentHeight - INDENT * 2
         );
 
         var middleX = contentWidth / 2;
         var middleY = contentHeight / 2;
 
-        g2d.setPaint(new GradientPaint(20, 50, Color.RED,
-                10, 300, Color.ORANGE, true));
+        g2d.setPaint(new GradientPaint(
+                20, 50, Color.RED,
+                10, 300, Color.ORANGE,
+                true
+        ));
         g2d.fillPolygon(triangle(middleX, middleY, INDENT));
 
         g2d.setColor(Color.WHITE);
         g2d.fillPolygon(triangle(middleX, middleY - INDENT, INDENT * 3));
 
-        IntStream.range(0, COLORS.length).forEach(i -> {
-            g2d.setColor(COLORS[i]);
-            g2d.fillOval(
-                    middleX - RADIUS / 2,
-                    middleY - INDENT * (i + 1) * COEFFICIENT,
-                    RADIUS,
-                    RADIUS
-            );
-        });
+        IntStream.range(0, COLORS.length)
+                .forEach(i -> {
+                    g2d.setColor(COLORS[i]);
+                    g2d.fillOval(
+                            middleX - RADIUS / 2,
+                            middleY - INDENT * (i + 1) * COEFFICIENT,
+                            RADIUS,
+                            RADIUS
+                    );
+                });
 
         var x1 = middleX - (INDENT >> 1);
         var y3 = 2 * middleY - INDENT;
@@ -83,8 +96,12 @@ class Application extends JPanel {
     }
 
     public static void main(String... args) {
-        var size = Window.configure("Lab 2", FRAME_WIDTH, FRAME_HEIGHT,
-                new Application());
+        var size = Window.configure(
+                "Lab 2",
+                FRAME_WIDTH,
+                FRAME_HEIGHT,
+                new Application()
+        );
         contentWidth = (short) size.width;
         contentHeight = (short) size.height;
     }

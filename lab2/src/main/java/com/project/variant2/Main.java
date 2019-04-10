@@ -20,8 +20,12 @@ class Main extends JPanel implements ActionListener {
     private final static short[][] PARAMS = {
             {-165, -82, 165},
             {-105, -2, 75},
-            {-65, 28, 20}, {5, 28, 20},
-            {-100, -52, 8}, {-65, -72, 8}, {55, -52, 8}, {90, -72, 8}
+            {-65, 28, 20},
+            {5, 28, 20},
+            {-100, -52, 8},
+            {-65, -72, 8},
+            {55, -52, 8},
+            {90, -72, 8}
     };
 
     private static short contentWidth;
@@ -45,8 +49,13 @@ class Main extends JPanel implements ActionListener {
         var drawer = new ShapeDrawer(g2d);
         drawer.setRendering();
         drawer.drawFrame(
-                Color.BLUE, BasicStroke.CAP_ROUND, BasicStroke.JOIN_MITER,
-                INDENT, INDENT, contentWidth - INDENT * 2, contentHeight - INDENT * 2
+                Color.BLUE,
+                BasicStroke.CAP_ROUND,
+                BasicStroke.JOIN_MITER,
+                INDENT,
+                INDENT,
+                contentWidth - INDENT * 2,
+                contentHeight - INDENT * 2
         );
 
         g2d.translate(contentWidth / 2, contentHeight / 2);
@@ -54,13 +63,16 @@ class Main extends JPanel implements ActionListener {
         g2d.scale(scale, scale);
 
         drawer.drawRectangles(
-                PARAMS, Color.BLUE, new Color(77, 19, 21), Color.YELLOW
+                PARAMS,
+                Color.BLUE,
+                new Color(77, 19, 21),
+                Color.YELLOW
         );
 
         drawer.drawRoof(
-                PARAMS, INDENT * 3, new GradientPaint(
-                        5, 25, Color.CYAN, 20, 2, Color.YELLOW, true
-                )
+                PARAMS,
+                INDENT * 3,
+                new GradientPaint(5, 25, Color.CYAN, 20, 2, Color.YELLOW, true)
         );
     }
 
@@ -72,7 +84,12 @@ class Main extends JPanel implements ActionListener {
     }
 
     public static void main(String... args) {
-        var size = Window.configure("Lab 2", FRAME_WIDTH, FRAME_HEIGHT, new Main());
+        var size = Window.configure(
+                "Lab 2",
+                FRAME_WIDTH,
+                FRAME_HEIGHT,
+                new Main()
+        );
         contentWidth = (short) size.width;
         contentHeight = (short) size.height;
     }
