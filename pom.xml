@@ -55,7 +55,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>com.project.variant2.Program</mainClass>
+                    <mainClass>com.project.ChristmasTree</mainClass>
                 </configuration>
             </plugin>
         </plugins>
