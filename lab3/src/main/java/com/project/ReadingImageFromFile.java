@@ -1,35 +1,35 @@
 package com.project;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+
 public class ReadingImageFromFile {
+    
 	public static PrintingImage pr;
-	// метод для читання файлу з зображенням та виведення інформації про зчитаний файл,
-	// який приймає на вхід назву файлу з зображенням у форматі BMP
+	
+	// ����� ��� ������� ����� � ����������� �� ��������� ���������� ��� �������� ����, ���� 
+	// ������ �� ���� ����� ����� � ����������� � ������ BMP
 	public static void loadBitmapImage(String filename) throws IOException
 	{
-		int line;
-		BufferedInputStream reader = new BufferedInputStream (new
-				FileInputStream(filename)); // потік для читання
-		BufferedOutputStream writer = new BufferedOutputStream (new
-				FileOutputStream("primer_bmp.txt")); // потік для запису зчитаних зображень про пікселі у ASCII кодах
+		int line;                                         
+		BufferedInputStream reader = new BufferedInputStream (new FileInputStream(filename)); // ���� ��� �������
+		BufferedOutputStream writer = new BufferedOutputStream (new FileOutputStream("primer_bmp.txt")); // ���� ��� ������ �������� ��������� ��� ����� � ASCII �����
 		while ((line = reader.read())!=-1) {
-			writer.write(line);
+		  writer.write(line);
 		}
 		reader.close();
 		writer.close();
-		BufferedInputStream reader1 = new BufferedInputStream (new
-				FileInputStream("primer_bmp.txt")); // потік
-		ReadingHeaderFromBitmapImage reading = new
-				ReadingHeaderFromBitmapImage(); //створення об’єкту типу ReadingHeaderFromBitmapImage
-		HeaderBitmapImage hbi = new HeaderBitmapImage(); // створення об'єкту типу HeaderBitmapImage
-		hbi = reading.Reading(reader1); // у об'єкт типу HeaderBitmapImage записуємо результат роботи методу читання заголовку файлу
+		
+		BufferedInputStream reader1 = new BufferedInputStream (new FileInputStream("primer_bmp.txt")); // ���� 
+		ReadingHeaderFromBitmapImage reading = new ReadingHeaderFromBitmapImage(); // ��������� ����� ���� ReadingHeaderFromBitmapImage
+		HeaderBitmapImage hbi = new HeaderBitmapImage(); // �������� ��'���� ���� HeaderBitmapImage
+		hbi = reading.Reading(reader1); // � ��'��� ���� HeaderBitmapImage �������� ��������� ������ ������ ������� ��������� �����
 		pr = reading.pr;
-		// блок виведення зчитаної інформації на консоль
+		
+	    // ���� ��������� ������� ���������� �� �������
 		System.out.println("type = "+hbi.getType());
 		System.out.println("size = "+hbi.getSize());
 		System.out.println("reserve field 1 = "+hbi.getReserveField1());
@@ -46,9 +46,14 @@ public class ReadingImageFromFile {
 		System.out.println("vertical resolution = "+hbi.getVerticalResolution());
 		System.out.println("number of used colors = "+hbi.getNumbOfUsedColors());
 		System.out.println("number of important colors = "+hbi.getNumbOfImportantColors());
+		
 		System.out.println("half of width = "+hbi.getHalfOfWidth());
+		
 		reader1.close();
 	}
+	
+	public static void main(String[] args) throws IOException {
+		//loadBitmapImage("D:/Eclipse_workspace/JavaFX_Lab2_for_Comp_Graphics_Labs/sources/1.bmp");
+	}
 
-	public static void main(String[] args) throws IOException { }
 }
