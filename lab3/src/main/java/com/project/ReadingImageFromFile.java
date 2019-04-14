@@ -35,7 +35,7 @@ public class ReadingImageFromFile {
 		System.out.println("reserve field 1 = "+hbi.getReserveField1());
 		System.out.println("reserve field 2 = "+hbi.getReserveField2());
 		System.out.println("offset = "+hbi.getOffset());
-		System.out.println("size of header = "+hbi.getSizeOfHeader());
+		System.out.println("size of bitmap = "+hbi.getSizeOfHeader());
 		System.out.println("width = "+hbi.getWidth());
 		System.out.println("height = "+hbi.getHeight());
 		System.out.println("number of planes = "+hbi.getNumberOfColorPlanes());
@@ -53,7 +53,7 @@ public class ReadingImageFromFile {
 	}
 	
 	public static void main(String[] args) throws IOException {
-		//loadBitmapImage("D:/Eclipse_workspace/JavaFX_Lab2_for_Comp_Graphics_Labs/sources/1.bmp");
+		loadBitmapImage("D:/Eclipse_workspace/JavaFX_Lab2_for_Comp_Graphics_Labs/bmp/1.bmp");
 	}
 
 }

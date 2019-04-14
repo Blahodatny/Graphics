@@ -1,4 +1,4 @@
-package com.project.header;
+package com.project.bitmap;
 
 /*
  * To store general information about the bitmap image file.
@@ -14,4 +14,13 @@ abstract class BitmapFileHeader {
     // Положение пиксельных данных относительно
     // начала данной структуры (в байтах).
     long bfOffBits;
+
+    void setFileHeader(short bfType, long bfSize, short bfReserved1,
+            short bfReserved2, long bfOffBits) {
+        this.bfType = bfType;
+        this.bfSize = bfSize;
+        this.bfReserved1 = bfReserved1;
+        this.bfReserved2 = bfReserved2;
+        this.bfOffBits = bfOffBits;
+    }
 }

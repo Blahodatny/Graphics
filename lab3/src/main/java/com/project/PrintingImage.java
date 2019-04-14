@@ -40,7 +40,8 @@ public class PrintingImage extends Application{
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		
-		ReadingImageFromFile.loadBitmapImage("D:/Eclipse_workspace/JavaFX_Lab2_for_Comp_Graphics_Labs/sources/trajectory.bmp");
+		ReadingImageFromFile.loadBitmapImage("./lab3/src/main/resources" +
+				"/bmp/trajectory.bmp");
 		this.image = ReadingImageFromFile.pr.image;
 		int width = (int)this.image.getWidth();
 		int height = (int)this.image.getHeight();

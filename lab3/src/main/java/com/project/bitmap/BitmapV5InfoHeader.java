@@ -1,4 +1,4 @@
-package com.project.header;
+package com.project.bitmap;
 
 /*
  * A bitmap image file loaded into memory becomes a DIB data structure.
@@ -23,4 +23,21 @@ abstract class BitmapV5InfoHeader extends BitmapFileHeader {
     // Количество ячеек от начала таблицы цветов до последней используемой
     // (включая её саму).
     long CirImportant;
+
+    void setInfoHeader(long headerSize, long imageWidth, long imageHeight,
+            short planes, short bitCount, long compression, long imageSize,
+            long XPixelsPerMeter, long YPixelsPerMeter, long cirUsed,
+            long cirImportant) {
+        this.headerSize = headerSize;
+        this.imageWidth = imageWidth;
+        this.imageHeight = imageHeight;
+        this.planes = planes;
+        this.bitCount = bitCount;
+        this.compression = compression;
+        this.imageSize = imageSize;
+        this.XPixelsPerMeter = XPixelsPerMeter;
+        this.YPixelsPerMeter = YPixelsPerMeter;
+        CirUsed = cirUsed;
+        CirImportant = cirImportant;
+    }
 }
