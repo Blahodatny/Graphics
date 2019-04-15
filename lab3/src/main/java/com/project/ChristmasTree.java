@@ -9,63 +9,20 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.ArcType;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.LineTo;
-import javafx.scene.shape.MoveTo;
-import javafx.scene.shape.Path;
 import javafx.stage.Stage;
 
 public class ChristmasTree extends Application {
+    final private static short WIDTH = 1600;
+
     public void start(Stage primaryStage) {
         var root = new Group();
-        var scene = new Scene(root, 1600, 800);
 
-        var stem = new TreeStem();
-        root.getChildren().addAll(stem.getEllipse(), stem.getTrunk());
+        root.getChildren().addAll(TreeForm.getEllipse(), TreeForm.getStem());
 
-        // spruce spines drawing
-        Arc arc_down_body = new Arc(400, 350, 300, 250, 227, 86);
-        arc_down_body.setType(ArcType.ROUND);
-        arc_down_body.setStroke(Color.BLACK);
-        arc_down_body.setFill(Color.GREEN);
-        arc_down_body.setStrokeWidth(3);
-        Arc arc_middle_body = new Arc(400, 250, 250, 225, 230, 80);
-        arc_middle_body.setType(ArcType.ROUND);
-        arc_middle_body.setStroke(Color.BLACK);
-        arc_middle_body.setFill(Color.GREEN);
-        arc_middle_body.setStrokeWidth(3);
-        Arc arc_up_body = new Arc(400, 150, 250, 200, 240, 60);
-        arc_up_body.setType(ArcType.ROUND);
-        arc_up_body.setStroke(Color.BLACK);
-        arc_up_body.setFill(Color.GREEN);
-        arc_up_body.setStrokeWidth(3);
-        root.getChildren().addAll(arc_down_body, arc_middle_body, arc_up_body);
+        IntStream.range(0, TreeForm.getCrown().length)
+                .forEach(i -> root.getChildren().add(TreeForm.getCrown()[i]));
 
-        // star drawing
-        double hypotenuse = 50;
-        var big_leg = hypotenuse * Math.sin(Math.toRadians(54));
-        var small_leg = hypotenuse * Math.cos(Math.toRadians(54));
-        double start_x = 360;
-        double start_y = 140;
-        var middle_big_leg = 2 * big_leg * Math.cos(Math.toRadians(36));
-        var middle_small_leg = 2 * big_leg * Math.sin(Math.toRadians(36));
-        var path = new Path();
-        var moveTo = new MoveTo(start_x, start_y);
-        var line1 = new LineTo(start_x + big_leg * 2, start_y);
-        var line2 = new LineTo(
-                start_x + (2 * big_leg - middle_big_leg),
-                start_y + middle_small_leg
-        );
-        var line3 = new LineTo(start_x + big_leg, start_y - small_leg);
-        var line4 = new LineTo(
-                start_x + middle_big_leg,
-                start_y + middle_small_leg
-        );
-        var line5 = new LineTo(start_x, start_y);
-//        path.getElements().add(moveTo);
-        path.getElements().addAll(moveTo, line1, line2, line3, line4, line5);
-        path.setFill(Color.RED);
-        path.setStrokeWidth(3);
-        root.getChildren().add(path);
+        root.getChildren().add(ChristmasTreeStar.getStar());
 
         int balls_amount = 21;
         Circle[] balls = new Circle[balls_amount];
@@ -127,10 +84,10 @@ public class ChristmasTree extends Application {
                 .forEach(i -> root.getChildren()
                         .addAll(balls[i], balls_light[i]));
 
-//        Animation.run(root);
+        //        Animation.run(root);
 
         primaryStage.setTitle("Christmas Tree");
-        primaryStage.setScene(scene);
+        primaryStage.setScene(new Scene(root, WIDTH, WIDTH / 2));
         primaryStage.show();
     }
 
