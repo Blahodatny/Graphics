@@ -20,11 +20,12 @@ public class ChristmasTree extends Application {
 
         root.getChildren().add(ChristmasTreeStar.getStar());
 
-//        IntStream.range(0, balls.length)
-//                .forEach(i -> root.getChildren()
-//                        .addAll(balls[i], balls_light[i]));
+        var balls = ChristmasBalls.getBalls();
+        var arcs = ChristmasBalls.getArcs();
+        IntStream.range(0, balls.length)
+                .forEach(i -> root.getChildren().addAll(balls[i], arcs[i]));
 
-        //        Animation.run(root);
+        Animation.run(root);
 
         primaryStage.setTitle("Christmas Tree");
         primaryStage.setScene(new Scene(root, WIDTH, WIDTH / 2));

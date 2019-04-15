@@ -1,75 +1,54 @@
 package com.project.lab;
 
+import java.util.stream.IntStream;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.ArcType;
 import javafx.scene.shape.Circle;
 
-public class ChristmasBalls {
+class ChristmasBalls {
+    final private static byte BALLS_COUNT = 21;
+    final private static byte RADIUS = 18;
+    final private static Paint[] COLORS = new Paint[]{
+            Color.BLUE, Color.ORANGE, Paint.valueOf("#00FF00"), Color.YELLOW,
+            Color.PURPLE, Color.RED, Color.CYAN
+    };
+    final private static short[][] COORDINATES = new short[][]{
+            {430, 250}, {470, 460}, {370, 274}, {410, 460}, {260, 505},
+            {405, 590}, {380, 345}, {350, 230}, {305, 430}, {280, 573},
+            {330, 510}, {510, 500}, {330, 330}, {500, 370}, {420, 530},
+            {465, 310}, {355, 470}, {340, 570}, {545, 540}, {430, 400},
+            {466, 583}
+    };
+
+    private static Circle[] balls = new Circle[BALLS_COUNT];
+    private static Arc[] arcs = new Arc[BALLS_COUNT];
 
     static {
-        int balls_amount = 21;
-        Circle[] balls = new Circle[balls_amount];
-        Arc[] balls_light = new Arc[balls_amount];
-        for (int i = 0; i < balls.length; i++) {
-            balls[i] = new Circle(0, 0, 18);
+        IntStream.range(0, balls.length).forEach(i -> {
+            balls[i] = new Circle(0, 0, RADIUS);
             balls[i].setStroke(Color.BLACK);
             balls[i].setStrokeWidth(Stroke.WIDTH);
-            if (i < 3)
-                balls[i].setFill(Color.BLUE);
-            else if (i < 6)
-                balls[i].setFill(Color.ORANGE);
-            else if (i < 9)
-                balls[i].setFill(Paint.valueOf("#00FF00"));
-            else if (i < 12)
-                balls[i].setFill(Color.YELLOW);
-            else if (i < 15)
-                balls[i].setFill(Color.PURPLE);
-            else if (i < 19)
-                balls[i].setFill(Color.RED);
-            else
-                balls[i].setFill(Color.CYAN);
-            balls_light[i] = new Arc(100, 100, 15, 15, 90, 135);
-            balls_light[i].setType(ArcType.ROUND);
-            balls_light[i].setStroke(Color.WHITE);
-            balls_light[i].setFill(Color.WHITE);
-            balls_light[i].setOpacity(0.5);
-        }
-        // blue balls
-        setBallCoords(balls[0], 430, 250, balls_light[0]);
-        setBallCoords(balls[1], 470, 460, balls_light[1]);
-        setBallCoords(balls[2], 260, 505, balls_light[2]);
-        // orange balls
-        setBallCoords(balls[3], 370, 274, balls_light[3]);
-        setBallCoords(balls[4], 410, 460, balls_light[4]);
-        setBallCoords(balls[5], 405, 590, balls_light[5]);
-        // lime balls
-        setBallCoords(balls[6], 350, 230, balls_light[6]);
-        setBallCoords(balls[7], 355, 470, balls_light[7]);
-        setBallCoords(balls[8], 280, 573, balls_light[8]);
-        // yellow balls
-        setBallCoords(balls[9], 430, 400, balls_light[9]);
-        setBallCoords(balls[10], 330, 510, balls_light[10]);
-        setBallCoords(balls[11], 510, 500, balls_light[11]);
-        // purple balls
-        setBallCoords(balls[12], 330, 330, balls_light[12]);
-        setBallCoords(balls[13], 500, 370, balls_light[13]);
-        setBallCoords(balls[14], 420, 530, balls_light[14]);
-        // red balls
-        setBallCoords(balls[15], 465, 310, balls_light[15]);
-        setBallCoords(balls[16], 305, 430, balls_light[16]);
-        setBallCoords(balls[17], 340, 570, balls_light[17]);
-        setBallCoords(balls[18], 545, 540, balls_light[18]);
-        // cyan balls
-        setBallCoords(balls[19], 380, 345, balls_light[19]);
-        setBallCoords(balls[20], 466, 583, balls_light[20]);
+            balls[i].setFill(COLORS[i % 6]);
+            balls[i].setCenterX(COORDINATES[i][0]);
+            balls[i].setCenterY(COORDINATES[i][1]);
+
+            arcs[i] = new Arc(100, 100, 15, 15, 90, 135);
+            arcs[i].setType(ArcType.ROUND);
+            arcs[i].setStroke(Color.WHITE);
+            arcs[i].setFill(Color.WHITE);
+            arcs[i].setOpacity(0.5);
+            arcs[i].setCenterX(COORDINATES[i][0]);
+            arcs[i].setCenterY(COORDINATES[i][1]);
+        });
     }
 
-    private static void setBallCoords(Circle cir, int x, int y, Arc arc) {
-        cir.setCenterX(x);
-        cir.setCenterY(y);
-        arc.setCenterX(x);
-        arc.setCenterY(y);
+    static Circle[] getBalls() {
+        return balls;
+    }
+
+    static Arc[] getArcs() {
+        return arcs;
     }
 }
