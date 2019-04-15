@@ -1,59 +1,26 @@
 package com.project;
 
-import javafx.animation.ParallelTransition;
-import javafx.animation.RotateTransition;
-import javafx.animation.ScaleTransition;
-import javafx.animation.Timeline;
-import javafx.animation.TranslateTransition;
+import java.util.stream.IntStream;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.*;
+import javafx.scene.shape.Arc;
+import javafx.scene.shape.ArcType;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.LineTo;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 public class ChristmasTree extends Application {
-    public static void main(String... args) {
-        launch(args);
-    }
-
     public void start(Stage primaryStage) {
-        Group root = new Group();
-        Scene scene = new Scene(root, 1600, 800);
+        var root = new Group();
+        var scene = new Scene(root, 1600, 800);
 
-        // prop drawing
-        Rectangle prop_under = new Rectangle(330, 625, 140, 75);
-        prop_under.setArcHeight(68);
-        prop_under.setArcWidth(140);
-        prop_under.setFill(Paint.valueOf("#D2B48C"));
-        prop_under.setStroke(Color.BLACK);
-        prop_under.setStrokeWidth(3);
-        root.getChildren().add(prop_under);
-
-        Ellipse prop = new Ellipse(400, 655, 70, 35);
-        prop.setFill(Paint.valueOf("#DEB887"));
-        prop.setStroke(Color.BLACK);
-        prop.setStrokeWidth(3);
-        root.getChildren().add(prop);
-
-        Arc prop_light_up_arc = new Arc(400, 655, 68, 33, 100, 170);
-        prop_light_up_arc.setType(ArcType.ROUND);
-        prop_light_up_arc.setFill(Paint.valueOf("#F5DEB3"));
-        Arc prop_light_down_arc = new Arc(400, 655, 45, 33, 100, 170);
-        prop_light_down_arc.setType(ArcType.ROUND);
-        prop_light_down_arc.setFill(Paint.valueOf("#DEB887"));
-        root.getChildren().addAll(prop_light_up_arc, prop_light_down_arc);
-
-        // trunk drawing
-        Rectangle trunk = new Rectangle(370, 580, 60, 85);
-        trunk.setArcHeight(30);
-        trunk.setArcWidth(80);
-        trunk.setFill(Color.BROWN);
-        trunk.setStroke(Color.BLACK);
-        trunk.setStrokeWidth(3);
-        root.getChildren().add(trunk);
+        var stem = new TreeStem();
+        root.getChildren().addAll(stem.getEllipse(), stem.getTrunk());
 
         // spruce spines drawing
         Arc arc_down_body = new Arc(400, 350, 300, 250, 227, 86);
@@ -75,31 +42,27 @@ public class ChristmasTree extends Application {
 
         // star drawing
         double hypotenuse = 50;
-        double big_leg = hypotenuse * Math.sin(Math.toRadians(54));
-        double small_leg = hypotenuse * Math.cos(Math.toRadians(54));
+        var big_leg = hypotenuse * Math.sin(Math.toRadians(54));
+        var small_leg = hypotenuse * Math.cos(Math.toRadians(54));
         double start_x = 360;
         double start_y = 140;
-        double middle_big_leg = (2 * big_leg) * Math.cos(Math.toRadians(36));
-        double middle_small_leg = (2 * big_leg) * Math.sin(Math.toRadians(36));
-        System.out.println("big_leg = " + big_leg);
-        System.out.println("small_leg = " + small_leg);
-        System.out.println("middle_big_leg = " + middle_big_leg);
-        System.out.println("middle_small_leg = " + middle_small_leg);
-        Path path = new Path();
-        MoveTo moveTo = new MoveTo(start_x, start_y);
-        LineTo line1 = new LineTo(start_x + big_leg * 2, start_y);
-        LineTo line2 = new LineTo(
+        var middle_big_leg = 2 * big_leg * Math.cos(Math.toRadians(36));
+        var middle_small_leg = 2 * big_leg * Math.sin(Math.toRadians(36));
+        var path = new Path();
+        var moveTo = new MoveTo(start_x, start_y);
+        var line1 = new LineTo(start_x + big_leg * 2, start_y);
+        var line2 = new LineTo(
                 start_x + (2 * big_leg - middle_big_leg),
                 start_y + middle_small_leg
         );
-        LineTo line3 = new LineTo(start_x + big_leg, start_y - small_leg);
-        LineTo line4 = new LineTo(
+        var line3 = new LineTo(start_x + big_leg, start_y - small_leg);
+        var line4 = new LineTo(
                 start_x + middle_big_leg,
                 start_y + middle_small_leg
         );
-        LineTo line5 = new LineTo(start_x, start_y);
-        path.getElements().add(moveTo);
-        path.getElements().addAll(line1, line2, line3, line4, line5);
+        var line5 = new LineTo(start_x, start_y);
+//        path.getElements().add(moveTo);
+        path.getElements().addAll(moveTo, line1, line2, line3, line4, line5);
         path.setFill(Color.RED);
         path.setStrokeWidth(3);
         root.getChildren().add(path);
@@ -111,21 +74,20 @@ public class ChristmasTree extends Application {
             balls[i] = new Circle(0, 0, 18);
             balls[i].setStroke(Color.BLACK);
             balls[i].setStrokeWidth(3);
-            if (0 <= i && i < 3) {
+            if (i < 3)
                 balls[i].setFill(Color.BLUE);
-            } else if (3 <= i && i < 6) {
+            else if (i < 6)
                 balls[i].setFill(Color.ORANGE);
-            } else if (6 <= i && i < 9) {
+            else if (i < 9)
                 balls[i].setFill(Paint.valueOf("#00FF00"));
-            } else if (9 <= i && i < 12) {
+            else if (i < 12)
                 balls[i].setFill(Color.YELLOW);
-            } else if (12 <= i && i < 15) {
+            else if (i < 15)
                 balls[i].setFill(Color.PURPLE);
-            } else if (15 <= i && i < 19) {
+            else if (i < 19)
                 balls[i].setFill(Color.RED);
-            } else if (19 <= i && i < 21) {
+            else
                 balls[i].setFill(Color.CYAN);
-            }
             balls_light[i] = new Arc(100, 100, 15, 15, 90, 135);
             balls_light[i].setType(ArcType.ROUND);
             balls_light[i].setStroke(Color.WHITE);
@@ -161,45 +123,13 @@ public class ChristmasTree extends Application {
         setBallCoords(balls[19], 380, 345, balls_light[19]);
         setBallCoords(balls[20], 466, 583, balls_light[20]);
 
-        for (int i = 0; i < balls.length; i++) {
-            root.getChildren().addAll(balls[i], balls_light[i]);
-        }
+        IntStream.range(0, balls.length)
+                .forEach(i -> root.getChildren()
+                        .addAll(balls[i], balls_light[i]));
 
-        // Animation
-        int cycleCount = 2; //
-        int time = 2000;
+//        Animation.run(root);
 
-        ScaleTransition scaleTransition =
-                new ScaleTransition(Duration.millis(time), root);
-        scaleTransition.setToX(-1f);
-        scaleTransition.setToY(1f);
-        scaleTransition.setCycleCount(cycleCount);
-        scaleTransition.setAutoReverse(true);
-
-        TranslateTransition translateTransition =
-                new TranslateTransition(Duration.millis(time), root);
-        translateTransition.setFromX(50);
-        translateTransition.setToX(750);
-        translateTransition.setCycleCount(cycleCount + 2);
-        translateTransition.setAutoReverse(true);
-
-        RotateTransition rotateTransition =
-                new RotateTransition(Duration.millis(time), root);
-        rotateTransition.setByAngle(360f);
-        rotateTransition.setCycleCount(cycleCount);
-        rotateTransition.setAutoReverse(true);
-
-        ParallelTransition parallelTransition = new ParallelTransition();
-        parallelTransition.getChildren().addAll(
-                translateTransition,
-                scaleTransition,
-                rotateTransition
-        );
-
-        parallelTransition.setCycleCount(Timeline.INDEFINITE);
-        parallelTransition.play();
-
-        primaryStage.setTitle("Christmas Tree 9000");
+        primaryStage.setTitle("Christmas Tree");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -209,5 +139,9 @@ public class ChristmasTree extends Application {
         cir.setCenterY(y);
         arc.setCenterX(x);
         arc.setCenterY(y);
+    }
+
+    public static void main(String... args) {
+        launch(args);
     }
 }
