@@ -1,4 +1,4 @@
-package com.project;
+package com.project.lab;
 
 import javafx.animation.ParallelTransition;
 import javafx.animation.RotateTransition;

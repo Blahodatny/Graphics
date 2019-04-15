@@ -1,4 +1,4 @@
-package com.project;
+package com.project.lab;
 
 import java.util.stream.IntStream;
 import javafx.scene.paint.Color;
@@ -29,14 +29,14 @@ class TreeForm {
         );
         ellipse.setFill(Paint.valueOf("#DEB887"));
         ellipse.setStroke(Color.BLACK);
-        ellipse.setStrokeWidth(3);
+        ellipse.setStrokeWidth(Stroke.WIDTH);
 
         stem = new Rectangle(370, 580, 60, 85);
         stem.setArcHeight(30);
         stem.setArcWidth(80);
         stem.setFill(Color.BROWN);
         stem.setStroke(Color.BLACK);
-        stem.setStrokeWidth(3);
+        stem.setStrokeWidth(Stroke.WIDTH);
 
         IntStream.range(0, PARAMS.length).forEach(i -> {
             var arc = new Arc(
@@ -50,7 +50,7 @@ class TreeForm {
             arc.setType(ArcType.ROUND);
             arc.setStroke(Color.BLACK);
             arc.setFill(Color.GREEN);
-            arc.setStrokeWidth(3);
+            arc.setStrokeWidth(Stroke.WIDTH);
             crown[i] = arc;
         });
     }

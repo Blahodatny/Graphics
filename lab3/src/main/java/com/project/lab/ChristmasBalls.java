@@ -1,36 +1,21 @@
-package com.project;
+package com.project.lab;
 
-import java.util.stream.IntStream;
-import javafx.application.Application;
-import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.ArcType;
 import javafx.scene.shape.Circle;
-import javafx.stage.Stage;
 
-public class ChristmasTree extends Application {
-    final private static short WIDTH = 1600;
+public class ChristmasBalls {
 
-    public void start(Stage primaryStage) {
-        var root = new Group();
-
-        root.getChildren().addAll(TreeForm.getEllipse(), TreeForm.getStem());
-
-        IntStream.range(0, TreeForm.getCrown().length)
-                .forEach(i -> root.getChildren().add(TreeForm.getCrown()[i]));
-
-        root.getChildren().add(ChristmasTreeStar.getStar());
-
+    static {
         int balls_amount = 21;
         Circle[] balls = new Circle[balls_amount];
         Arc[] balls_light = new Arc[balls_amount];
         for (int i = 0; i < balls.length; i++) {
             balls[i] = new Circle(0, 0, 18);
             balls[i].setStroke(Color.BLACK);
-            balls[i].setStrokeWidth(3);
+            balls[i].setStrokeWidth(Stroke.WIDTH);
             if (i < 3)
                 balls[i].setFill(Color.BLUE);
             else if (i < 6)
@@ -79,26 +64,12 @@ public class ChristmasTree extends Application {
         // cyan balls
         setBallCoords(balls[19], 380, 345, balls_light[19]);
         setBallCoords(balls[20], 466, 583, balls_light[20]);
-
-        IntStream.range(0, balls.length)
-                .forEach(i -> root.getChildren()
-                        .addAll(balls[i], balls_light[i]));
-
-        //        Animation.run(root);
-
-        primaryStage.setTitle("Christmas Tree");
-        primaryStage.setScene(new Scene(root, WIDTH, WIDTH / 2));
-        primaryStage.show();
     }
 
-    private void setBallCoords(Circle cir, int x, int y, Arc arc) {
+    private static void setBallCoords(Circle cir, int x, int y, Arc arc) {
         cir.setCenterX(x);
         cir.setCenterY(y);
         arc.setCenterX(x);
         arc.setCenterY(y);
-    }
-
-    public static void main(String... args) {
-        launch(args);
     }
 }

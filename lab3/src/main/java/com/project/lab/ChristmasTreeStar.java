@@ -1,4 +1,4 @@
-package com.project;
+package com.project.lab;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.LineTo;
@@ -30,7 +30,7 @@ class ChristmasTreeStar {
                 new LineTo(START_X, START_Y)
         );
         star.setFill(Color.RED);
-        star.setStrokeWidth(3);
+        star.setStrokeWidth(Stroke.WIDTH);
     }
 
     static Path getStar() {

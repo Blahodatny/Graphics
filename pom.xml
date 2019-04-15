@@ -55,7 +55,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>com.project.ChristmasTree</mainClass>
+                    <mainClass>com.project.lab.ChristmasTree</mainClass>
                 </configuration>
             </plugin>
         </plugins>
