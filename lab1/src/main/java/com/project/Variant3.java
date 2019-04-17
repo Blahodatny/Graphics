@@ -1,19 +1,13 @@
-package com.project.variant3;
+package com.project;
 
-import javafx.application.Application;
+import java.util.stream.IntStream;
 import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
 
-import java.util.stream.IntStream;
-
-public class JavaFX extends Application {
-    private final static short MIDDLE_X = 300;
-    private final static short MIDDLE_Y = 200;
+public class Variant3 extends Program {
     private final static byte INDENT = 20;
 
     private final static Color[] COLORS = {
@@ -41,11 +35,11 @@ public class JavaFX extends Application {
         return polygon;
     }
 
-    public void start(Stage stage) {
-        var root = new Group();
-        var scene = new Scene(root, MIDDLE_X * 2, MIDDLE_Y * 2);
-        scene.setFill(Color.GRAY);
+    public Color setBackgroundColor() {
+        return Color.GRAY;
+    }
 
+    public void run(Group root) {
         root.getChildren().addAll(
                 triangle(MIDDLE_X, MIDDLE_Y, INDENT, Color.RED),
                 triangle(MIDDLE_X, MIDDLE_Y - INDENT, INDENT * 3, Color.WHITE),
@@ -65,12 +59,5 @@ public class JavaFX extends Application {
                                 RADIUS,
                                 COLORS[i]
                         )));
-
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    public static void main(String... args) {
-        launch();
     }
 }

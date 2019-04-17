@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 public class ReadBMPWithJavaFX extends Application {
     final private static String BMP = "bmp/tr33.bmp";
 
-    public void start(Stage primaryStage) {
+    public void start(Stage stage) {
         var image = new Image(BMP);
 
         var pixelReader = image.getPixelReader();
@@ -38,13 +38,8 @@ public class ReadBMPWithJavaFX extends Application {
         var imageView = new ImageView();
         imageView.setImage(image);
         root.getChildren().add(imageView);
-        primaryStage.setTitle("Image Read Test");
-        primaryStage.setScene(
-                new Scene(root, image.getWidth(), image.getHeight()));
-        primaryStage.show();
-    }
-
-    public static void main(String... args) {
-        launch(args);
+        stage.setTitle("Image Read Test");
+        stage.setScene(new Scene(root, image.getWidth(), image.getHeight()));
+        stage.show();
     }
 }

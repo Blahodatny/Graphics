@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 public class ChristmasTree extends Application {
     final private static short WIDTH = 1600;
 
-    public void start(Stage primaryStage) {
+    public void start(Stage stage) {
         var root = new Group();
 
         root.getChildren().addAll(TreeForm.getEllipse(), TreeForm.getStem());
@@ -27,12 +27,8 @@ public class ChristmasTree extends Application {
 
         Animation.run(root);
 
-        primaryStage.setTitle("Christmas Tree");
-        primaryStage.setScene(new Scene(root, WIDTH, WIDTH / 2));
-        primaryStage.show();
-    }
-
-    public static void main(String... args) {
-        launch(args);
+        stage.setTitle("Christmas Tree");
+        stage.setScene(new Scene(root, WIDTH, WIDTH / 2));
+        stage.show();
     }
 }

@@ -30,7 +30,7 @@ class ChristmasBalls {
             balls[i] = new Circle(0, 0, RADIUS);
             balls[i].setStroke(Color.BLACK);
             balls[i].setStrokeWidth(Stroke.WIDTH);
-            balls[i].setFill(COLORS[i % 6]);
+            balls[i].setFill(COLORS[i % COLORS.length]);
             balls[i].setCenterX(COORDINATES[i][0]);
             balls[i].setCenterY(COORDINATES[i][1]);
 

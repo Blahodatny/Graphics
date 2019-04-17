@@ -1,19 +1,12 @@
-package com.project.variant2;
+package com.project;
 
-import javafx.application.Application;
+import java.util.stream.IntStream;
 import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
 
-import java.util.stream.IntStream;
-
-public class Program extends Application {
-    private final static short WIDTH = 600;
-    private final static short HEIGHT = 400;
-
+public class Variant2 extends Program {
     private final static short[][] PARAMS = {
             {100, 225, 150},
             {180, 260, 45},
@@ -25,11 +18,11 @@ public class Program extends Application {
     };
     private final static byte TOP = 70;
 
-    public void start(Stage stage) {
-        var root = new Group();
-        var scene = new Scene(root, WIDTH, HEIGHT);
-        scene.setFill(Color.DARKBLUE);
+    public Color setBackgroundColor() {
+        return Color.DARKBLUE;
+    }
 
+    public void run(Group root) {
         IntStream.range(0, PARAMS.length)
                 .forEach(i -> {
                     var rectangle = new Rectangle(
@@ -52,12 +45,5 @@ public class Program extends Application {
         );
         triangle.setFill(Color.GRAY);
         root.getChildren().add(triangle);
-
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    public static void main(String... args) {
-        launch();
     }
 }
