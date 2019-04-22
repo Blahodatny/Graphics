@@ -51,3 +51,6 @@ The following steps are common for both OS:
 Library, and select library you've created in the previous step and give it the first priority like shown in screen:
 
 <img src="screen.jpg" alt="screen" height="300" width="600"></img>
+
+* Run program
+___
