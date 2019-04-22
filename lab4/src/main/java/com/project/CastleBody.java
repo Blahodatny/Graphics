@@ -146,7 +146,8 @@ public class CastleBody {
 
     private static Appearance getBodyAppearence() {
         // ����������� ��������
-        TextureLoader loader = new TextureLoader("source_folder\\metal.jpg", "LUMINANCE", new
+        TextureLoader loader = new TextureLoader("source_folder/metal.jpg",
+                "LUMINANCE", new
                 Container());
 
         Texture texture = loader.getTexture();
@@ -184,7 +185,8 @@ public class CastleBody {
 
     private static Appearance getCubeTowersAppearence() {
         // ����������� ��������
-        TextureLoader loader = new TextureLoader("source_folder\\Koala.jpg", "LUMINANCE", new
+        TextureLoader loader = new TextureLoader("source_folder/Koala.jpg",
+                "LUMINANCE", new
                 Container());
 
         Texture texture = loader.getTexture();
@@ -211,7 +213,8 @@ public class CastleBody {
 
     private static Appearance getCylTowersAppearence() {
         // ����������� ��������
-        TextureLoader loader = new TextureLoader("source_folder\\lines.png", "LUMINANCE", new Container());
+        TextureLoader loader = new TextureLoader("source_folder/lines.png",
+                "LUMINANCE", new Container());
         Texture texture = loader.getTexture();
 
         // ������ ���������� ������� ��������
