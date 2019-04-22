@@ -1,9 +1,6 @@
 package com.project.variant2;
 
 import com.project.Window;
-
-import javax.swing.JPanel;
-import javax.swing.Timer;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.GradientPaint;
@@ -11,6 +8,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JPanel;
+import javax.swing.Timer;
 
 class Main extends JPanel implements ActionListener {
     private final static short FRAME_WIDTH = 1500;

@@ -17,7 +17,7 @@ public static void main(String... args) {
 }
 ```
 After executing you can get rid of it &#128522;
-
+___
 Read some beneficial articles before exploring third lab:
 
 * [*What is Bitmap Picture?* (на русском)](https://ru.wikipedia.org/wiki/BMP)

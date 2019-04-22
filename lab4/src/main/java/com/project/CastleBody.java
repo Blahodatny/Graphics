@@ -1,12 +1,22 @@
 package com.project;
 
-import java.awt.Container;
-import javax.media.j3d.*; // for transform
-import javax.vecmath.Color3f;
-import java.awt.Color;
-import com.sun.j3d.utils.geometry.*;
-import javax.vecmath.*; // for Vector3f
+import com.sun.j3d.utils.geometry.Box;
+import com.sun.j3d.utils.geometry.Cone;
+import com.sun.j3d.utils.geometry.Cylinder;
+import com.sun.j3d.utils.geometry.Primitive;
 import com.sun.j3d.utils.image.TextureLoader;
+import java.awt.Color;
+import java.awt.Container;
+import javax.media.j3d.Appearance;
+import javax.media.j3d.Material;
+import javax.media.j3d.Texture;
+import javax.media.j3d.TextureAttributes;
+import javax.media.j3d.Transform3D;
+import javax.media.j3d.TransformGroup;
+import javax.vecmath.AxisAngle4d;
+import javax.vecmath.Color3f;
+import javax.vecmath.Color4f;
+import javax.vecmath.Vector3f;
 
 public class CastleBody {
     public static Box getBody(float height, float width) {
@@ -203,7 +213,7 @@ public class CastleBody {
         // ����������� ��������
         TextureLoader loader = new TextureLoader("source_folder\\lines.png", "LUMINANCE", new Container());
         Texture texture = loader.getTexture();
-        
+
         // ������ ���������� ������� ��������
         texture.setBoundaryModeS(Texture.WRAP);
         texture.setBoundaryModeT(Texture.WRAP);

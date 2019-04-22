@@ -1,8 +1,7 @@
 package com.project.variant3;
 
-import com.project.Window;
 import com.project.GraphicsHelper;
-
+import com.project.Window;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.GradientPaint;
