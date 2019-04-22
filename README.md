@@ -5,6 +5,19 @@ To execute JavaFX Application run:
 mvn compile exec:java -pl {name of module} -Dexec.mainClass={name of Main Class}
 ``````
 
+If you see the following error when running *mvn compile*:
+```text
+[ERROR] Failed to execute goal org.codehaus.mojo:exec-maven-plugin:1.6.0:java (default-cli) on project lab1: An exception occured while executing the Java class. The specified mainClass doesn't contain a main method with appropriate signature.: com.project.Variant2.main([Ljava.lang.String;) -> [Help 1]
+```
+
+Insert that method in one of JavaFX running classes:
+```java
+public static void main(String... args) {
+    launch();
+}
+```
+After executing you can get rid of it &#128522;
+
 Read some beneficial articles before exploring third lab:
 
 * [*What is Bitmap Picture?* (на русском)](https://ru.wikipedia.org/wiki/BMP)
