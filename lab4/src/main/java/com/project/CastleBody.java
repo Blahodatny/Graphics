@@ -18,68 +18,100 @@ import javax.vecmath.Color3f;
 import javax.vecmath.Color4f;
 import javax.vecmath.Vector3f;
 
-public class CastleBody {
-    public static Box getBody(float height, float width) {
-        int primflags = Primitive.GENERATE_NORMALS + Primitive.GENERATE_TEXTURE_COORDS;
-        return new Box(width, width, height, primflags, getBodyAppearence());
+class CastleBody {
+    static Box getBody(float height, float width) {
+        return new Box(
+                width,
+                width,
+                height,
+                Primitive.GENERATE_NORMALS + Primitive.GENERATE_TEXTURE_COORDS,
+                getAppearence("source_folder/metal.jpg")
+        );
     }
 
-    public static Box getTower() {
-        int primflags = Primitive.GENERATE_NORMALS + Primitive.GENERATE_TEXTURE_COORDS;
-        return new Box(0.2f, 0.2f, 0.125f, primflags, getCubeTowersAppearence());
+    static Box getTower() {
+        return new Box(
+                0.2f,
+                0.2f,
+                0.125f,
+                Primitive.GENERATE_NORMALS + Primitive.GENERATE_TEXTURE_COORDS,
+                getAppearence("source_folder/Koala.jpg")
+        );
     }
 
     private static Cylinder getCentralTower(float cylinderHeight) {
-        int primflags = Primitive.GENERATE_NORMALS + Primitive.GENERATE_TEXTURE_COORDS;
-        return new Cylinder(0.1f, cylinderHeight, primflags, getCylTowersAppearence());
+        return new Cylinder(
+                0.1f,
+                cylinderHeight,
+                Primitive.GENERATE_NORMALS + Primitive.GENERATE_TEXTURE_COORDS,
+                getAppearence("source_folder/lines.png")
+        );
     }
 
     private static Cone getCentralTowerRoof() {
-        int primflags = Primitive.GENERATE_NORMALS + Primitive.GENERATE_TEXTURE_COORDS;
-        return new Cone(0.125f, 0.3f, primflags, getRoofAppearence());
+        return new Cone(
+                0.125f,
+                0.3f,
+                Primitive.GENERATE_NORMALS + Primitive.GENERATE_TEXTURE_COORDS,
+                getRoofAppearence()
+        );
     }
 
     private static TransformGroup getCover(float x) {
-        int primflags = Primitive.GENERATE_NORMALS + Primitive.GENERATE_TEXTURE_COORDS;
-
-        TransformGroup tg = new TransformGroup();
-        Transform3D transform = new Transform3D();
+        var group = new TransformGroup();
+        var transform = new Transform3D();
         transform.setTranslation(new Vector3f(x, .0f, 0.012f));
-        tg.setTransform(transform);
-        tg.addChild(new Box(0.008f, 0.008f, 0.008f, primflags, getRoofAppearence()));
-        return tg;
+        group.setTransform(transform);
+        group.addChild(new Box(
+                0.008f,
+                0.008f,
+                0.008f,
+                Primitive.GENERATE_NORMALS + Primitive.GENERATE_TEXTURE_COORDS,
+                getRoofAppearence()
+        ));
+        return group;
     }
 
     private static TransformGroup getWall() {
-        int primflags = Primitive.GENERATE_NORMALS + Primitive.GENERATE_TEXTURE_COORDS;
-
-        TransformGroup tg = new TransformGroup();
-        Transform3D transform = new Transform3D();
+        var group = new TransformGroup();
+        var transform = new Transform3D();
         transform.setTranslation(new Vector3f(.0f, .0f, .0f));
-        tg.setTransform(transform);
-        tg.addChild(new Box(0.2f, 0.008f, 0.008f, primflags, getRoofAppearence()));
-        return tg;
+        group.setTransform(transform);
+        group.addChild(new Box(
+                0.2f,
+                0.008f,
+                0.008f,
+                Primitive.GENERATE_NORMALS + Primitive.GENERATE_TEXTURE_COORDS,
+                getRoofAppearence()
+        ));
+        return group;
     }
 
     private static TransformGroup getFetch() {
         TransformGroup tg = new TransformGroup();
         TransformGroup wall = getWall();
         tg.addChild(wall);
-        for (float i=0.192f; i>-0.193f; i-=0.032f){
+        for (float i = 0.192f; i > -0.193f; i -= 0.032f) {
             TransformGroup cover = getCover(i);
             tg.addChild(cover);
         }
         return tg;
     }
 
-    public static TransformGroup getProtectFetch(float xPos, float yPos, float zPos, boolean turn){
+    public static TransformGroup getProtectFetch(float xPos, float yPos,
+            float zPos, boolean turn) {
         TransformGroup tg = new TransformGroup();
 
         TransformGroup fetch3 = CastleBody.getFetch();
         Transform3D fetch3trans = new Transform3D();
         fetch3trans.setTranslation(new Vector3f(xPos, yPos, zPos));
-        if (turn){
-            fetch3trans.setRotation(new AxisAngle4d(0, 0, 1, Math.toRadians(90)));
+        if (turn) {
+            fetch3trans.setRotation(new AxisAngle4d(
+                    0,
+                    0,
+                    1,
+                    Math.toRadians(90)
+            ));
         }
         fetch3.setTransform(fetch3trans);
         tg.addChild(fetch3);
@@ -87,10 +119,10 @@ public class CastleBody {
         return tg;
     }
 
-    public static TransformGroup getFourFetches() {
-        TransformGroup tg = new TransformGroup();
-        float distanceFromCentre = 0.192f;
-        float zPos = 0.63f;
+    static TransformGroup getFourFetches() {
+        var tg = new TransformGroup();
+        var distanceFromCentre = 0.192f;
+        var zPos = 0.63f;
 
         TransformGroup fetch1 = CastleBody.getFetch();
         Transform3D fetch1trans = new Transform3D();
@@ -100,7 +132,11 @@ public class CastleBody {
 
         TransformGroup fetch2 = CastleBody.getFetch();
         Transform3D fetch2trans = new Transform3D();
-        fetch2trans.setTranslation(new Vector3f(.0f, -distanceFromCentre, zPos));
+        fetch2trans.setTranslation(new Vector3f(
+                .0f,
+                -distanceFromCentre,
+                zPos
+        ));
         fetch2.setTransform(fetch2trans);
         tg.addChild(fetch2);
 
@@ -113,19 +149,24 @@ public class CastleBody {
 
         TransformGroup fetch4 = CastleBody.getFetch();
         Transform3D fetch4trans = new Transform3D();
-        fetch4trans.setTranslation(new Vector3f(-distanceFromCentre, .0f, zPos));
+        fetch4trans.setTranslation(new Vector3f(
+                -distanceFromCentre,
+                .0f,
+                zPos
+        ));
         fetch4trans.setRotation(new AxisAngle4d(0, 0, 1, Math.toRadians(90)));
         fetch4.setTransform(fetch4trans);
         tg.addChild(fetch4);
         return tg;
     }
 
-    public static TransformGroup getCylinderTower(float height, float xPos, float yPos){
+    public static TransformGroup getCylinderTower(float height, float xPos,
+            float yPos) {
         TransformGroup tg = new TransformGroup();
 
         Cylinder centralTower = CastleBody.getCentralTower(height);
         Transform3D centralTowerT = new Transform3D();
-        centralTowerT.setTranslation(new Vector3f(xPos, yPos, height*0.5f));
+        centralTowerT.setTranslation(new Vector3f(xPos, yPos, height * 0.5f));
         centralTowerT.setRotation(new AxisAngle4d(1, 0, 0, Math.toRadians(90)));
         TransformGroup centralTowerTG = new TransformGroup();
         centralTowerTG.setTransform(centralTowerT);
@@ -134,8 +175,17 @@ public class CastleBody {
 
         Cone centralTowerRoof = CastleBody.getCentralTowerRoof();
         Transform3D centralTowerRoofT = new Transform3D();
-        centralTowerRoofT.setTranslation(new Vector3f(xPos, yPos, height+0.15f));
-        centralTowerRoofT.setRotation(new AxisAngle4d(1, 0, 0, Math.toRadians(90)));
+        centralTowerRoofT.setTranslation(new Vector3f(
+                xPos,
+                yPos,
+                height + 0.15f
+        ));
+        centralTowerRoofT.setRotation(new AxisAngle4d(
+                1,
+                0,
+                0,
+                Math.toRadians(90)
+        ));
         TransformGroup centralTowerRoofTG = new TransformGroup();
         centralTowerRoofTG.setTransform(centralTowerRoofT);
         centralTowerRoofTG.addChild(centralTowerRoof);
@@ -144,97 +194,43 @@ public class CastleBody {
         return tg;
     }
 
-    private static Appearance getBodyAppearence() {
-        // ����������� ��������
-        TextureLoader loader = new TextureLoader("source_folder/metal.jpg",
-                "LUMINANCE", new
-                Container());
-
-        Texture texture = loader.getTexture();
-        // ������ ���������� ������� ��������
-        texture.setBoundaryModeS(Texture.WRAP);
-        texture.setBoundaryModeT(Texture.WRAP);
-        texture.setBoundaryColor(new Color4f(0.0f, 1.0f, 1.0f, 0.0f));
-
-        // ������������ �������� ��������
-        TextureAttributes texAttr = new TextureAttributes();
-        texAttr.setTextureMode(TextureAttributes.MODULATE); // ���� ���� REPLACE, BLEND ��� DECAL ������ MODULATE
-
-        Appearance ap = new Appearance();
-        ap.setTexture(texture);
-        ap.setTextureAttributes(texAttr);
-
-        Color3f emissive = new Color3f(new Color(0,0, 0));
-        Color3f ambient = new Color3f(new Color(100,38, 38));
-        Color3f diffuse = new Color3f(new Color(178,38, 38));
-        Color3f specular = new Color3f(new Color(0,0, 0));
-        // ambient, emissive, diffuse, specular, 1.0f
-        ap.setMaterial(new Material(ambient, emissive, diffuse, specular, 1.0f));
-        return ap;
-    }
-
     private static Appearance getRoofAppearence() {
         Appearance ap = new Appearance();
-        Color3f emissive = new Color3f(new Color(0,0, 0));
-        Color3f ambient = new Color3f(new Color(100,38, 38));
-        Color3f diffuse = new Color3f(new Color(255,38, 38));
-        Color3f specular = new Color3f(new Color(0,0, 0));
-        ap.setMaterial(new Material(ambient, emissive, diffuse, specular, 1.0f));
+        Color3f emissive = new Color3f(new Color(0, 0, 0));
+        Color3f ambient = new Color3f(new Color(100, 38, 38));
+        Color3f diffuse = new Color3f(new Color(255, 38, 38));
+        Color3f specular = new Color3f(new Color(0, 0, 0));
+        ap.setMaterial(new Material(
+                ambient,
+                emissive,
+                diffuse,
+                specular,
+                1.0f
+        ));
         return ap;
     }
 
-    private static Appearance getCubeTowersAppearence() {
-        // ����������� ��������
-        TextureLoader loader = new TextureLoader("source_folder/Koala.jpg",
-                "LUMINANCE", new
-                Container());
+    private static Appearance getAppearence(String file) {
+        var texture = new TextureLoader(file, "LUMINANCE", new Container())
+                .getTexture();
 
-        Texture texture = loader.getTexture();
-        // ������ ���������� ������� ��������
         texture.setBoundaryModeS(Texture.WRAP);
         texture.setBoundaryModeT(Texture.WRAP);
         texture.setBoundaryColor(new Color4f(0.0f, 1.0f, 1.0f, 0.0f));
 
-        // ������������ �������� ��������
-        TextureAttributes texAttr = new TextureAttributes();
-        texAttr.setTextureMode(TextureAttributes.MODULATE); // ���� ���� REPLACE, BLEND ��� DECAL ������ MODULATE
+        var texAttr = new TextureAttributes();
+        texAttr.setTextureMode(TextureAttributes.MODULATE);
 
-        Appearance ap = new Appearance();
+        var ap = new Appearance();
         ap.setTexture(texture);
         ap.setTextureAttributes(texAttr);
-
-        Color3f emissive = new Color3f(new Color(0,0, 0));
-        Color3f ambient = new Color3f(new Color(100,38, 38));
-        Color3f diffuse = new Color3f(new Color(100,38, 38));
-        Color3f specular = new Color3f(new Color(0,0, 0));
-        ap.setMaterial(new Material(ambient, emissive, diffuse, specular, 1.0f));
-        return ap;
-    }
-
-    private static Appearance getCylTowersAppearence() {
-        // ����������� ��������
-        TextureLoader loader = new TextureLoader("source_folder/lines.png",
-                "LUMINANCE", new Container());
-        Texture texture = loader.getTexture();
-
-        // ������ ���������� ������� ��������
-        texture.setBoundaryModeS(Texture.WRAP);
-        texture.setBoundaryModeT(Texture.WRAP);
-        texture.setBoundaryColor(new Color4f(0.0f, 1.0f, 1.0f, 0.0f));
-
-        // ������������ �������� ��������
-        TextureAttributes texAttr = new TextureAttributes();
-        texAttr.setTextureMode(TextureAttributes.MODULATE); // ���� ���� REPLACE, BLEND ��� DECAL ������ MODULATE
-
-        Appearance ap = new Appearance();
-        ap.setTexture(texture);
-        ap.setTextureAttributes(texAttr);
-
-        Color3f emissive = new Color3f(new Color(0,0, 0));
-        Color3f ambient = new Color3f(new Color(100,38, 38));
-        Color3f diffuse = new Color3f(new Color(100,38, 38));
-        Color3f specular = new Color3f(new Color(0,0, 0));
-        ap.setMaterial(new Material(ambient, emissive, diffuse, specular, 1.0f));
+        ap.setMaterial(new Material(
+                new Color3f(new Color(100, 38, 38)),
+                new Color3f(new Color(0, 0, 0)),
+                new Color3f(new Color(100, 38, 38)),
+                new Color3f(new Color(0, 0, 0)),
+                1.0f
+        ));
         return ap;
     }
 }

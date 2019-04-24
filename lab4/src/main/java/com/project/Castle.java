@@ -38,8 +38,7 @@ public class Castle implements ActionListener {
     }
 
     private Castle() {
-        Timer timer = new Timer(50, this);
-        SimpleUniverse universe = new SimpleUniverse();
+        var universe = new SimpleUniverse();
 
         viewingTransformGroup =
                 universe.getViewingPlatform().getViewPlatformTransform();
@@ -47,36 +46,33 @@ public class Castle implements ActionListener {
 
         eyeHeight = upperEyeLimit;
         eyeDistance = farthestEyeLimit;
-        timer.start();
+        new Timer(50, this).start();
     }
 
     private BranchGroup createSceneGraph() {
-        BranchGroup objRoot = new BranchGroup();
+        var objRoot = new BranchGroup();
 
-        // ��������� ��'���, �� ������ �������� �� �����
         treeTransformGroup = new TransformGroup();
         treeTransformGroup.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
         buildCastleSkeleton();
         objRoot.addChild(treeTransformGroup);
 
-        Background background =
-                new Background(new Color3f(1.0f, 1.0f, 1.0f)); // white color
-        BoundingSphere sphere =
+        var background =
+                new Background(new Color3f(1.0f, 1.0f, 1.0f));
+        var sphere =
                 new BoundingSphere(new Point3d(0, 0, 0), 100000);
         background.setApplicationBounds(sphere);
         objRoot.addChild(background);
 
-        // ����������� ���������
-        BoundingSphere bounds =
+        var bounds =
                 new BoundingSphere(new Point3d(0.0, 0.0, 0.0), 100.0);
-        Color3f light1Color = new Color3f(1.0f, 0.5f, 0.4f);
-        Vector3f light1Direction = new Vector3f(4.0f, -7.0f, -12.0f);
-        DirectionalLight light1 =
+        var light1Color = new Color3f(1.0f, 0.5f, 0.4f);
+        var light1Direction = new Vector3f(4.0f, -7.0f, -12.0f);
+        var light1 =
                 new DirectionalLight(light1Color, light1Direction);
         light1.setInfluencingBounds(bounds);
         objRoot.addChild(light1);
 
-        // ������������ ��������� ���������
         Color3f ambientColor = new Color3f(1.0f, 1.0f, 1.0f);
         AmbientLight ambientLightNode = new AmbientLight(ambientColor);
         ambientLightNode.setInfluencingBounds(bounds);
@@ -351,47 +347,35 @@ public class Castle implements ActionListener {
         treeTransformGroup.addChild(tower4TG);
     }
 
-    // ActionListener interface
-    @Override
     public void actionPerformed(ActionEvent e) {
-        float delta = 0.03f;
+        var delta = 0.03f;
 
-        // rotation of the castle
         treeTransform3D.rotZ(angle);
         treeTransformGroup.setTransform(treeTransform3D);
         angle += delta;
 
-        // change of the camera position up and down within defined limits
-        if (eyeHeight > upperEyeLimit) {
+        if (eyeHeight > upperEyeLimit)
             descend = true;
-        } else if (eyeHeight < lowerEyeLimit) {
+        else if (eyeHeight < lowerEyeLimit)
             descend = false;
-        }
-        if (descend) {
+        if (descend)
             eyeHeight -= delta;
-        } else {
+        else
             eyeHeight += delta;
-        }
 
-        // change camera distance to the scene
-        if (eyeDistance > farthestEyeLimit) {
+        if (eyeDistance > farthestEyeLimit)
             approaching = true;
-        } else if (eyeDistance < nearestEyeLimit) {
+        else if (eyeDistance < nearestEyeLimit)
             approaching = false;
-        }
-        if (approaching) {
+        if (approaching)
             eyeDistance -= delta;
-        } else {
+        else
             eyeDistance += delta;
-        }
 
-        Point3d eye = new Point3d(eyeDistance,
-                eyeDistance,
-                eyeHeight
-        ); // spectator's eye
-        Point3d center = new Point3d(.0f, .0f, 0.5f); // sight target
-        Vector3d up = new Vector3d(.0f, .0f, 1.0f);
-        ; // the camera frustum
+        var eye = new Point3d(eyeDistance, eyeDistance, eyeHeight);
+        var center = new Point3d(.0f, .0f, 0.5f);
+        var up = new Vector3d(.0f, .0f, 1.0f);
+
         viewingTransform.lookAt(eye, center, up);
         viewingTransform.invert();
         viewingTransformGroup.setTransform(viewingTransform);
