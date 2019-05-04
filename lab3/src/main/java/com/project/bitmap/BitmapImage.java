@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class BitmapImage extends BitmapImageHeader {
-    final private static String DIR = "./lab3/src/main/resources/";
+    final private static String DIR = "lab3/src/main/resources/";
     final private static String BMP = DIR + "bmp/tr33.bmp";
     final private static String PIXELS = DIR + "pixels.txt";
     final private static String BMP_IN_TXT = DIR + "primer_bmp.txt";

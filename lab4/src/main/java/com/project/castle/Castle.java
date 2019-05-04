@@ -1,5 +1,6 @@
-package com.project;
+package com.project.castle;
 
+import com.project.castle.tower.TowerPainter;
 import com.sun.j3d.utils.universe.SimpleUniverse;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -34,7 +35,7 @@ public class Castle implements ActionListener {
     private float eyeHeight;
     private float eyeDistance;
     private boolean descend = true;
-    private boolean approaching = true;        //        approaching = eyeDistance > farthestEyeLimit;
+    private boolean approaching = true;
 
     public static void main(String[] args) {
         new Castle();
@@ -92,7 +93,7 @@ public class Castle implements ActionListener {
 
         setOneLevelOfTowers(0.8f, 0.25f);
         setOneLevelOfTowers(0.4f, 0.5f);
-        setCylinderTowers();
+        new TowerPainter().run(treeTransformGroup::addChild);
         setOneLevelOf4Fetches(0.4f, .0f);
         setOneLevelOf4Fetches(0.8f, -0.25f);
         setUpperProtectFetches();
@@ -155,22 +156,6 @@ public class Castle implements ActionListener {
                                 0.133f,
                                 i < 6
                         )));
-    }
-
-    private void setCylinderTowers() {
-        var heights = new float[]{1.5f, 1.0f, 0.9f, 1.1f, 1.05f};
-        var cylTowDistFromCentre = 0.2f;
-
-        IntStream.range(0, heights.length).forEach(i ->
-                treeTransformGroup.addChild(CastleBody.getCylinderTower(
-                        heights[i],
-                        i == 0 ?
-                                .0f :
-                                cylTowDistFromCentre * distances[i - 1][0],
-                        i == 0 ?
-                                .0f :
-                                cylTowDistFromCentre * distances[i - 1][1]
-                )));
     }
 
     private void setOneLevelOf4Fetches(float distanceFromCentre, float height) {

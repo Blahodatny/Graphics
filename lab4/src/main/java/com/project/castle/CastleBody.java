@@ -1,4 +1,4 @@
-package com.project;
+package com.project.castle;
 
 import com.sun.j3d.utils.geometry.Box;
 import com.sun.j3d.utils.geometry.Cone;
