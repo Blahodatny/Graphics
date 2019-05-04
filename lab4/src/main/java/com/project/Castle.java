@@ -4,6 +4,7 @@ import com.sun.j3d.utils.geometry.Box;
 import com.sun.j3d.utils.universe.SimpleUniverse;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.stream.IntStream;
 import javax.media.j3d.AmbientLight;
 import javax.media.j3d.Background;
 import javax.media.j3d.BoundingSphere;
@@ -18,6 +19,7 @@ import javax.vecmath.Vector3d;
 import javax.vecmath.Vector3f;
 
 public class Castle implements ActionListener {
+    
     private float upperEyeLimit = 5.0f; // 5.0
     private float lowerEyeLimit = 1.0f; // 1.0
     private float farthestEyeLimit = 6.0f; // 6.0
@@ -81,10 +83,10 @@ public class Castle implements ActionListener {
     }
 
     private void buildCastleSkeleton() {
-        Box body1 = CastleBody.getBody(0.125f, 1.0f);
-        Transform3D body1T = new Transform3D();
+        var body1 = CastleBody.getBody(1.0f);
+        var body1T = new Transform3D();
         body1T.setTranslation(new Vector3f());
-        TransformGroup body1TG = new TransformGroup();
+        var body1TG = new TransformGroup();
         body1TG.setTransform(body1T);
         body1TG.addChild(body1);
         treeTransformGroup.addChild(body1TG);
@@ -92,7 +94,7 @@ public class Castle implements ActionListener {
         setOneLevelOfTowers(0.8f, 0.25f);
         setOneLevelOfTowers(0.4f, 0.5f);
 
-        Box body2 = CastleBody.getBody(0.125f, 0.6f);
+        Box body2 = CastleBody.getBody(0.6f);
         Transform3D body2T = new Transform3D();
         body2T.setTranslation(new Vector3f(.0f, .0f, 0.25f));
         TransformGroup body2TG = new TransformGroup();
@@ -256,8 +258,8 @@ public class Castle implements ActionListener {
     }
 
     private void setOneLevelOf4Fetches(float distanceFromCentre, float height) {
-        TransformGroup fourFetches1 = CastleBody.getFourFetches();
-        Transform3D tower1T = new Transform3D();
+        var fourFetches1 = CastleBody.getFourFetches();
+        var tower1T = new Transform3D();
         tower1T.setTranslation(new Vector3f(
                 distanceFromCentre,
                 distanceFromCentre,
@@ -266,8 +268,8 @@ public class Castle implements ActionListener {
         fourFetches1.setTransform(tower1T);
         treeTransformGroup.addChild(fourFetches1);
 
-        TransformGroup fourFetches2 = CastleBody.getFourFetches();
-        Transform3D tower2T = new Transform3D();
+        var fourFetches2 = CastleBody.getFourFetches();
+        var tower2T = new Transform3D();
         tower2T.setTranslation(new Vector3f(
                 -distanceFromCentre,
                 -distanceFromCentre,
@@ -276,8 +278,8 @@ public class Castle implements ActionListener {
         fourFetches2.setTransform(tower2T);
         treeTransformGroup.addChild(fourFetches2);
 
-        TransformGroup fourFetches3 = CastleBody.getFourFetches();
-        Transform3D tower3T = new Transform3D();
+        var fourFetches3 = CastleBody.getFourFetches();
+        var tower3T = new Transform3D();
         tower3T.setTranslation(new Vector3f(
                 distanceFromCentre,
                 -distanceFromCentre,
@@ -286,8 +288,8 @@ public class Castle implements ActionListener {
         fourFetches3.setTransform(tower3T);
         treeTransformGroup.addChild(fourFetches3);
 
-        TransformGroup fourFetches4 = CastleBody.getFourFetches();
-        Transform3D tower4T = new Transform3D();
+        var fourFetches4 = CastleBody.getFourFetches();
+        var tower4T = new Transform3D();
         tower4T.setTranslation(new Vector3f(
                 -distanceFromCentre,
                 distanceFromCentre,
@@ -298,53 +300,20 @@ public class Castle implements ActionListener {
     }
 
     private void setOneLevelOfTowers(float distanceFromCentre, float height) {
-        Box tower1 = CastleBody.getTower();
-        Transform3D tower1T = new Transform3D();
-        tower1T.setTranslation(new Vector3f(
-                distanceFromCentre,
-                distanceFromCentre,
-                height
-        ));
-        TransformGroup tower1TG = new TransformGroup();
-        tower1TG.setTransform(tower1T);
-        tower1TG.addChild(tower1);
-        treeTransformGroup.addChild(tower1TG);
+        var distances = new float[][]{{1, 1}, {-1, -1}, {-1, 1}, {1, -1}};
 
-        Box tower2 = CastleBody.getTower();
-        Transform3D tower2T = new Transform3D();
-        tower2T.setTranslation(new Vector3f(
-                -distanceFromCentre,
-                -distanceFromCentre,
-                height
-        ));
-        TransformGroup tower2TG = new TransformGroup();
-        tower2TG.setTransform(tower2T);
-        tower2TG.addChild(tower2);
-        treeTransformGroup.addChild(tower2TG);
-
-        Box tower3 = CastleBody.getTower();
-        Transform3D tower3T = new Transform3D();
-        tower3T.setTranslation(new Vector3f(
-                distanceFromCentre,
-                -distanceFromCentre,
-                height
-        ));
-        TransformGroup tower3TG = new TransformGroup();
-        tower3TG.setTransform(tower3T);
-        tower3TG.addChild(tower3);
-        treeTransformGroup.addChild(tower3TG);
-
-        Box tower4 = CastleBody.getTower();
-        Transform3D tower4T = new Transform3D();
-        tower4T.setTranslation(new Vector3f(
-                -distanceFromCentre,
-                distanceFromCentre,
-                height
-        ));
-        TransformGroup tower4TG = new TransformGroup();
-        tower4TG.setTransform(tower4T);
-        tower4TG.addChild(tower4);
-        treeTransformGroup.addChild(tower4TG);
+        IntStream.range(0, distances.length).forEach(i -> {
+            var tower = new Transform3D();
+            tower.setTranslation(new Vector3f(
+                    distanceFromCentre * distances[i][0],
+                    distanceFromCentre * distances[i][1],
+                    height
+            ));
+            var group = new TransformGroup();
+            group.setTransform(tower);
+            group.addChild(CastleBody.getTower());
+            treeTransformGroup.addChild(group);
+        });
     }
 
     public void actionPerformed(ActionEvent e) {

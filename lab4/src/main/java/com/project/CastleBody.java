@@ -19,13 +19,13 @@ import javax.vecmath.Color4f;
 import javax.vecmath.Vector3f;
 
 class CastleBody {
-    static Box getBody(float height, float width) {
+    static Box getBody(float width) {
         return new Box(
                 width,
                 width,
-                height,
+                (float) 0.125,
                 Primitive.GENERATE_NORMALS + Primitive.GENERATE_TEXTURE_COORDS,
-                getAppearence("source_folder/metal.jpg")
+                getAppearence("lab4/src/main/resources/metal.jpg")
         );
     }
 
@@ -35,7 +35,7 @@ class CastleBody {
                 0.2f,
                 0.125f,
                 Primitive.GENERATE_NORMALS + Primitive.GENERATE_TEXTURE_COORDS,
-                getAppearence("source_folder/Koala.jpg")
+                getAppearence("lab4/src/main/resources/image.jpg")
         );
     }
 
@@ -44,7 +44,7 @@ class CastleBody {
                 0.1f,
                 cylinderHeight,
                 Primitive.GENERATE_NORMALS + Primitive.GENERATE_TEXTURE_COORDS,
-                getAppearence("source_folder/lines.png")
+                getAppearence("lab4/src/main/resources/lines.png")
         );
     }
 
@@ -88,8 +88,8 @@ class CastleBody {
     }
 
     private static TransformGroup getFetch() {
-        TransformGroup tg = new TransformGroup();
-        TransformGroup wall = getWall();
+        var tg = new TransformGroup();
+        var wall = getWall();
         tg.addChild(wall);
         for (float i = 0.192f; i > -0.193f; i -= 0.032f) {
             TransformGroup cover = getCover(i);
@@ -98,21 +98,20 @@ class CastleBody {
         return tg;
     }
 
-    public static TransformGroup getProtectFetch(float xPos, float yPos,
+    static TransformGroup getProtectFetch(float xPos, float yPos,
             float zPos, boolean turn) {
-        TransformGroup tg = new TransformGroup();
+        var tg = new TransformGroup();
 
-        TransformGroup fetch3 = CastleBody.getFetch();
+        var fetch3 = CastleBody.getFetch();
         Transform3D fetch3trans = new Transform3D();
         fetch3trans.setTranslation(new Vector3f(xPos, yPos, zPos));
-        if (turn) {
+        if (turn)
             fetch3trans.setRotation(new AxisAngle4d(
                     0,
                     0,
                     1,
                     Math.toRadians(90)
             ));
-        }
         fetch3.setTransform(fetch3trans);
         tg.addChild(fetch3);
 
@@ -124,14 +123,14 @@ class CastleBody {
         var distanceFromCentre = 0.192f;
         var zPos = 0.63f;
 
-        TransformGroup fetch1 = CastleBody.getFetch();
-        Transform3D fetch1trans = new Transform3D();
+        var fetch1 = CastleBody.getFetch();
+        var fetch1trans = new Transform3D();
         fetch1trans.setTranslation(new Vector3f(.0f, distanceFromCentre, zPos));
         fetch1.setTransform(fetch1trans);
         tg.addChild(fetch1);
 
-        TransformGroup fetch2 = CastleBody.getFetch();
-        Transform3D fetch2trans = new Transform3D();
+        var fetch2 = CastleBody.getFetch();
+        var fetch2trans = new Transform3D();
         fetch2trans.setTranslation(new Vector3f(
                 .0f,
                 -distanceFromCentre,
@@ -140,15 +139,15 @@ class CastleBody {
         fetch2.setTransform(fetch2trans);
         tg.addChild(fetch2);
 
-        TransformGroup fetch3 = CastleBody.getFetch();
-        Transform3D fetch3trans = new Transform3D();
+        var fetch3 = CastleBody.getFetch();
+        var fetch3trans = new Transform3D();
         fetch3trans.setTranslation(new Vector3f(distanceFromCentre, .0f, zPos));
         fetch3trans.setRotation(new AxisAngle4d(0, 0, 1, Math.toRadians(90)));
         fetch3.setTransform(fetch3trans);
         tg.addChild(fetch3);
 
-        TransformGroup fetch4 = CastleBody.getFetch();
-        Transform3D fetch4trans = new Transform3D();
+        var fetch4 = CastleBody.getFetch();
+        var fetch4trans = new Transform3D();
         fetch4trans.setTranslation(new Vector3f(
                 -distanceFromCentre,
                 .0f,
@@ -160,21 +159,21 @@ class CastleBody {
         return tg;
     }
 
-    public static TransformGroup getCylinderTower(float height, float xPos,
+    static TransformGroup getCylinderTower(float height, float xPos,
             float yPos) {
-        TransformGroup tg = new TransformGroup();
+        var tg = new TransformGroup();
 
-        Cylinder centralTower = CastleBody.getCentralTower(height);
-        Transform3D centralTowerT = new Transform3D();
+        var centralTower = CastleBody.getCentralTower(height);
+        var centralTowerT = new Transform3D();
         centralTowerT.setTranslation(new Vector3f(xPos, yPos, height * 0.5f));
         centralTowerT.setRotation(new AxisAngle4d(1, 0, 0, Math.toRadians(90)));
-        TransformGroup centralTowerTG = new TransformGroup();
+        var centralTowerTG = new TransformGroup();
         centralTowerTG.setTransform(centralTowerT);
         centralTowerTG.addChild(centralTower);
         tg.addChild(centralTowerTG);
 
-        Cone centralTowerRoof = CastleBody.getCentralTowerRoof();
-        Transform3D centralTowerRoofT = new Transform3D();
+        var centralTowerRoof = CastleBody.getCentralTowerRoof();
+        var centralTowerRoofT = new Transform3D();
         centralTowerRoofT.setTranslation(new Vector3f(
                 xPos,
                 yPos,
@@ -186,7 +185,7 @@ class CastleBody {
                 0,
                 Math.toRadians(90)
         ));
-        TransformGroup centralTowerRoofTG = new TransformGroup();
+        var centralTowerRoofTG = new TransformGroup();
         centralTowerRoofTG.setTransform(centralTowerRoofT);
         centralTowerRoofTG.addChild(centralTowerRoof);
         tg.addChild(centralTowerRoofTG);
@@ -195,11 +194,11 @@ class CastleBody {
     }
 
     private static Appearance getRoofAppearence() {
-        Appearance ap = new Appearance();
-        Color3f emissive = new Color3f(new Color(0, 0, 0));
-        Color3f ambient = new Color3f(new Color(100, 38, 38));
-        Color3f diffuse = new Color3f(new Color(255, 38, 38));
-        Color3f specular = new Color3f(new Color(0, 0, 0));
+        var ap = new Appearance();
+        var emissive = new Color3f(new Color(0, 0, 0));
+        var ambient = new Color3f(new Color(100, 38, 38));
+        var diffuse = new Color3f(new Color(255, 38, 38));
+        var specular = new Color3f(new Color(0, 0, 0));
         ap.setMaterial(new Material(
                 ambient,
                 emissive,
