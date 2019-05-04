@@ -1,6 +1,5 @@
 package com.project;
 
-import com.sun.j3d.utils.geometry.Box;
 import com.sun.j3d.utils.universe.SimpleUniverse;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,11 +18,13 @@ import javax.vecmath.Vector3d;
 import javax.vecmath.Vector3f;
 
 public class Castle implements ActionListener {
-    
-    private float upperEyeLimit = 5.0f; // 5.0
-    private float lowerEyeLimit = 1.0f; // 1.0
-    private float farthestEyeLimit = 6.0f; // 6.0
-    private float nearestEyeLimit = 3.0f; // 3.0
+    private float[][] distances = new float[][]{
+            {1, 1}, {-1, -1}, {-1, 1}, {1, -1}
+    };
+    private float upperEyeLimit = 5.0f;
+    private float lowerEyeLimit = 1.0f;
+    private float farthestEyeLimit = 6.0f;
+    private float nearestEyeLimit = 3.0f;
 
     private TransformGroup treeTransformGroup;
     private TransformGroup viewingTransformGroup;
@@ -33,7 +34,7 @@ public class Castle implements ActionListener {
     private float eyeHeight;
     private float eyeDistance;
     private boolean descend = true;
-    private boolean approaching = true;
+    private boolean approaching = true;        //        approaching = eyeDistance > farthestEyeLimit;
 
     public static void main(String[] args) {
         new Castle();
@@ -59,78 +60,68 @@ public class Castle implements ActionListener {
         buildCastleSkeleton();
         objRoot.addChild(treeTransformGroup);
 
-        var background =
-                new Background(new Color3f(1.0f, 1.0f, 1.0f));
-        var sphere =
-                new BoundingSphere(new Point3d(0, 0, 0), 100000);
+        var background = new Background(new Color3f(1.0f, 1.0f, 1.0f));
+        var sphere = new BoundingSphere(new Point3d(0, 0, 0), 100000);
         background.setApplicationBounds(sphere);
         objRoot.addChild(background);
 
-        var bounds =
-                new BoundingSphere(new Point3d(0.0, 0.0, 0.0), 100.0);
+        var bounds = new BoundingSphere(new Point3d(0.0, 0.0, 0.0), 100.0);
         var light1Color = new Color3f(1.0f, 0.5f, 0.4f);
         var light1Direction = new Vector3f(4.0f, -7.0f, -12.0f);
-        var light1 =
-                new DirectionalLight(light1Color, light1Direction);
+        var light1 = new DirectionalLight(light1Color, light1Direction);
         light1.setInfluencingBounds(bounds);
         objRoot.addChild(light1);
 
-        Color3f ambientColor = new Color3f(1.0f, 1.0f, 1.0f);
-        AmbientLight ambientLightNode = new AmbientLight(ambientColor);
+        var ambientColor = new Color3f(1.0f, 1.0f, 1.0f);
+        var ambientLightNode = new AmbientLight(ambientColor);
         ambientLightNode.setInfluencingBounds(bounds);
         objRoot.addChild(ambientLightNode);
         return objRoot;
     }
 
     private void buildCastleSkeleton() {
-        var body1 = CastleBody.getBody(1.0f);
-        var body1T = new Transform3D();
-        body1T.setTranslation(new Vector3f());
-        var body1TG = new TransformGroup();
-        body1TG.setTransform(body1T);
-        body1TG.addChild(body1);
-        treeTransformGroup.addChild(body1TG);
+        IntStream.range(0, 2).forEach(i -> {
+            var body = new Transform3D();
+            body.setTranslation(
+                    i == 0 ? new Vector3f() : new Vector3f(.0f, .0f, 0.25f));
+            var group = new TransformGroup();
+            group.setTransform(body);
+            group.addChild(CastleBody.getBody(i == 0 ? 1.0f : 0.6f));
+            treeTransformGroup.addChild(group);
+        });
 
         setOneLevelOfTowers(0.8f, 0.25f);
         setOneLevelOfTowers(0.4f, 0.5f);
-
-        Box body2 = CastleBody.getBody(0.6f);
-        Transform3D body2T = new Transform3D();
-        body2T.setTranslation(new Vector3f(.0f, .0f, 0.25f));
-        TransformGroup body2TG = new TransformGroup();
-        body2TG.setTransform(body2T);
-        body2TG.addChild(body2);
-        treeTransformGroup.addChild(body2TG);
-
         setCylinderTowers();
-
         setOneLevelOf4Fetches(0.4f, .0f);
         setOneLevelOf4Fetches(0.8f, -0.25f);
-
         setUpperProtectFetches();
         setLowerProtectFetches();
     }
 
     private void setUpperProtectFetches() {
-        float distanceFromCentre = 0.592f;
-        float zPos = 0.38f; // 0.33f
-        TransformGroup protectFetch1 =
+        var distanceFromCentre = 0.592f;
+        var zPos = 0.38f;
+        var protectFetch1 =
                 CastleBody.getProtectFetch(distanceFromCentre, .0f, zPos, true);
         treeTransformGroup.addChild(protectFetch1);
-        TransformGroup protectFetch2 =
-                CastleBody.getProtectFetch(-distanceFromCentre,
+        var protectFetch2 =
+                CastleBody.getProtectFetch(
+                        -distanceFromCentre,
                         .0f,
                         zPos,
                         true
                 );
         treeTransformGroup.addChild(protectFetch2);
-        TransformGroup protectFetch3 = CastleBody.getProtectFetch(.0f,
+        var protectFetch3 = CastleBody.getProtectFetch(
+                .0f,
                 distanceFromCentre,
                 zPos,
                 false
         );
         treeTransformGroup.addChild(protectFetch3);
-        TransformGroup protectFetch4 = CastleBody.getProtectFetch(.0f,
+        var protectFetch4 = CastleBody.getProtectFetch(
+                .0f,
                 -distanceFromCentre,
                 zPos,
                 false
@@ -139,169 +130,64 @@ public class Castle implements ActionListener {
     }
 
     private void setLowerProtectFetches() {
-        float distanceFromCentre1 = 0.992f;
-        float distanceFromCentre2 = 0.4f; // 0.392
-        float zPos = 0.133f;
+        var distanceFromCentre1 = 0.992f;
+        var distanceFromCentre2 = 0.4f;
+        var dist = new float[][]{
+                {distanceFromCentre1, .0f},
+                {distanceFromCentre1, distanceFromCentre2},
+                {distanceFromCentre1, -distanceFromCentre2},
+                {-distanceFromCentre1, .0f},
+                {-distanceFromCentre1, distanceFromCentre2},
+                {-distanceFromCentre1, -distanceFromCentre2},
+                {.0f, distanceFromCentre1},
+                {distanceFromCentre2, distanceFromCentre1},
+                {-distanceFromCentre2, distanceFromCentre1},
+                {0.f, -distanceFromCentre1},
+                {distanceFromCentre2, -distanceFromCentre1},
+                {-distanceFromCentre2, -distanceFromCentre1}
+        };
 
-        TransformGroup protectFetch1 = CastleBody.getProtectFetch(
-                distanceFromCentre1,
-                .0f,
-                zPos,
-                true
-        );
-        treeTransformGroup.addChild(protectFetch1);
-        TransformGroup protectFetch2 = CastleBody.getProtectFetch(
-                distanceFromCentre1,
-                distanceFromCentre2,
-                zPos,
-                true
-        );
-        treeTransformGroup.addChild(protectFetch2);
-        TransformGroup protectFetch3 = CastleBody.getProtectFetch(
-                distanceFromCentre1,
-                -distanceFromCentre2,
-                zPos,
-                true
-        );
-        treeTransformGroup.addChild(protectFetch3);
-
-        TransformGroup protectFetch4 =
-                CastleBody.getProtectFetch(-distanceFromCentre1,
-                        .0f,
-                        zPos,
-                        true
-                );
-        treeTransformGroup.addChild(protectFetch4);
-        TransformGroup protectFetch5 =
-                CastleBody.getProtectFetch(-distanceFromCentre1,
-                        distanceFromCentre2,
-                        zPos,
-                        true
-                );
-        treeTransformGroup.addChild(protectFetch5);
-        TransformGroup protectFetch6 =
-                CastleBody.getProtectFetch(-distanceFromCentre1,
-                        -distanceFromCentre2,
-                        zPos,
-                        true
-                );
-        treeTransformGroup.addChild(protectFetch6);
-
-        TransformGroup protectFetch7 = CastleBody.getProtectFetch(.0f,
-                distanceFromCentre1,
-                zPos,
-                false
-        );
-        treeTransformGroup.addChild(protectFetch7);
-        TransformGroup protectFetch8 = CastleBody.getProtectFetch(
-                distanceFromCentre2,
-                distanceFromCentre1,
-                zPos,
-                false
-        );
-        treeTransformGroup.addChild(protectFetch8);
-        TransformGroup protectFetch9 =
-                CastleBody.getProtectFetch(-distanceFromCentre2,
-                        distanceFromCentre1,
-                        zPos,
-                        false
-                );
-        treeTransformGroup.addChild(protectFetch9);
-
-        TransformGroup protectFetch10 = CastleBody.getProtectFetch(0.f,
-                -distanceFromCentre1,
-                zPos,
-                false
-        );
-        treeTransformGroup.addChild(protectFetch10);
-        TransformGroup protectFetch11 = CastleBody.getProtectFetch(
-                distanceFromCentre2,
-                -distanceFromCentre1,
-                zPos,
-                false
-        );
-        treeTransformGroup.addChild(protectFetch11);
-        TransformGroup protectFetch12 =
-                CastleBody.getProtectFetch(-distanceFromCentre2,
-                        -distanceFromCentre1,
-                        zPos,
-                        false
-                );
-        treeTransformGroup.addChild(protectFetch12);
+        IntStream.range(0, dist.length)
+                .forEach(i -> treeTransformGroup.addChild
+                        (CastleBody.getProtectFetch(
+                                dist[i][0],
+                                dist[i][1],
+                                0.133f,
+                                i < 6
+                        )));
     }
 
     private void setCylinderTowers() {
-        float cylTowDistFromCentre = 0.2f;
-        TransformGroup cylinderTower1 =
-                CastleBody.getCylinderTower(1.5f, .0f, .0f);
-        treeTransformGroup.addChild(cylinderTower1);
-        TransformGroup cylinderTower2 = CastleBody.getCylinderTower(1.05f,
-                -cylTowDistFromCentre,
-                cylTowDistFromCentre
-        );
-        treeTransformGroup.addChild(cylinderTower2);
-        TransformGroup cylinderTower3 = CastleBody.getCylinderTower(1.0f,
-                cylTowDistFromCentre,
-                cylTowDistFromCentre
-        );
-        treeTransformGroup.addChild(cylinderTower3);
-        TransformGroup cylinderTower4 = CastleBody.getCylinderTower(1.1f,
-                cylTowDistFromCentre,
-                -cylTowDistFromCentre
-        );
-        treeTransformGroup.addChild(cylinderTower4);
-        TransformGroup cylinderTower5 = CastleBody.getCylinderTower(0.9f,
-                -cylTowDistFromCentre,
-                -cylTowDistFromCentre
-        );
-        treeTransformGroup.addChild(cylinderTower5);
+        var heights = new float[]{1.5f, 1.0f, 0.9f, 1.1f, 1.05f};
+        var cylTowDistFromCentre = 0.2f;
+
+        IntStream.range(0, heights.length).forEach(i ->
+                treeTransformGroup.addChild(CastleBody.getCylinderTower(
+                        heights[i],
+                        i == 0 ?
+                                .0f :
+                                cylTowDistFromCentre * distances[i - 1][0],
+                        i == 0 ?
+                                .0f :
+                                cylTowDistFromCentre * distances[i - 1][1]
+                )));
     }
 
     private void setOneLevelOf4Fetches(float distanceFromCentre, float height) {
-        var fourFetches1 = CastleBody.getFourFetches();
-        var tower1T = new Transform3D();
-        tower1T.setTranslation(new Vector3f(
-                distanceFromCentre,
-                distanceFromCentre,
-                height
-        ));
-        fourFetches1.setTransform(tower1T);
-        treeTransformGroup.addChild(fourFetches1);
-
-        var fourFetches2 = CastleBody.getFourFetches();
-        var tower2T = new Transform3D();
-        tower2T.setTranslation(new Vector3f(
-                -distanceFromCentre,
-                -distanceFromCentre,
-                height
-        ));
-        fourFetches2.setTransform(tower2T);
-        treeTransformGroup.addChild(fourFetches2);
-
-        var fourFetches3 = CastleBody.getFourFetches();
-        var tower3T = new Transform3D();
-        tower3T.setTranslation(new Vector3f(
-                distanceFromCentre,
-                -distanceFromCentre,
-                height
-        ));
-        fourFetches3.setTransform(tower3T);
-        treeTransformGroup.addChild(fourFetches3);
-
-        var fourFetches4 = CastleBody.getFourFetches();
-        var tower4T = new Transform3D();
-        tower4T.setTranslation(new Vector3f(
-                -distanceFromCentre,
-                distanceFromCentre,
-                height
-        ));
-        fourFetches4.setTransform(tower4T);
-        treeTransformGroup.addChild(fourFetches4);
+        IntStream.range(0, distances.length).forEach(i -> {
+            var fourFetches = CastleBody.getFourFetches();
+            var tower = new Transform3D();
+            tower.setTranslation(new Vector3f(
+                    distanceFromCentre * distances[i][0],
+                    distanceFromCentre * distances[i][1],
+                    height
+            ));
+            fourFetches.setTransform(tower);
+            treeTransformGroup.addChild(fourFetches);
+        });
     }
 
     private void setOneLevelOfTowers(float distanceFromCentre, float height) {
-        var distances = new float[][]{{1, 1}, {-1, -1}, {-1, 1}, {1, -1}};
-
         IntStream.range(0, distances.length).forEach(i -> {
             var tower = new Transform3D();
             tower.setTranslation(new Vector3f(
@@ -327,19 +213,14 @@ public class Castle implements ActionListener {
             descend = true;
         else if (eyeHeight < lowerEyeLimit)
             descend = false;
-        if (descend)
-            eyeHeight -= delta;
-        else
-            eyeHeight += delta;
+        eyeHeight += descend ? -delta : delta;
+
 
         if (eyeDistance > farthestEyeLimit)
             approaching = true;
         else if (eyeDistance < nearestEyeLimit)
             approaching = false;
-        if (approaching)
-            eyeDistance -= delta;
-        else
-            eyeDistance += delta;
+        eyeDistance += approaching ? -delta : delta;
 
         var eye = new Point3d(eyeDistance, eyeDistance, eyeHeight);
         var center = new Point3d(.0f, .0f, 0.5f);

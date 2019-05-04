@@ -1,0 +1,35 @@
+# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
+# File Created: 08.01.2013 13:26:01
+
+newmtl mus001_piano__Vray_
+	Ns 60.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.0784 0.0784 0.0784
+	Ks 0.5400 0.5400 0.5400
+	Ke 0.0000 0.0000 0.0000
+	map_refl Map__118_VRayMap.tga
+
+newmtl wire_032037115
+	Ns 32
+	d 1
+	Tr 0
+	Tf 1 1 1
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.1255 0.1451 0.4510
+	Ks 0.3500 0.3500 0.3500
+
+newmtl wire_255255000
+	Ns 32
+	d 1
+	Tr 0
+	Tf 1 1 1
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 1.0000 1.0000 0.0000
+	Ks 0.3500 0.3500 0.3500
