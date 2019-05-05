@@ -3,9 +3,11 @@ package com.project.castle.tower;
 import java.util.function.Consumer;
 import java.util.stream.IntStream;
 import javax.media.j3d.Node;
+import javax.vecmath.AxisAngle4d;
 
 public class TowerPainter extends Tower {
-    private final static double ANGLE = Math.toRadians(90);
+    private final static AxisAngle4d ANGLE =
+            new AxisAngle4d(1, 0, 0, Math.toRadians(90));
     private final static float CYLINDER_RADIUS = 0.1f;
     private final static float CONE_HEIGHT = 0.3f;
     private final static float[] CYLINDER_HEIGHTS =
@@ -22,7 +24,7 @@ public class TowerPainter extends Tower {
                 )));
     }
 
-    double getAngle() {
+    protected AxisAngle4d getAngle() {
         return ANGLE;
     }
 
