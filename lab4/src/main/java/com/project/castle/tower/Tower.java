@@ -1,8 +1,8 @@
 package com.project.castle.tower;
 
+import com.project.castle.FLAGS;
 import com.sun.j3d.utils.geometry.Cone;
 import com.sun.j3d.utils.geometry.Cylinder;
-import com.sun.j3d.utils.geometry.Primitive;
 import javax.media.j3d.Node;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
@@ -12,7 +12,7 @@ import javax.vecmath.Vector3f;
 import static com.project.ColorPainter.getAppearence;
 
 abstract class Tower {
-    private final static String lines = "lab4/src/main/resources/lines.png";
+    private final static String LINES = "lab4/src/main/resources/lines.png";
 
     abstract double getAngle();
 
@@ -33,15 +33,13 @@ abstract class Tower {
 
     TransformGroup build(float x, float y, float height) {
         var group = new TransformGroup();
-        var flags =
-                Primitive.GENERATE_NORMALS + Primitive.GENERATE_TEXTURE_COORDS;
         group.addChild(build(
                 new Vector3f(x, y, height * 0.5f),
                 new Cylinder(
                         getCylinderRadius(),
                         height,
-                        flags,
-                        getAppearence(lines)
+                        FLAGS.get(),
+                        getAppearence(LINES)
                 )
         ));
         group.addChild(build(
@@ -49,7 +47,7 @@ abstract class Tower {
                 new Cone(
                         getCylinderRadius() + 0.025f,
                         getConeHeight(),
-                        flags,
+                        FLAGS.get(),
                         getAppearence()
                 )
         ));

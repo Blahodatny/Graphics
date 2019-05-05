@@ -54,30 +54,34 @@ public class Castle implements ActionListener {
     }
 
     private BranchGroup createSceneGraph() {
-        var objRoot = new BranchGroup();
+        var root = new BranchGroup();
 
         treeTransformGroup = new TransformGroup();
         treeTransformGroup.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
         buildCastleSkeleton();
-        objRoot.addChild(treeTransformGroup);
+        root.addChild(treeTransformGroup);
 
         var background = new Background(new Color3f(1.0f, 1.0f, 1.0f));
-        var sphere = new BoundingSphere(new Point3d(0, 0, 0), 100000);
-        background.setApplicationBounds(sphere);
-        objRoot.addChild(background);
+        background.setApplicationBounds(new BoundingSphere(
+                new Point3d(0, 0, 0),
+                100000
+        ));
+        root.addChild(background);
 
-        var bounds = new BoundingSphere(new Point3d(0.0, 0.0, 0.0), 100.0);
-        var light1Color = new Color3f(1.0f, 0.5f, 0.4f);
-        var light1Direction = new Vector3f(4.0f, -7.0f, -12.0f);
-        var light1 = new DirectionalLight(light1Color, light1Direction);
-        light1.setInfluencingBounds(bounds);
-        objRoot.addChild(light1);
+        var sphere = new BoundingSphere(new Point3d(0.0, 0.0, 0.0), 100.0);
 
-        var ambientColor = new Color3f(1.0f, 1.0f, 1.0f);
-        var ambientLightNode = new AmbientLight(ambientColor);
-        ambientLightNode.setInfluencingBounds(bounds);
-        objRoot.addChild(ambientLightNode);
-        return objRoot;
+        var light = new DirectionalLight(
+                new Color3f(1.0f, 0.5f, 0.4f),
+                new Vector3f(4.0f, -7.0f, -12.0f)
+        );
+        light.setInfluencingBounds(sphere);
+        root.addChild(light);
+
+        var ambient = new AmbientLight(new Color3f(1.0f, 1.0f, 1.0f));
+        ambient.setInfluencingBounds(sphere);
+        root.addChild(ambient);
+
+        return root;
     }
 
     private void buildCastleSkeleton() {
@@ -100,16 +104,33 @@ public class Castle implements ActionListener {
         setLowerProtectFetches();
     }
 
-    private void setUpperProtectFetches(){
+    private void setUpperProtectFetches() {
         float distanceFromCentre = 0.592f;
         float zPos = 0.38f; // 0.33f
-        TransformGroup protectFetch1 = CastleBody.getProtectFetch(distanceFromCentre, .0f, zPos, true);
+        TransformGroup protectFetch1 =
+                CastleBody.getProtectFetch(distanceFromCentre, .0f, zPos, true);
         treeTransformGroup.addChild(protectFetch1);
-        TransformGroup protectFetch2 = CastleBody.getProtectFetch(-distanceFromCentre, .0f, zPos, true);
+        TransformGroup protectFetch2 =
+                CastleBody.getProtectFetch(
+                        -distanceFromCentre,
+                        .0f,
+                        zPos,
+                        true
+                );
         treeTransformGroup.addChild(protectFetch2);
-        TransformGroup protectFetch3 = CastleBody.getProtectFetch(.0f, distanceFromCentre, zPos, false);
+        TransformGroup protectFetch3 = CastleBody.getProtectFetch(
+                .0f,
+                distanceFromCentre,
+                zPos,
+                false
+        );
         treeTransformGroup.addChild(protectFetch3);
-        TransformGroup protectFetch4 = CastleBody.getProtectFetch(.0f, -distanceFromCentre, zPos, false);
+        TransformGroup protectFetch4 = CastleBody.getProtectFetch(
+                .0f,
+                -distanceFromCentre,
+                zPos,
+                false
+        );
         treeTransformGroup.addChild(protectFetch4);
     }
 
@@ -177,17 +198,12 @@ public class Castle implements ActionListener {
         treeTransformGroup.setTransform(treeTransform3D);
         angle += delta;
 
-        if (eyeHeight > upperEyeLimit)
-            descend = true;
-        else if (eyeHeight < lowerEyeLimit)
-            descend = false;
+        descend = eyeHeight > upperEyeLimit ||
+                !(eyeHeight < lowerEyeLimit) && descend;
         eyeHeight += descend ? -delta : delta;
 
-
-        if (eyeDistance > farthestEyeLimit)
-            approaching = true;
-        else if (eyeDistance < nearestEyeLimit)
-            approaching = false;
+        approaching = eyeDistance > farthestEyeLimit ||
+                !(eyeDistance < nearestEyeLimit) && approaching;
         eyeDistance += approaching ? -delta : delta;
 
         var eye = new Point3d(eyeDistance, eyeDistance, eyeHeight);

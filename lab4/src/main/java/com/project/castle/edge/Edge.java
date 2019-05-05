@@ -1,7 +1,7 @@
 package com.project.castle.edge;
 
+import com.project.castle.FLAGS;
 import com.sun.j3d.utils.geometry.Box;
-import com.sun.j3d.utils.geometry.Primitive;
 import javax.media.j3d.Node;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
@@ -10,6 +10,8 @@ import javax.vecmath.Vector3f;
 import static com.project.ColorPainter.getAppearence;
 
 abstract class Edge {
+    abstract float getBoxSideLength();
+
     private TransformGroup build(Vector3f vector, Node node) {
         var transform = new Transform3D();
         transform.setTranslation(vector);
@@ -20,28 +22,28 @@ abstract class Edge {
         return group;
     }
 
-    private TransformGroup build(float x) {
+    TransformGroup build() {
         var group = new TransformGroup();
         group.addChild(build(
                 new Vector3f(.0f, .0f, .0f),
                 new Box(
-                        0.2f,
-                        0.008f,
-                        0.008f,
-                        Primitive.GENERATE_NORMALS +
-                                Primitive.GENERATE_TEXTURE_COORDS,
+                        getBoxSideLength() * 25,
+                        getBoxSideLength(),
+                        getBoxSideLength(),
+                        FLAGS.get(),
                         getAppearence()
                 )
         ));
-        for (var i = 0.192f; i > -0.193f; i -= 0.032f)
+        for (var i = getBoxSideLength() * 24;
+             i >= -getBoxSideLength() * 24;
+             i -= getBoxSideLength() * 4)
             group.addChild(build(
-                    new Vector3f(x, .0f, 0.012f),
+                    new Vector3f(i, .0f, getBoxSideLength() * 1.5f),
                     new Box(
-                            0.008f,
-                            0.008f,
-                            0.008f,
-                            Primitive.GENERATE_NORMALS +
-                                    Primitive.GENERATE_TEXTURE_COORDS,
+                            getBoxSideLength(),
+                            getBoxSideLength(),
+                            getBoxSideLength(),
+                            FLAGS.get(),
                             getAppearence()
                     )
             ));
