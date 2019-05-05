@@ -12,13 +12,13 @@ import javax.vecmath.Color4f;
 
 public class ColorPainter {
     // світло, що випромінюється
-    private static Color3f emissive = new Color3f(new Color(56, 35, 23));
+    private static Color3f emissive = new Color3f(new Color(0x4C0E51));
     // навколишнє світло
-    private static Color3f ambient = new Color3f(new Color(12, 177, 245));
+    private static Color3f ambient = new Color3f(new Color(0x5B070C));
     // світло, що розсіюється
-    private static Color3f diffuse = new Color3f(new Color(155, 2, 255));
+    private static Color3f diffuse = new Color3f(new Color(0xD3DB23));
     // світло, що відбивається
-    private static Color3f specular = new Color3f(new Color(0, 188, 0));
+    private static Color3f specular = new Color3f(new Color(0x1A1A46));
     private static Color4f boundary = new Color4f(0.0f, 1.0f, 1.0f, 0.0f);
 
     public static Appearance getAppearence() {

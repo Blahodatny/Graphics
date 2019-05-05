@@ -14,8 +14,8 @@ public class TowerPainter extends Tower {
     private final static float DIST = 0.2f;
 
     public void run(Consumer<Node> consumer) {
-        IntStream.range(0, CYLINDER_HEIGHTS.length).forEach(i ->
-                consumer.accept(build(
+        IntStream.range(0, CYLINDER_HEIGHTS.length)
+                .forEach(i -> consumer.accept(build(
                         i == 0 ? .0f : DIST * (i % 2 == 0 ? 1 : -1),
                         i == 0 ? .0f : DIST * (i % 3 == 1 ? 1 : -1),
                         CYLINDER_HEIGHTS[i]

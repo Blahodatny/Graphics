@@ -100,33 +100,16 @@ public class Castle implements ActionListener {
         setLowerProtectFetches();
     }
 
-    private void setUpperProtectFetches() {
-        var distanceFromCentre = 0.592f;
-        var zPos = 0.38f;
-        var protectFetch1 =
-                CastleBody.getProtectFetch(distanceFromCentre, .0f, zPos, true);
+    private void setUpperProtectFetches(){
+        float distanceFromCentre = 0.592f;
+        float zPos = 0.38f; // 0.33f
+        TransformGroup protectFetch1 = CastleBody.getProtectFetch(distanceFromCentre, .0f, zPos, true);
         treeTransformGroup.addChild(protectFetch1);
-        var protectFetch2 =
-                CastleBody.getProtectFetch(
-                        -distanceFromCentre,
-                        .0f,
-                        zPos,
-                        true
-                );
+        TransformGroup protectFetch2 = CastleBody.getProtectFetch(-distanceFromCentre, .0f, zPos, true);
         treeTransformGroup.addChild(protectFetch2);
-        var protectFetch3 = CastleBody.getProtectFetch(
-                .0f,
-                distanceFromCentre,
-                zPos,
-                false
-        );
+        TransformGroup protectFetch3 = CastleBody.getProtectFetch(.0f, distanceFromCentre, zPos, false);
         treeTransformGroup.addChild(protectFetch3);
-        var protectFetch4 = CastleBody.getProtectFetch(
-                .0f,
-                -distanceFromCentre,
-                zPos,
-                false
-        );
+        TransformGroup protectFetch4 = CastleBody.getProtectFetch(.0f, -distanceFromCentre, zPos, false);
         treeTransformGroup.addChild(protectFetch4);
     }
 
