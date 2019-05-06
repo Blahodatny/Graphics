@@ -1,6 +1,6 @@
 package com.project;
 
-import javax.media.j3d.Node;
+import javax.media.j3d.Group;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
 import javax.vecmath.AxisAngle4d;
@@ -9,7 +9,7 @@ import javax.vecmath.Vector3f;
 public abstract class TransformGroupBuilder {
     protected abstract AxisAngle4d getAngle();
 
-    protected TransformGroup buildGroup(Vector3f vector, Node node,
+    protected TransformGroup buildGroup(Vector3f vector, Group node,
             boolean rotate) {
         var transform = new Transform3D();
         transform.setTranslation(vector);

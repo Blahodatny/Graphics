@@ -16,20 +16,20 @@ abstract class Tower extends TransformGroupBuilder {
 
     abstract float getConeHeight();
 
-    TransformGroup build(float x, float y, float height) {
+    TransformGroup buildTower(float x, float y, float z) {
         var group = new TransformGroup();
         group.addChild(buildGroup(
-                new Vector3f(x, y, height * 0.5f),
+                new Vector3f(x, y, z * 0.5f),
                 new Cylinder(
                         getCylinderRadius(),
-                        height,
+                        z,
                         FLAGS.get(),
                         getAppearence(LINES)
                 ),
                 true
         ));
         group.addChild(buildGroup(
-                new Vector3f(x, y, height + 0.15f),
+                new Vector3f(x, y, z + 0.15f),
                 new Cone(
                         getCylinderRadius() + 0.025f,
                         getConeHeight(),

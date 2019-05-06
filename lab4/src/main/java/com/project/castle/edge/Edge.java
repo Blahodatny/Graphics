@@ -8,33 +8,33 @@ import javax.vecmath.Vector3f;
 
 import static com.project.ColorPainter.getAppearence;
 
-abstract class Edge extends TransformGroupBuilder {
+public abstract class Edge extends TransformGroupBuilder {
     private static final int COEFFICIENT = 25;
 
-    abstract float getBoxSideLength();
+    public abstract float getToothSideLength();
 
     private TransformGroup buildEdge() {
         var group = new TransformGroup();
         group.addChild(buildGroup(
                 new Vector3f(.0f, .0f, .0f),
                 new Box(
-                        getBoxSideLength() * COEFFICIENT,
-                        getBoxSideLength(),
-                        getBoxSideLength(),
+                        getToothSideLength() * COEFFICIENT,
+                        getToothSideLength(),
+                        getToothSideLength(),
                         FLAGS.get(),
                         getAppearence()
                 ),
                 false
         ));
-        for (var i = getBoxSideLength() * (COEFFICIENT - 1);
-             i >= -getBoxSideLength() * (COEFFICIENT - 1);
-             i -= getBoxSideLength() * 4)
+        for (var i = getToothSideLength() * (COEFFICIENT - 1);
+             i >= -getToothSideLength() * (COEFFICIENT - 1);
+             i -= getToothSideLength() * 4)
             group.addChild(buildGroup(
-                    new Vector3f(i, .0f, getBoxSideLength() * 1.5f),
+                    new Vector3f(i, .0f, getToothSideLength() * 1.5f),
                     new Box(
-                            getBoxSideLength(),
-                            getBoxSideLength(),
-                            getBoxSideLength(),
+                            getToothSideLength(),
+                            getToothSideLength(),
+                            getToothSideLength(),
                             FLAGS.get(),
                             getAppearence()
                     ),
@@ -43,7 +43,8 @@ abstract class Edge extends TransformGroupBuilder {
         return group;
     }
 
-    TransformGroup build(float x, float y, float z, boolean rotate) {
+    protected TransformGroup buildEdge(float x, float y, float z,
+            boolean rotate) {
         return buildGroup(new Vector3f(x, y, z), buildEdge(), rotate);
     }
 }

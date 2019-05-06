@@ -2,7 +2,7 @@ package com.project.castle.tower;
 
 import java.util.function.Consumer;
 import java.util.stream.IntStream;
-import javax.media.j3d.Node;
+import javax.media.j3d.Group;
 import javax.vecmath.AxisAngle4d;
 
 public class TowerPainter extends Tower {
@@ -15,9 +15,9 @@ public class TowerPainter extends Tower {
     // distance from center
     private final static float DIST = 0.2f;
 
-    public void buildTowers(Consumer<Node> consumer) {
+    public void buildTowers(Consumer<Group> consumer) {
         IntStream.range(0, CYLINDER_HEIGHTS.length)
-                .forEach(i -> consumer.accept(build(
+                .forEach(i -> consumer.accept(buildTower(
                         i == 0 ? .0f : DIST * (i % 2 == 0 ? 1 : -1),
                         i == 0 ? .0f : DIST * (i % 3 == 1 ? 1 : -1),
                         CYLINDER_HEIGHTS[i]
