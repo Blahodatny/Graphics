@@ -1,5 +1,6 @@
 package com.project.castle;
 
+import com.project.castle.edge.EdgePainter;
 import com.project.castle.tower.TowerPainter;
 import com.sun.j3d.utils.universe.SimpleUniverse;
 import java.awt.event.ActionEvent;
@@ -97,69 +98,10 @@ public class Castle implements ActionListener {
 
         setOneLevelOfTowers(0.8f, 0.25f);
         setOneLevelOfTowers(0.4f, 0.5f);
-        new TowerPainter().run(treeTransformGroup::addChild);
+        new TowerPainter().buildTowers(treeTransformGroup::addChild);
         setOneLevelOf4Fetches(0.4f, .0f);
         setOneLevelOf4Fetches(0.8f, -0.25f);
-        setUpperProtectFetches();
-        setLowerProtectFetches();
-    }
-
-    private void setUpperProtectFetches() {
-        float distanceFromCentre = 0.592f;
-        float zPos = 0.38f; // 0.33f
-        TransformGroup protectFetch1 =
-                CastleBody.getProtectFetch(distanceFromCentre, .0f, zPos, true);
-        treeTransformGroup.addChild(protectFetch1);
-        TransformGroup protectFetch2 =
-                CastleBody.getProtectFetch(
-                        -distanceFromCentre,
-                        .0f,
-                        zPos,
-                        true
-                );
-        treeTransformGroup.addChild(protectFetch2);
-        TransformGroup protectFetch3 = CastleBody.getProtectFetch(
-                .0f,
-                distanceFromCentre,
-                zPos,
-                false
-        );
-        treeTransformGroup.addChild(protectFetch3);
-        TransformGroup protectFetch4 = CastleBody.getProtectFetch(
-                .0f,
-                -distanceFromCentre,
-                zPos,
-                false
-        );
-        treeTransformGroup.addChild(protectFetch4);
-    }
-
-    private void setLowerProtectFetches() {
-        var distanceFromCentre1 = 0.992f;
-        var distanceFromCentre2 = 0.4f;
-        var dist = new float[][]{
-                {distanceFromCentre1, .0f},
-                {distanceFromCentre1, distanceFromCentre2},
-                {distanceFromCentre1, -distanceFromCentre2},
-                {-distanceFromCentre1, .0f},
-                {-distanceFromCentre1, distanceFromCentre2},
-                {-distanceFromCentre1, -distanceFromCentre2},
-                {.0f, distanceFromCentre1},
-                {distanceFromCentre2, distanceFromCentre1},
-                {-distanceFromCentre2, distanceFromCentre1},
-                {0.f, -distanceFromCentre1},
-                {distanceFromCentre2, -distanceFromCentre1},
-                {-distanceFromCentre2, -distanceFromCentre1}
-        };
-
-        IntStream.range(0, dist.length)
-                .forEach(i -> treeTransformGroup.addChild
-                        (CastleBody.getProtectFetch(
-                                dist[i][0],
-                                dist[i][1],
-                                0.133f,
-                                i < 6
-                        )));
+        new EdgePainter().buildTierEdges(treeTransformGroup::addChild);
     }
 
     private void setOneLevelOf4Fetches(float distanceFromCentre, float height) {

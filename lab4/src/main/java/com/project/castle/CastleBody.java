@@ -64,30 +64,10 @@ class CastleBody {
         var tg = new TransformGroup();
         var wall = getWall();
         tg.addChild(wall);
-//        for (var i = 0.192f; i > -0.193f; i -= 0.032f) {
-//            var cover = getCover(i);
-//            tg.addChild(cover);
-//        }
-        return tg;
-    }
-
-    static TransformGroup getProtectFetch(float xPos, float yPos,
-            float zPos, boolean turn) {
-        var tg = new TransformGroup();
-
-        var fetch3 = CastleBody.getFetch();
-        Transform3D fetch3trans = new Transform3D();
-        fetch3trans.setTranslation(new Vector3f(xPos, yPos, zPos));
-        if (turn)
-            fetch3trans.setRotation(new AxisAngle4d(
-                    0,
-                    0,
-                    1,
-                    Math.toRadians(90)
-            ));
-        fetch3.setTransform(fetch3trans);
-        tg.addChild(fetch3);
-
+        for (var i = 0.192f; i > -0.193f; i -= 0.032f) {
+            var cover = getCover(i);
+            tg.addChild(cover);
+        }
         return tg;
     }
 

@@ -13,7 +13,7 @@ abstract class Edge extends TransformGroupBuilder {
 
     abstract float getBoxSideLength();
 
-    private TransformGroup build() {
+    private TransformGroup buildEdge() {
         var group = new TransformGroup();
         group.addChild(buildGroup(
                 new Vector3f(.0f, .0f, .0f),
@@ -44,6 +44,6 @@ abstract class Edge extends TransformGroupBuilder {
     }
 
     TransformGroup build(float x, float y, float z, boolean rotate) {
-        return buildGroup(new Vector3f(x, y, z), build(), rotate);
+        return buildGroup(new Vector3f(x, y, z), buildEdge(), rotate);
     }
 }
