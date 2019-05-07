@@ -1,6 +1,7 @@
 package com.project.castle;
 
 import com.project.castle.edge.CastleWallEdgesPainter;
+import com.project.castle.edge.FortressEdgesPainter;
 import com.project.castle.fortress.CastleWallsPainter;
 import com.project.castle.tower.TowerPainter;
 import com.sun.j3d.utils.universe.SimpleUniverse;
@@ -88,12 +89,13 @@ public class Castle implements ActionListener {
 
     private void buildCastleSkeleton() {
         new CastleWallsPainter().buildTiers(treeTransformGroup::addChild);
-        new CastleWallEdgesPainter().buildTierEdges(treeTransformGroup::addChild);
+        new CastleWallEdgesPainter().buildEdges(treeTransformGroup::addChild);
         setOneLevelOfTowers(0.8f, 0.25f);
         setOneLevelOfTowers(0.4f, 0.5f);
         new TowerPainter().buildTowers(treeTransformGroup::addChild);
-        setOneLevelOf4Fetches(0.4f, .0f);
-        setOneLevelOf4Fetches(0.8f, -0.25f);
+        new FortressEdgesPainter().buildEdges(treeTransformGroup::addChild);
+//        setOneLevelOf4Fetches(0.4f, .0f);
+//        setOneLevelOf4Fetches(0.8f, -0.25f);
     }
 
     private void setOneLevelOf4Fetches(float distanceFromCentre, float height) {

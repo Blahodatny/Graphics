@@ -15,7 +15,6 @@ public abstract class TransformGroupBuilder {
         transform.setTranslation(vector);
         if (rotate)
             transform.setRotation(getAngle());
-
         var group = new TransformGroup();
         group.setTransform(transform);
         group.addChild(node);
