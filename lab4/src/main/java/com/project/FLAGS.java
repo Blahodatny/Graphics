@@ -1,4 +1,4 @@
-package com.project.castle;
+package com.project;
 
 import com.sun.j3d.utils.geometry.Primitive;
 

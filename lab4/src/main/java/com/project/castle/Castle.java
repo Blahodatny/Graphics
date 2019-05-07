@@ -3,11 +3,11 @@ package com.project.castle;
 import com.project.castle.edge.CastleWallEdgesPainter;
 import com.project.castle.edge.FortressEdgesPainter;
 import com.project.castle.fortress.CastleWallsPainter;
+import com.project.castle.fortress.FortressPainter;
 import com.project.castle.tower.TowerPainter;
 import com.sun.j3d.utils.universe.SimpleUniverse;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.stream.IntStream;
 import javax.media.j3d.AmbientLight;
 import javax.media.j3d.Background;
 import javax.media.j3d.BoundingSphere;
@@ -22,9 +22,6 @@ import javax.vecmath.Vector3d;
 import javax.vecmath.Vector3f;
 
 public class Castle implements ActionListener {
-    private float[][] distances = new float[][]{
-            {1, 1}, {-1, -1}, {-1, 1}, {1, -1}
-    };
     private float upperEyeLimit = 5.0f;
     private float lowerEyeLimit = 1.0f;
     private float farthestEyeLimit = 6.0f;
@@ -90,25 +87,9 @@ public class Castle implements ActionListener {
     private void buildCastleSkeleton() {
         new CastleWallsPainter().buildTiers(treeTransformGroup::addChild);
         new CastleWallEdgesPainter().build(treeTransformGroup::addChild);
-        setOneLevelOfTowers(0.8f, 0.25f);
-        setOneLevelOfTowers(0.4f, 0.5f);
+        new FortressPainter().build(treeTransformGroup::addChild);
         new TowerPainter().buildTowers(treeTransformGroup::addChild);
         new FortressEdgesPainter().build(treeTransformGroup::addChild);
-    }
-
-    private void setOneLevelOfTowers(float distanceFromCentre, float height) {
-        IntStream.range(0, distances.length).forEach(i -> {
-            var tower = new Transform3D();
-            tower.setTranslation(new Vector3f(
-                    distanceFromCentre * distances[i][0],
-                    distanceFromCentre * distances[i][1],
-                    height
-            ));
-            var group = new TransformGroup();
-            group.setTransform(tower);
-            group.addChild(CastleBody.getTower());
-            treeTransformGroup.addChild(group);
-        });
     }
 
     public void actionPerformed(ActionEvent e) {

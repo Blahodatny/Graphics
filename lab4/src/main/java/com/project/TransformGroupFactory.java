@@ -1,6 +1,5 @@
-package com.project.castle;
+package com.project;
 
-import com.project.TransformGroupBuilder;
 import java.util.function.Consumer;
 import java.util.stream.IntStream;
 import javax.media.j3d.Group;
@@ -17,7 +16,7 @@ public abstract class TransformGroupFactory extends TransformGroupBuilder {
     public abstract TransformGroup getBuildCallback(float x, float y, float z,
             boolean rotate);
 
-    void build(Consumer<Group> consumer) {
+    public void build(Consumer<Group> consumer) {
         IntStream.range(0, COORDINATES.length)
                 .forEach(i -> IntStream.rangeClosed(0, COORDINATES[i].length)
                         .mapToObj(j -> {

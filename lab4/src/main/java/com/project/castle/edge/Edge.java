@@ -1,8 +1,8 @@
 package com.project.castle.edge;
 
 import com.project.ColorPainter;
-import com.project.castle.FLAGS;
-import com.project.castle.TransformGroupFactory;
+import com.project.FLAGS;
+import com.project.TransformGroupFactory;
 import com.sun.j3d.utils.geometry.Box;
 import javax.media.j3d.TransformGroup;
 import javax.vecmath.Vector3f;

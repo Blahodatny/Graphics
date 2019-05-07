@@ -2,7 +2,7 @@ package com.project.castle.tower;
 
 import com.project.ColorPainter;
 import com.project.TransformGroupBuilder;
-import com.project.castle.FLAGS;
+import com.project.FLAGS;
 import com.sun.j3d.utils.geometry.Cone;
 import com.sun.j3d.utils.geometry.Cylinder;
 import javax.media.j3d.TransformGroup;

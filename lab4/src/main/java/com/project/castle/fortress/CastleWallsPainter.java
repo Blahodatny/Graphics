@@ -1,7 +1,7 @@
 package com.project.castle.fortress;
 
 import com.project.TransformGroupBuilder;
-import com.project.castle.FLAGS;
+import com.project.FLAGS;
 import com.sun.j3d.utils.geometry.Box;
 import java.util.function.Consumer;
 import java.util.stream.IntStream;
