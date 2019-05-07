@@ -35,11 +35,7 @@ abstract class EdgesPainter extends Edge {
                         .forEach(consumer));
     }
 
-    float getToothSideLength() {
-        return TOOTH_SIDE_LENGTH;
-    }
+    float getToothSideLength() { return TOOTH_SIDE_LENGTH; }
 
-    protected AxisAngle4d getAngle() {
-        return ANGLE;
-    }
+    protected AxisAngle4d getAngle() { return ANGLE; }
 }

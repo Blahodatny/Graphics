@@ -30,9 +30,7 @@ public class FortressEdgesPainter extends EdgesPainter {
         return group;
     }
 
-    float[][] getVectorCoordinates() {
-        return COORDINATES;
-    }
+    float[][] getVectorCoordinates() { return COORDINATES; }
 
     TransformGroup getBuildCallback(float x, float y, float z, boolean rotate) {
         return buildGroup(new Vector3f(x, y, z), buildFortressEdges(), false);

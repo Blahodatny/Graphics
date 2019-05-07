@@ -43,8 +43,7 @@ abstract class Edge extends TransformGroupBuilder {
         return group;
     }
 
-    TransformGroup buildEdge(float x, float y, float z,
-            boolean rotate) {
+    TransformGroup buildEdge(float x, float y, float z, boolean rotate) {
         return buildGroup(new Vector3f(x, y, z), buildEdge(), rotate);
     }
 }

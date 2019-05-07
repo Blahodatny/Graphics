@@ -21,15 +21,9 @@ public class CastleWallsPainter extends Fortress {
                 )));
     }
 
-    String getFortressPicture() {
-        return IMAGE;
-    }
+    String getFortressPicture() { return IMAGE; }
 
-    float getFortressHeight() {
-        return FORTRESS_HEIGHT;
-    }
+    float getFortressHeight() { return FORTRESS_HEIGHT; }
 
-    protected AxisAngle4d getAngle() {
-        return null;
-    }
+    protected AxisAngle4d getAngle() { return null; }
 }

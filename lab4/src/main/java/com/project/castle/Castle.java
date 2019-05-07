@@ -94,22 +94,6 @@ public class Castle implements ActionListener {
         setOneLevelOfTowers(0.4f, 0.5f);
         new TowerPainter().buildTowers(treeTransformGroup::addChild);
         new FortressEdgesPainter().buildEdges(treeTransformGroup::addChild);
-//        setOneLevelOf4Fetches(0.4f, .0f);
-//        setOneLevelOf4Fetches(0.8f, -0.25f);
-    }
-
-    private void setOneLevelOf4Fetches(float distanceFromCentre, float height) {
-        IntStream.range(0, distances.length).forEach(i -> {
-            var fourFetches = CastleBody.getFourFetches();
-            var tower = new Transform3D();
-            tower.setTranslation(new Vector3f(
-                    distanceFromCentre * distances[i][0],
-                    distanceFromCentre * distances[i][1],
-                    height
-            ));
-            fourFetches.setTransform(tower);
-            treeTransformGroup.addChild(fourFetches);
-        });
     }
 
     private void setOneLevelOfTowers(float distanceFromCentre, float height) {

@@ -31,14 +31,11 @@ public class ColorPainter {
     public static Appearance getAppearence(String file) {
         var texture = new TextureLoader(file, "LUMINANCE", new Container())
                 .getTexture();
-
         texture.setBoundaryModeS(Texture.WRAP);
         texture.setBoundaryModeT(Texture.WRAP);
         texture.setBoundaryColor(boundary);
-
         var attributes = new TextureAttributes();
         attributes.setTextureMode(TextureAttributes.MODULATE);
-
         var appearence = getAppearence();
         appearence.setTexture(texture);
         appearence.setTextureAttributes(attributes);

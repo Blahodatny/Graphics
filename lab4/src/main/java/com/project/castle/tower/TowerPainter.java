@@ -24,15 +24,9 @@ public class TowerPainter extends Tower {
                 )));
     }
 
-    float getCylinderRadius() {
-        return CYLINDER_RADIUS;
-    }
+    float getCylinderRadius() { return CYLINDER_RADIUS; }
 
-    float getConeHeight() {
-        return CONE_HEIGHT;
-    }
+    float getConeHeight() { return CONE_HEIGHT; }
 
-    protected AxisAngle4d getAngle() {
-        return ANGLE;
-    }
+    protected AxisAngle4d getAngle() { return ANGLE; }
 }
