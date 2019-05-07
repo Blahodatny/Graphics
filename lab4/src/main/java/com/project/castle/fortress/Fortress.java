@@ -11,7 +11,7 @@ import static com.project.ColorPainter.getAppearence;
 abstract class Fortress extends TransformGroupBuilder {
     abstract String getFortressPicture();
 
-    abstract float getFortressHeigth();
+    abstract float getFortressHeight();
 
     TransformGroup buildFortress(float x, float y, float z,
             float boxSideLength) {
@@ -20,7 +20,7 @@ abstract class Fortress extends TransformGroupBuilder {
                 new Box(
                         boxSideLength,
                         boxSideLength,
-                        getFortressHeigth(),
+                        getFortressHeight(),
                         FLAGS.get(),
                         getAppearence(getFortressPicture())
                 ),

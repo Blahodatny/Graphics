@@ -16,7 +16,7 @@ public class FortressPainter extends Fortress {
         return IMAGE;
     }
 
-    float getFortressHeigth() {
+    float getFortressHeight() {
         return FORTRESS_HEIGHT;
     }
 
