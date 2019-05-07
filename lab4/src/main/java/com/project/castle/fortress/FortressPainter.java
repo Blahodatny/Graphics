@@ -19,9 +19,7 @@ public class FortressPainter extends TransformGroupFactory {
             {-0.8f, 0.8f, 0.25f}
     };
 
-    public float[][] getVectorCoordinates() {
-        return COORDINATES;
-    }
+    public float[][] getVectorCoordinates() { return COORDINATES; }
 
     public TransformGroup getBuildCallback(float x, float y, float z,
             boolean rotate) {

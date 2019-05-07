@@ -8,11 +8,13 @@ import com.project.castle.tower.TowerPainter;
 import com.sun.j3d.utils.universe.SimpleUniverse;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.function.Consumer;
 import javax.media.j3d.AmbientLight;
 import javax.media.j3d.Background;
 import javax.media.j3d.BoundingSphere;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.DirectionalLight;
+import javax.media.j3d.Group;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
 import javax.swing.Timer;
@@ -21,45 +23,46 @@ import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 import javax.vecmath.Vector3f;
 
-public class Castle implements ActionListener {
-    private float upperEyeLimit = 5.0f;
-    private float lowerEyeLimit = 1.0f;
-    private float farthestEyeLimit = 6.0f;
-    private float nearestEyeLimit = 3.0f;
+class Castle implements ActionListener {
+    private static final float upperEyeLimit = 5.0f;
+    private static final float lowerEyeLimit = 1.0f;
+    private static final float farthestEyeLimit = 6.0f;
+    private static final float nearestEyeLimit = 3.0f;
 
-    private TransformGroup treeTransformGroup;
-    private TransformGroup viewingTransformGroup;
-    private Transform3D treeTransform3D = new Transform3D();
+    private TransformGroup treeGroup;
+    private TransformGroup viewingGroup;
+    private Transform3D treeTransform = new Transform3D();
     private Transform3D viewingTransform = new Transform3D();
+
+    private final static float delta = 0.03f;
     private float angle = 0;
     private float eyeHeight;
     private float eyeDistance;
     private boolean descend = true;
     private boolean approaching = true;
 
-    public static void main(String[] args) {
+    public static void main(String... args) {
         new Castle();
     }
 
     private Castle() {
         var universe = new SimpleUniverse();
-
-        viewingTransformGroup =
-                universe.getViewingPlatform().getViewPlatformTransform();
+        viewingGroup = universe.getViewingPlatform().getViewPlatformTransform();
         universe.addBranchGraph(createSceneGraph());
 
         eyeHeight = upperEyeLimit;
-        eyeDistance = farthestEyeLimit;
+        eyeDistance = lowerEyeLimit;
+
         new Timer(50, this).start();
     }
 
     private BranchGroup createSceneGraph() {
         var root = new BranchGroup();
 
-        treeTransformGroup = new TransformGroup();
-        treeTransformGroup.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
-        buildCastleSkeleton();
-        root.addChild(treeTransformGroup);
+        treeGroup = new TransformGroup();
+        treeGroup.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
+        buildCastle(treeGroup::addChild);
+        root.addChild(treeGroup);
 
         var background = new Background(new Color3f(1.0f, 1.0f, 1.0f));
         background.setApplicationBounds(new BoundingSphere(
@@ -68,12 +71,11 @@ public class Castle implements ActionListener {
         ));
         root.addChild(background);
 
-        var sphere = new BoundingSphere(new Point3d(0.0, 0.0, 0.0), 100.0);
-
         var light = new DirectionalLight(
                 new Color3f(1.0f, 0.5f, 0.4f),
                 new Vector3f(4.0f, -7.0f, -12.0f)
         );
+        var sphere = new BoundingSphere(new Point3d(0.0, 0.0, 0.0), 100.0);
         light.setInfluencingBounds(sphere);
         root.addChild(light);
 
@@ -84,19 +86,18 @@ public class Castle implements ActionListener {
         return root;
     }
 
-    private void buildCastleSkeleton() {
-        new CastleWallsPainter().buildTiers(treeTransformGroup::addChild);
-        new CastleWallEdgesPainter().build(treeTransformGroup::addChild);
-        new FortressPainter().build(treeTransformGroup::addChild);
-        new TowerPainter().buildTowers(treeTransformGroup::addChild);
-        new FortressEdgesPainter().build(treeTransformGroup::addChild);
+    private void buildCastle(Consumer<Group> consumer) {
+        new CastleWallsPainter().buildTiers(consumer);
+        new CastleWallEdgesPainter().build(consumer);
+        new TowerPainter().buildTowers(consumer);
+        new FortressPainter().build(consumer);
+        new FortressEdgesPainter().build(consumer);
     }
 
     public void actionPerformed(ActionEvent e) {
-        var delta = 0.03f;
+        treeTransform.rotZ(angle);
+        treeGroup.setTransform(treeTransform);
 
-        treeTransform3D.rotZ(angle);
-        treeTransformGroup.setTransform(treeTransform3D);
         angle += delta;
 
         descend = eyeHeight > upperEyeLimit ||
@@ -113,6 +114,6 @@ public class Castle implements ActionListener {
 
         viewingTransform.lookAt(eye, center, up);
         viewingTransform.invert();
-        viewingTransformGroup.setTransform(viewingTransform);
+        viewingGroup.setTransform(viewingTransform);
     }
 }
