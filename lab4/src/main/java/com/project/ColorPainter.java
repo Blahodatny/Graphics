@@ -21,14 +21,14 @@ public class ColorPainter {
     private static Color3f specular = new Color3f(new Color(0x1A1A46));
     private static Color4f boundary = new Color4f(0.0f, 1.0f, 1.0f, 0.0f);
 
-    public static Appearance getAppearence() {
+    public static Appearance getAppearance() {
         var appearance = new Appearance();
         appearance.setMaterial(
                 new Material(ambient, emissive, diffuse, specular, 1.0f));
         return appearance;
     }
 
-    public static Appearance getAppearence(String file) {
+    public static Appearance getAppearance(String file) {
         var texture = new TextureLoader(file, "LUMINANCE", new Container())
                 .getTexture();
         texture.setBoundaryModeS(Texture.WRAP);
@@ -36,7 +36,7 @@ public class ColorPainter {
         texture.setBoundaryColor(boundary);
         var attributes = new TextureAttributes();
         attributes.setTextureMode(TextureAttributes.MODULATE);
-        var appearence = getAppearence();
+        var appearence = getAppearance();
         appearence.setTexture(texture);
         appearence.setTextureAttributes(attributes);
         return appearence;

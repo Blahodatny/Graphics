@@ -4,7 +4,8 @@ import java.util.stream.IntStream;
 import javax.media.j3d.TransformGroup;
 import javax.vecmath.Vector3f;
 
-public class FortressEdgesPainter extends EdgesPainter {
+public class FortressEdgesPainter extends Edge {
+    private static final float TOOTH_SIDE_LENGTH = 0.008f;
     // distance from center
     private final static float DIST = 0.192f;
     private final static float Z_POSITION = 0.63f;
@@ -30,9 +31,12 @@ public class FortressEdgesPainter extends EdgesPainter {
         return group;
     }
 
-    float[][] getVectorCoordinates() { return COORDINATES; }
+    float getToothSideLength() { return TOOTH_SIDE_LENGTH; }
 
-    TransformGroup getBuildCallback(float x, float y, float z, boolean rotate) {
+    public float[][] getVectorCoordinates() { return COORDINATES; }
+
+    public TransformGroup getBuildCallback(float x, float y, float z,
+            boolean rotate) {
         return buildGroup(new Vector3f(x, y, z), buildFortressEdges(), false);
     }
 }

@@ -1,5 +1,6 @@
 package com.project.castle.tower;
 
+import com.project.ColorPainter;
 import com.project.TransformGroupBuilder;
 import com.project.castle.FLAGS;
 import com.sun.j3d.utils.geometry.Cone;
@@ -7,7 +8,7 @@ import com.sun.j3d.utils.geometry.Cylinder;
 import javax.media.j3d.TransformGroup;
 import javax.vecmath.Vector3f;
 
-import static com.project.ColorPainter.getAppearence;
+import static com.project.ColorPainter.getAppearance;
 
 abstract class Tower extends TransformGroupBuilder {
     private final static String LINES = "lab4/src/main/resources/lines.png";
@@ -24,7 +25,7 @@ abstract class Tower extends TransformGroupBuilder {
                         getCylinderRadius(),
                         z,
                         FLAGS.get(),
-                        getAppearence(LINES)
+                        getAppearance(LINES)
                 ),
                 true
         ));
@@ -34,7 +35,7 @@ abstract class Tower extends TransformGroupBuilder {
                         getCylinderRadius() + 0.025f,
                         getConeHeight(),
                         FLAGS.get(),
-                        getAppearence()
+                        ColorPainter.getAppearance()
                 ),
                 true
         ));

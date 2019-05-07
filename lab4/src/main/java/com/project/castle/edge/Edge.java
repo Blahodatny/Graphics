@@ -1,14 +1,13 @@
 package com.project.castle.edge;
 
-import com.project.TransformGroupBuilder;
+import com.project.ColorPainter;
 import com.project.castle.FLAGS;
+import com.project.castle.TransformGroupFactory;
 import com.sun.j3d.utils.geometry.Box;
 import javax.media.j3d.TransformGroup;
 import javax.vecmath.Vector3f;
 
-import static com.project.ColorPainter.getAppearence;
-
-abstract class Edge extends TransformGroupBuilder {
+abstract class Edge extends TransformGroupFactory {
     private static final int COEFFICIENT = 25;
 
     abstract float getToothSideLength();
@@ -22,7 +21,7 @@ abstract class Edge extends TransformGroupBuilder {
                         getToothSideLength(),
                         getToothSideLength(),
                         FLAGS.get(),
-                        getAppearence()
+                        ColorPainter.getAppearance()
                 ),
                 false
         ));
@@ -36,7 +35,7 @@ abstract class Edge extends TransformGroupBuilder {
                             getToothSideLength(),
                             getToothSideLength(),
                             FLAGS.get(),
-                            getAppearence()
+                            ColorPainter.getAppearance()
                     ),
                     false
             ));

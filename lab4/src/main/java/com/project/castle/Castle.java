@@ -89,11 +89,11 @@ public class Castle implements ActionListener {
 
     private void buildCastleSkeleton() {
         new CastleWallsPainter().buildTiers(treeTransformGroup::addChild);
-        new CastleWallEdgesPainter().buildEdges(treeTransformGroup::addChild);
+        new CastleWallEdgesPainter().build(treeTransformGroup::addChild);
         setOneLevelOfTowers(0.8f, 0.25f);
         setOneLevelOfTowers(0.4f, 0.5f);
         new TowerPainter().buildTowers(treeTransformGroup::addChild);
-        new FortressEdgesPainter().buildEdges(treeTransformGroup::addChild);
+        new FortressEdgesPainter().build(treeTransformGroup::addChild);
     }
 
     private void setOneLevelOfTowers(float distanceFromCentre, float height) {

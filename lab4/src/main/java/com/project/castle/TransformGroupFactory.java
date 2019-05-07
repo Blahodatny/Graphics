@@ -1,23 +1,23 @@
-package com.project.castle.edge;
+package com.project.castle;
 
+import com.project.TransformGroupBuilder;
 import java.util.function.Consumer;
 import java.util.stream.IntStream;
 import javax.media.j3d.Group;
 import javax.media.j3d.TransformGroup;
 import javax.vecmath.AxisAngle4d;
 
-abstract class EdgesPainter extends Edge {
-    private static final float TOOTH_SIDE_LENGTH = 0.008f;
+public abstract class TransformGroupFactory extends TransformGroupBuilder {
     private static final AxisAngle4d ANGLE =
             new AxisAngle4d(0, 0, 1, Math.toRadians(90));
     private final float[][] COORDINATES = getVectorCoordinates();
 
-    abstract float[][] getVectorCoordinates();
+    public abstract float[][] getVectorCoordinates();
 
-    abstract TransformGroup getBuildCallback(float x, float y, float z,
+    public abstract TransformGroup getBuildCallback(float x, float y, float z,
             boolean rotate);
 
-    public void buildEdges(Consumer<Group> consumer) {
+    void build(Consumer<Group> consumer) {
         IntStream.range(0, COORDINATES.length)
                 .forEach(i -> IntStream.rangeClosed(0, COORDINATES[i].length)
                         .mapToObj(j -> {
@@ -34,8 +34,6 @@ abstract class EdgesPainter extends Edge {
                         })
                         .forEach(consumer));
     }
-
-    float getToothSideLength() { return TOOTH_SIDE_LENGTH; }
 
     protected AxisAngle4d getAngle() { return ANGLE; }
 }
