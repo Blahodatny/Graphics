@@ -10,15 +10,6 @@ import javax.vecmath.Vector3f;
 import static com.project.ColorPainter.getAppearence;
 
 class CastleBody {
-    static Box getBody(float width) {
-        return new Box(
-                width,
-                width,
-                0.125f,
-                Primitive.GENERATE_NORMALS + Primitive.GENERATE_TEXTURE_COORDS,
-                getAppearence("lab4/src/main/resources/metal.jpg")
-        );
-    }
 
     static Box getTower() {
         return new Box(

@@ -8,10 +8,10 @@ import javax.vecmath.Vector3f;
 
 import static com.project.ColorPainter.getAppearence;
 
-public abstract class Edge extends TransformGroupBuilder {
+abstract class Edge extends TransformGroupBuilder {
     private static final int COEFFICIENT = 25;
 
-    public abstract float getToothSideLength();
+    abstract float getToothSideLength();
 
     private TransformGroup buildEdge() {
         var group = new TransformGroup();
@@ -43,7 +43,7 @@ public abstract class Edge extends TransformGroupBuilder {
         return group;
     }
 
-    protected TransformGroup buildEdge(float x, float y, float z,
+    TransformGroup buildEdge(float x, float y, float z,
             boolean rotate) {
         return buildGroup(new Vector3f(x, y, z), buildEdge(), rotate);
     }
