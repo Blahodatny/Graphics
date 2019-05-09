@@ -37,7 +37,6 @@ class Car extends JFrame {
     };
     private static final int WHEEL_TURN_COUNT = 100;
 
-
     private Car() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -72,7 +71,7 @@ class Car extends JFrame {
         var roachNamedObjects =
                 Objects.requireNonNull(getCarScene()).getNamedObjects();
 
-        var sceneGroup = new TransformGroup();
+        var group = new TransformGroup();
         IntStream.range(0, WHEELS_Y_Z.length).forEach(i -> {
             var wheel = new TransformGroup();
             wheel.addChild(((Shape3D) roachNamedObjects.get(
@@ -90,15 +89,17 @@ class Car extends JFrame {
                     new Point3d(0.0, 0.0, 0.0),
                     Double.MAX_VALUE
             ));
+
             wheel.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
             wheel.addChild(wheelRot);
-            sceneGroup.addChild(wheel);
+            group.addChild(wheel);
         });
 
         var carBody = new TransformGroup();
         carBody.addChild(((Shape3D) roachNamedObjects.get("platinum1")).cloneTree());
-        sceneGroup.addChild(carBody.cloneTree());
-        return sceneGroup;
+
+        group.addChild(carBody.cloneTree());
+        return group;
     }
 
     private void createSceneGraph(SimpleUniverse universe) {
