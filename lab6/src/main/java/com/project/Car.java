@@ -13,7 +13,7 @@ import javax.media.j3d.BoundingSphere;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Canvas3D;
 import javax.media.j3d.DirectionalLight;
-import javax.media.j3d.Node;
+import javax.media.j3d.Group;
 import javax.media.j3d.RotationInterpolator;
 import javax.media.j3d.Shape3D;
 import javax.media.j3d.Transform3D;
@@ -147,7 +147,7 @@ class Car extends JFrame {
         universe.addBranchGraph(group);
     }
 
-    private TransformGroup translate(Node node, Vector3f vector) {
+    private TransformGroup translate(Group node, Vector3f vector) {
         var transform3D = new Transform3D();
         transform3D.setTranslation(vector);
         var transformGroup = new TransformGroup();
@@ -156,7 +156,7 @@ class Car extends JFrame {
         return transformGroup;
     }
 
-    private TransformGroup rotate(Node node, Alpha alpha) {
+    private TransformGroup rotate(Group node, Alpha alpha) {
         var xFormGroup = new TransformGroup();
         xFormGroup.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
         var interpolator = new RotationInterpolator(alpha, xFormGroup);
