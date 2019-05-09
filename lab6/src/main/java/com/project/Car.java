@@ -4,8 +4,8 @@ import com.sun.j3d.loaders.Scene;
 import com.sun.j3d.loaders.objectfile.ObjectFile;
 import com.sun.j3d.utils.behaviors.vp.OrbitBehavior;
 import com.sun.j3d.utils.universe.SimpleUniverse;
-import java.util.Enumeration;
-import java.util.Hashtable;
+import java.io.FileNotFoundException;
+import java.util.Objects;
 import javax.media.j3d.Alpha;
 import javax.media.j3d.Background;
 import javax.media.j3d.BoundingSphere;
@@ -24,64 +24,66 @@ import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 import javax.vecmath.Vector3f;
 
-public class Car extends JFrame {
-    public Canvas3D myCanvas3D;
+class Car extends JFrame {
+    private static final double[][] WHEELS_Y_Z = new double[][]{
+            {-0.1, -0.644},
+            {-0.101, 0.52},
+            {-0.1, -0.625},
+            {-0.101, 0.535}
+    };
 
-    public Car() {
+    private Car() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        myCanvas3D = new Canvas3D(SimpleUniverse.getPreferredConfiguration());
-        SimpleUniverse simpUniv = new SimpleUniverse(myCanvas3D);
+        var canvas = new Canvas3D(SimpleUniverse.getPreferredConfiguration());
 
-        simpUniv.getViewingPlatform().setNominalViewingTransform();
+        var universe = new SimpleUniverse(canvas);
+        universe.getViewingPlatform().setNominalViewingTransform();
 
-        // set the geometry and transformations
-        createSceneGraph(simpUniv);
-        addLight(simpUniv);
+        createSceneGraph(universe);
+        addLight(universe);
 
-        OrbitBehavior ob = new OrbitBehavior(myCanvas3D);
-        ob.setSchedulingBounds(new BoundingSphere(new Point3d(0.0, 0.0, 0.0),
-                Double.MAX_VALUE));
-        simpUniv.getViewingPlatform().setViewPlatformBehavior(ob);
+        var behavior = new OrbitBehavior(canvas);
+        behavior.setSchedulingBounds(new BoundingSphere(
+                new Point3d(0.0, 0.0, 0.0),
+                Double.MAX_VALUE
+        ));
+        universe.getViewingPlatform().setViewPlatformBehavior(behavior);
 
         setTitle("Car");
         setSize(700, 700);
-        // ??
-        getContentPane().add("Center", myCanvas3D);
+        getContentPane().add("Center", canvas);
         setVisible(true);
     }
 
-    public void createSceneGraph(SimpleUniverse su) {
-        // loading object
-        ObjectFile f = new ObjectFile(ObjectFile.RESIZE);
-        BoundingSphere bs = new BoundingSphere(new Point3d(0.0, 0.0, 0.0),
-                Double.MAX_VALUE);
-        String name;
-        BranchGroup carBranchGroup = new BranchGroup();
-        Background carBackground =
-                new Background(new Color3f(1.0f, 1.0f, 1.0f));
+    private void createSceneGraph(SimpleUniverse universe) {
+        var sphere = new BoundingSphere(
+                new Point3d(0.0, 0.0, 0.0),
+                Double.MAX_VALUE
+        );
+        var carBranchGroup = new BranchGroup();
+        var carBackground = new Background(new Color3f(1.0f, 1.0f, 1.0f));
 
         Scene carScene = null;
+
         try {
-            carScene = f.load("models/car.obj");
-        } catch (Exception e) {
-            System.out.println("File loading failed:" + e);
-        }
-        Hashtable roachNamedObjects = carScene.getNamedObjects();
-        Enumeration enumer = roachNamedObjects.keys();
-        while (enumer.hasMoreElements()) {
-            name = (String) enumer.nextElement();
-            System.out.println("Name: " + name);
+            carScene = new ObjectFile(ObjectFile.RESIZE).load(
+                    "lab6/src/main/resources/models/car.obj");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
 
+        var roachNamedObjects =
+                Objects.requireNonNull(carScene).getNamedObjects();
+
         // start animation
-        Transform3D startTransformation = new Transform3D();
+        var startTransformation = new Transform3D();
         startTransformation.setScale(1.0 / 6);
-        Transform3D combinedStartTransformation = new Transform3D();
+        var combinedStartTransformation = new Transform3D();
         combinedStartTransformation.rotY(-3 * Math.PI / 2);
         combinedStartTransformation.mul(startTransformation);
 
-        TransformGroup carStartTransformGroup =
+        var carStartTransformGroup =
                 new TransformGroup(combinedStartTransformation);
 
 
@@ -90,208 +92,102 @@ public class Car extends JFrame {
         int movesDuration = 500; // moves for 0,3 seconds
         int startTime = 0; // launch animation after timeStart seconds
 
-        // wheel 1
-        Alpha leg1_1RotAlpha = new Alpha(movesCount,
-                Alpha.INCREASING_ENABLE,
-                startTime,
-                0,
-                movesDuration,
-                0,
-                0,
-                0,
-                0,
-                0
-        );
+        var sceneGroup = new TransformGroup();
+        for (var i = 0; i < WHEELS_Y_Z.length; i++) {
+            var wheelTG1 = new TransformGroup();
+            wheelTG1.addChild(((Shape3D) roachNamedObjects.get(
+                    "wheel" + (i + 1))).cloneTree());
 
-        Shape3D wheel1 = (Shape3D) roachNamedObjects.get("wheel1");
-        TransformGroup wheelTG1 = new TransformGroup();
-        wheelTG1.addChild(wheel1.cloneTree());
+            var legRotAxis = new Transform3D();
+            legRotAxis.set(new Vector3d(0, WHEELS_Y_Z[i][0], WHEELS_Y_Z[i][1]));
+            legRotAxis.setRotation(new AxisAngle4d(0, 0, -0.1, Math.PI / 2));
 
-        Transform3D legRotAxis = new Transform3D();
-        legRotAxis.set(new Vector3d(0, -0.1, -0.644));
-        legRotAxis.setRotation(new AxisAngle4d(0, 0, -0.1, Math.PI / 2));
+            var wheel1rot =
+                    new RotationInterpolator(
+                            new Alpha(
+                                    movesCount,
+                                    Alpha.INCREASING_ENABLE,
+                                    startTime,
+                                    0,
+                                    movesDuration,
+                                    0,
+                                    0,
+                                    0,
+                                    0,
+                                    0
+                            ),
+                            wheelTG1,
+                            legRotAxis,
+                            0.0f,
+                            (float) Math.PI * 2
+                    );
+            wheel1rot.setSchedulingBounds(sphere);
+            wheelTG1.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
+            wheelTG1.addChild(wheel1rot);
+            sceneGroup.addChild(wheelTG1);
+        }
 
-        RotationInterpolator wheel1rot =
-                new RotationInterpolator(leg1_1RotAlpha,
-                        wheelTG1,
-                        legRotAxis,
-                        (float) 0.0f,
-                        (float) Math.PI * 2
-                ); // Math.PI*2
-        wheel1rot.setSchedulingBounds(bs);
-        wheelTG1.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
-        wheelTG1.addChild(wheel1rot);
-        // wheel 2
-        Alpha whAlpha2 = new Alpha(movesCount,
-                Alpha.INCREASING_ENABLE,
-                startTime,
-                0,
-                movesDuration,
-                0,
-                0,
-                0,
-                0,
-                0
-        );
-
-        Shape3D wheel2 = (Shape3D) roachNamedObjects.get("wheel2");
-        TransformGroup wheelTG2 = new TransformGroup();
-        wheelTG2.addChild(wheel2.cloneTree());
-
-        Transform3D legRotAxis2 = new Transform3D();
-        legRotAxis2.set(new Vector3d(0, -0.101, 0.52));
-        legRotAxis2.setRotation(new AxisAngle4d(0, 0, -0.1, Math.PI / 2));
-
-        RotationInterpolator wheel2rot = new RotationInterpolator(whAlpha2,
-                wheelTG2,
-                legRotAxis2,
-                (float) 0.0f,
-                (float) Math.PI * 2
-        ); // Math.PI*2
-        wheel2rot.setSchedulingBounds(bs);
-        wheelTG2.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
-        wheelTG2.addChild(wheel2rot);
-        // wheel 3
-        Alpha whAlpha3 = new Alpha(movesCount,
-                Alpha.INCREASING_ENABLE,
-                startTime,
-                0,
-                movesDuration,
-                0,
-                0,
-                0,
-                0,
-                0
-        );
-
-        Shape3D wheel3 = (Shape3D) roachNamedObjects.get("wheel3");
-        TransformGroup wheelTG3 = new TransformGroup();
-        wheelTG3.addChild(wheel3.cloneTree());
-
-        Transform3D legRotAxis3 = new Transform3D();
-        legRotAxis3.set(new Vector3d(0, -0.1, -0.625));
-        legRotAxis3.setRotation(new AxisAngle4d(0, 0, -0.1, Math.PI / 2));
-
-        RotationInterpolator wheel3rot = new RotationInterpolator(whAlpha3,
-                wheelTG3,
-                legRotAxis3,
-                (float) 0.0f,
-                (float) Math.PI * 2
-        ); // Math.PI*2
-        wheel3rot.setSchedulingBounds(bs);
-        wheelTG3.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
-        wheelTG3.addChild(wheel3rot);
-        // wheel 4
-        Alpha whAlpha4 = new Alpha(movesCount,
-                Alpha.INCREASING_ENABLE,
-                startTime,
-                0,
-                movesDuration,
-                0,
-                0,
-                0,
-                0,
-                0
-        );
-
-        Shape3D wheel4 = (Shape3D) roachNamedObjects.get("wheel4");
-        TransformGroup wheelTG4 = new TransformGroup();
-        wheelTG4.addChild(wheel4.cloneTree());
-
-        Transform3D legRotAxis4 = new Transform3D();
-        legRotAxis4.set(new Vector3d(0, -0.101, 0.535));
-        legRotAxis4.setRotation(new AxisAngle4d(0, 0, -0.1, Math.PI / 2));
-
-        RotationInterpolator wheel4rot = new RotationInterpolator(whAlpha4,
-                wheelTG4,
-                legRotAxis4,
-                (float) 0.0f,
-                (float) Math.PI * 2
-        ); // Math.PI*2
-        wheel4rot.setSchedulingBounds(bs);
-        wheelTG4.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
-        wheelTG4.addChild(wheel4rot);
-        // the wheels end
-
-
-        TransformGroup sceneGroup = new TransformGroup();
-        sceneGroup.addChild(wheelTG1);
-        sceneGroup.addChild(wheelTG2);
-        sceneGroup.addChild(wheelTG3);
-        sceneGroup.addChild(wheelTG4);
-        TransformGroup tgBody = new TransformGroup();
-        Shape3D carBodyShape = (Shape3D) roachNamedObjects.get("platinum1");
-        tgBody.addChild(carBodyShape.cloneTree());
+        var tgBody = new TransformGroup();
+        tgBody.addChild(((Shape3D) roachNamedObjects.get("platinum1")).cloneTree());
         sceneGroup.addChild(tgBody.cloneTree());
 
-        TransformGroup whiteTransXformGroup = translate(
+        carBranchGroup.addChild(rotate(translate(
                 carStartTransformGroup,
                 new Vector3f(0.0f, 0.0f, 0.5f)
-        );
-
-        TransformGroup whiteRotXformGroup =
-                rotate(whiteTransXformGroup, new Alpha(10, 5000));
-        carBranchGroup.addChild(whiteRotXformGroup);
+        ), new Alpha(10, 5000)));
         carStartTransformGroup.addChild(sceneGroup);
 
-        // adding the car background to branch group
-        BoundingSphere bounds =
-                new BoundingSphere(new Point3d(120.0, 250.0, 100.0),
-                        Double.MAX_VALUE);
-        carBackground.setApplicationBounds(bounds);
+        carBackground.setApplicationBounds(new BoundingSphere(
+                new Point3d(120.0, 250.0, 100.0),
+                Double.MAX_VALUE
+        ));
         carBranchGroup.addChild(carBackground);
 
         carBranchGroup.compile();
-        su.addBranchGraph(carBranchGroup);
+        universe.addBranchGraph(carBranchGroup);
     }
 
-    public void addLight(SimpleUniverse su) {
-        BranchGroup bgLight = new BranchGroup();
-        BoundingSphere bounds =
-                new BoundingSphere(new Point3d(0.0, 0.0, 0.0), 100.0);
-        Color3f lightColour1 = new Color3f(1.0f, 1.0f, 1.0f);
-        Vector3f lightDir1 = new Vector3f(-1.0f, 0.0f, -0.5f);
-        DirectionalLight light1 = new DirectionalLight(lightColour1, lightDir1);
-        light1.setInfluencingBounds(bounds);
-        bgLight.addChild(light1);
-        su.addBranchGraph(bgLight);
+    private void addLight(SimpleUniverse universe) {
+        var group = new BranchGroup();
+        var light = new DirectionalLight(
+                new Color3f(1.0f, 1.0f, 1.0f),
+                new Vector3f(-1.0f, 0.0f, -0.5f)
+        );
+        light.setInfluencingBounds(new BoundingSphere(new Point3d(
+                0.0,
+                0.0,
+                0.0
+        ), 100.0));
+        group.addChild(light);
+        universe.addBranchGraph(group);
     }
 
-    TransformGroup translate(Node node, Vector3f vector) {
-
-        Transform3D transform3D = new Transform3D();
+    private TransformGroup translate(Node node, Vector3f vector) {
+        var transform3D = new Transform3D();
         transform3D.setTranslation(vector);
-        TransformGroup transformGroup =
-                new TransformGroup();
+        var transformGroup = new TransformGroup();
         transformGroup.setTransform(transform3D);
-
         transformGroup.addChild(node);
         return transformGroup;
-    }//end translate
-
-    TransformGroup rotate(Node node, Alpha alpha) {
-
-        TransformGroup xformGroup = new TransformGroup();
-        xformGroup.setCapability(
-                TransformGroup.ALLOW_TRANSFORM_WRITE);
-
-        //Create an interpolator for rotating the node.
-        RotationInterpolator interpolator =
-                new RotationInterpolator(alpha, xformGroup);
-
-        //Establish the animation region for this
-        // interpolator.
-        interpolator.setSchedulingBounds(new BoundingSphere(
-                new Point3d(0.0, 0.0, 0.0), 1.0));
-
-        //Populate the xform group.
-        xformGroup.addChild(interpolator);
-        xformGroup.addChild(node);
-
-        return xformGroup;
     }
 
-    public static void main(String[] args) {
+    private TransformGroup rotate(Node node, Alpha alpha) {
+        var xFormGroup = new TransformGroup();
+        xFormGroup.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
+
+        var interpolator = new RotationInterpolator(alpha, xFormGroup);
+        interpolator.setSchedulingBounds(new BoundingSphere(new Point3d(
+                0.0,
+                0.0,
+                0.0
+        ), 1.0));
+
+        xFormGroup.addChild(interpolator);
+        xFormGroup.addChild(node);
+        return xFormGroup;
+    }
+
+    public static void main(String... args) {
         new Car();
     }
 }
