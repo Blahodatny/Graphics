@@ -23,7 +23,7 @@ import javax.vecmath.Vector3d;
 import javax.vecmath.Vector3f;
 
 class Boat extends JFrame {
-    private final static String TRACK = "lab5/src/main/resources/track.png";
+    private final static String TRACK = "lab5/src/main/resources/back.png";
     private final static String BOAT = "lab5/src/main/resources/Boat.obj";
 
     private static Canvas3D canvas;
@@ -129,9 +129,9 @@ class Boat extends JFrame {
     }
 
     public static void main(String[] args) {
-        canvas.addKeyListener(new BoatAnimation(boat));
         try {
             new Boat().setVisible(true);
+            canvas.addKeyListener(new BoatAnimation(boat));
         } catch (IOException e) {
             e.printStackTrace();
         }
