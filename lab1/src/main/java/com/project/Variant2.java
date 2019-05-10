@@ -18,9 +18,7 @@ public class Variant2 extends Program {
     };
     private final static byte TOP = 70;
 
-    public Color setBackgroundColor() {
-        return Color.DARKBLUE;
-    }
+    public Color setBackgroundColor() { return Color.DARKBLUE; }
 
     public void run(Group root) {
         IntStream.range(0, PARAMS.length)

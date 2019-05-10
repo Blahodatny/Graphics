@@ -9,13 +9,9 @@ import java.util.Objects;
 public class GraphicsHelper {
     private Graphics2D g2d;
 
-    public GraphicsHelper(Graphics2D g2d) {
-        this.g2d = g2d;
-    }
+    public GraphicsHelper(Graphics2D g2d) { this.g2d = g2d; }
 
-    protected Graphics2D getG2d() {
-        return g2d;
-    }
+    protected Graphics2D getG2d() { return g2d; }
 
     public void setRendering() {
         g2d.setRenderingHint(

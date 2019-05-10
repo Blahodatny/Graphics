@@ -35,9 +35,7 @@ public class Variant3 extends Program {
         return polygon;
     }
 
-    public Color setBackgroundColor() {
-        return Color.GRAY;
-    }
+    public Color setBackgroundColor() { return Color.GRAY; }
 
     public void run(Group root) {
         root.getChildren().addAll(
