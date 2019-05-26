@@ -44,11 +44,7 @@ class ChristmasBalls {
         });
     }
 
-    static Circle[] getBalls() {
-        return balls;
-    }
+    static Circle[] getBalls() { return balls; }
 
-    static Arc[] getArcs() {
-        return arcs;
-    }
+    static Arc[] getArcs() { return arcs; }
 }

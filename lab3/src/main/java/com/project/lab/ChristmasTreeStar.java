@@ -33,7 +33,5 @@ class ChristmasTreeStar {
         star.setStrokeWidth(Stroke.WIDTH);
     }
 
-    static Path getStar() {
-        return star;
-    }
+    static Path getStar() { return star; }
 }

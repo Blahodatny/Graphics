@@ -170,7 +170,5 @@ class Car extends JFrame {
         return xFormGroup;
     }
 
-    public static void main(String... args) {
-        new Car();
-    }
+    public static void main(String... args) { new Car(); }
 }

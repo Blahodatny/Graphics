@@ -55,15 +55,9 @@ class TreeForm {
         });
     }
 
-    static Ellipse getEllipse() {
-        return ellipse;
-    }
+    static Ellipse getEllipse() { return ellipse; }
 
-    static Rectangle getStem() {
-        return stem;
-    }
+    static Rectangle getStem() { return stem; }
 
-    static Arc[] getCrown() {
-        return crown;
-    }
+    static Arc[] getCrown() { return crown; }
 }

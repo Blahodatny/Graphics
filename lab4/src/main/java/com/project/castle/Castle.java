@@ -41,9 +41,7 @@ class Castle implements ActionListener {
     private boolean descend = true;
     private boolean approaching = true;
 
-    public static void main(String... args) {
-        new Castle();
-    }
+    public static void main(String... args) { new Castle(); }
 
     private Castle() {
         var universe = new SimpleUniverse();

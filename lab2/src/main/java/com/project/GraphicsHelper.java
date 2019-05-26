@@ -40,7 +40,5 @@ public class GraphicsHelper {
         return Objects.equals(g2d, that.g2d);
     }
 
-    public int hashCode() {
-        return Objects.hash(g2d);
-    }
+    public int hashCode() { return Objects.hash(g2d); }
 }
