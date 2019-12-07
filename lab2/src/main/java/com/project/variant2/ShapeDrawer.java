@@ -9,9 +9,7 @@ import java.util.Arrays;
 import java.util.stream.IntStream;
 
 class ShapeDrawer extends GraphicsHelper {
-    ShapeDrawer(Graphics2D g2d) {
-        super(g2d);
-    }
+    ShapeDrawer(Graphics2D g2d) { super(g2d); }
 
     void drawRectangles(short[][] params, Color rectangle, Color house,
             Color square) {

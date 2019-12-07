@@ -36,9 +36,7 @@ class Main extends JPanel implements ActionListener {
     private double scale = 1;
     private double delta = 0.01;
 
-    private Main() {
-        new Timer(DELAY, this).start();
-    }
+    private Main() { new Timer(DELAY, this).start(); }
 
     public void paint(Graphics graphics) {
         var g2d = (Graphics2D) graphics;
