@@ -10,15 +10,15 @@ class ChristmasTreeStar {
     final private static short START_X = 360;
     final private static short START_Y = 140;
 
-    private static Path star;
+    private static final Path STAR;
 
     static {
         var bigLeg = HYPOTENUSE * Math.sin(Math.toRadians(54));
         var smallLeg = HYPOTENUSE * Math.cos(Math.toRadians(54));
         var middleBigLeg = 2 * bigLeg * Math.cos(Math.toRadians(36));
         var middleSmallLeg = 2 * bigLeg * Math.sin(Math.toRadians(36));
-        star = new Path();
-        star.getElements().addAll(
+        STAR = new Path();
+        STAR.getElements().addAll(
                 new MoveTo(START_X, START_Y),
                 new LineTo(START_X + bigLeg * 2, START_Y),
                 new LineTo(
@@ -29,9 +29,9 @@ class ChristmasTreeStar {
                 new LineTo(START_X + middleBigLeg, START_Y + middleSmallLeg),
                 new LineTo(START_X, START_Y)
         );
-        star.setFill(Color.RED);
-        star.setStrokeWidth(Stroke.WIDTH);
+        STAR.setFill(Color.RED);
+        STAR.setStrokeWidth(Stroke.WIDTH);
     }
 
-    static Path getStar() { return star; }
+    static Path getStar() { return STAR; }
 }

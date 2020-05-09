@@ -16,27 +16,27 @@ class TreeForm {
     // 'start angle' and 'length' parameters for arcs
     final private static short[][] PARAMS = {{227, 86}, {230, 80}, {240, 60}};
 
-    private static Ellipse ellipse;
-    private static Rectangle stem;
-    private static Arc[] crown = new Arc[3];
+    private static final Ellipse ELLIPSE;
+    private static final Rectangle STEM;
+    private static final Arc[] CROWN = new Arc[3];
 
     static {
-        ellipse = new Ellipse(
+        ELLIPSE = new Ellipse(
                 CENTER_X,
                 CENTER_Y + 305,
                 RADIUS_X - 230,
                 RADIUS_Y - 215
         );
-        ellipse.setFill(Paint.valueOf("#DEB887"));
-        ellipse.setStroke(Color.BLACK);
-        ellipse.setStrokeWidth(Stroke.WIDTH);
+        ELLIPSE.setFill(Paint.valueOf("#DEB887"));
+        ELLIPSE.setStroke(Color.BLACK);
+        ELLIPSE.setStrokeWidth(Stroke.WIDTH);
 
-        stem = new Rectangle(370, 580, 60, 85);
-        stem.setArcHeight(30);
-        stem.setArcWidth(80);
-        stem.setFill(Color.BROWN);
-        stem.setStroke(Color.BLACK);
-        stem.setStrokeWidth(Stroke.WIDTH);
+        STEM = new Rectangle(370, 580, 60, 85);
+        STEM.setArcHeight(30);
+        STEM.setArcWidth(80);
+        STEM.setFill(Color.BROWN);
+        STEM.setStroke(Color.BLACK);
+        STEM.setStrokeWidth(Stroke.WIDTH);
 
         IntStream.range(0, PARAMS.length).forEach(i -> {
             var arc = new Arc(
@@ -51,13 +51,13 @@ class TreeForm {
             arc.setStroke(Color.BLACK);
             arc.setFill(Color.GREEN);
             arc.setStrokeWidth(Stroke.WIDTH);
-            crown[i] = arc;
+            CROWN[i] = arc;
         });
     }
 
-    static Ellipse getEllipse() { return ellipse; }
+    static Ellipse getEllipse() { return ELLIPSE; }
 
-    static Rectangle getStem() { return stem; }
+    static Rectangle getStem() { return STEM; }
 
-    static Arc[] getCrown() { return crown; }
+    static Arc[] getCrown() { return CROWN; }
 }

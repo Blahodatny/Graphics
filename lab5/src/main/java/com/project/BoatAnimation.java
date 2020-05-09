@@ -12,8 +12,8 @@ import javax.vecmath.Vector3f;
 class BoatAnimation implements ActionListener, KeyListener {
     private static final float DISTANCE = 0.01f;
 
-    private TransformGroup boat;
-    private Transform3D transform3D = new Transform3D();
+    private final TransformGroup BOAT;
+    private final Transform3D TRANSFORM3D = new Transform3D();
 
     private float x = 0;
     private float y = 0;
@@ -26,22 +26,22 @@ class BoatAnimation implements ActionListener, KeyListener {
     private boolean fromRightToLeft = false;
 
     BoatAnimation(TransformGroup boat) {
-        this.boat = boat;
-        this.boat.getTransform(this.transform3D);
+        this.BOAT = boat;
+        this.BOAT.getTransform(this.TRANSFORM3D);
         new Timer(20, this).start();
     }
 
     private void Move() {
         x = left ? x - DISTANCE : right ? x + DISTANCE : x;
         y = up ? y + DISTANCE : down ? y - DISTANCE : y;
-        transform3D.setTranslation(new Vector3f(x, y, 0));
+        TRANSFORM3D.setTranslation(new Vector3f(x, y, 0));
 
         if (fromLeftToRight || fromRightToLeft) {
             var rotation = new Transform3D();
             rotation.rotY(fromLeftToRight ? 0.05f : -0.05f);
-            transform3D.mul(rotation);
+            TRANSFORM3D.mul(rotation);
         }
-        boat.setTransform(transform3D);
+        BOAT.setTransform(TRANSFORM3D);
     }
 
     private void setKey(char key, boolean value) {

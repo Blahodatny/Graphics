@@ -22,29 +22,29 @@ class ChristmasBalls {
             {466, 583}
     };
 
-    private static Circle[] balls = new Circle[BALLS_COUNT];
-    private static Arc[] arcs = new Arc[BALLS_COUNT];
+    private static final Circle[] BALLS = new Circle[BALLS_COUNT];
+    private static final Arc[] ARCS = new Arc[BALLS_COUNT];
 
     static {
-        IntStream.range(0, balls.length).forEach(i -> {
-            balls[i] = new Circle(0, 0, RADIUS);
-            balls[i].setStroke(Color.BLACK);
-            balls[i].setStrokeWidth(Stroke.WIDTH);
-            balls[i].setFill(COLORS[i % COLORS.length]);
-            balls[i].setCenterX(COORDINATES[i][0]);
-            balls[i].setCenterY(COORDINATES[i][1]);
+        IntStream.range(0, BALLS.length).forEach(i -> {
+            BALLS[i] = new Circle(0, 0, RADIUS);
+            BALLS[i].setStroke(Color.BLACK);
+            BALLS[i].setStrokeWidth(Stroke.WIDTH);
+            BALLS[i].setFill(COLORS[i % COLORS.length]);
+            BALLS[i].setCenterX(COORDINATES[i][0]);
+            BALLS[i].setCenterY(COORDINATES[i][1]);
 
-            arcs[i] = new Arc(100, 100, 15, 15, 90, 135);
-            arcs[i].setType(ArcType.ROUND);
-            arcs[i].setStroke(Color.WHITE);
-            arcs[i].setFill(Color.WHITE);
-            arcs[i].setOpacity(0.5);
-            arcs[i].setCenterX(COORDINATES[i][0]);
-            arcs[i].setCenterY(COORDINATES[i][1]);
+            ARCS[i] = new Arc(100, 100, 15, 15, 90, 135);
+            ARCS[i].setType(ArcType.ROUND);
+            ARCS[i].setStroke(Color.WHITE);
+            ARCS[i].setFill(Color.WHITE);
+            ARCS[i].setOpacity(0.5);
+            ARCS[i].setCenterX(COORDINATES[i][0]);
+            ARCS[i].setCenterY(COORDINATES[i][1]);
         });
     }
 
-    static Circle[] getBalls() { return balls; }
+    static Circle[] getBalls() { return BALLS; }
 
-    static Arc[] getArcs() { return arcs; }
+    static Arc[] getArcs() { return ARCS; }
 }

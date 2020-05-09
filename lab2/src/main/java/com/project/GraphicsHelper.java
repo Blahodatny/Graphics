@@ -7,18 +7,18 @@ import java.awt.RenderingHints;
 import java.util.Objects;
 
 public class GraphicsHelper {
-    private Graphics2D g2d;
+    private final Graphics2D G2D;
 
-    public GraphicsHelper(Graphics2D g2d) { this.g2d = g2d; }
+    public GraphicsHelper(Graphics2D g2d) { this.G2D = g2d; }
 
-    protected Graphics2D getG2d() { return g2d; }
+    protected Graphics2D getG2D() { return G2D; }
 
     public void setRendering() {
-        g2d.setRenderingHint(
+        G2D.setRenderingHint(
                 RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON
         );
-        g2d.setRenderingHint(
+        G2D.setRenderingHint(
                 RenderingHints.KEY_RENDERING,
                 RenderingHints.VALUE_RENDER_QUALITY
         );
@@ -26,9 +26,9 @@ public class GraphicsHelper {
 
     public void drawFrame(Color color, int cap, int join, int x, int y,
             int width, int height) {
-        g2d.setColor(color);
-        g2d.setStroke(new BasicStroke(16, cap, join));
-        g2d.drawRect(x, y, width, height);
+        G2D.setColor(color);
+        G2D.setStroke(new BasicStroke(16, cap, join));
+        G2D.drawRect(x, y, width, height);
     }
 
     public boolean equals(Object o) {
@@ -37,8 +37,8 @@ public class GraphicsHelper {
         if (!(o instanceof GraphicsHelper))
             return false;
         var that = (GraphicsHelper) o;
-        return Objects.equals(g2d, that.g2d);
+        return Objects.equals(G2D, that.G2D);
     }
 
-    public int hashCode() { return Objects.hash(g2d); }
+    public int hashCode() { return Objects.hash(G2D); }
 }

@@ -28,7 +28,7 @@ public class ChristmasTree extends Application {
         Animation.run(root);
 
         stage.setTitle("Christmas Tree");
-        stage.setScene(new Scene(root, WIDTH, WIDTH / 2));
+        stage.setScene(new Scene(root, WIDTH, WIDTH >> 1));
         stage.show();
     }
 }

@@ -30,9 +30,9 @@ class Castle implements ActionListener {
     private static final float nearestEyeLimit = 3.0f;
 
     private TransformGroup treeGroup;
-    private TransformGroup viewingGroup;
-    private Transform3D treeTransform = new Transform3D();
-    private Transform3D viewingTransform = new Transform3D();
+    private final TransformGroup VIEWING_GROUP;
+    private final Transform3D TREE_TRANSFORM = new Transform3D();
+    private final Transform3D VIEWING_TRANSFORM = new Transform3D();
 
     private final static float delta = 0.03f;
     private float angle = 0;
@@ -45,7 +45,8 @@ class Castle implements ActionListener {
 
     private Castle() {
         var universe = new SimpleUniverse();
-        viewingGroup = universe.getViewingPlatform().getViewPlatformTransform();
+        VIEWING_GROUP =
+                universe.getViewingPlatform().getViewPlatformTransform();
         universe.addBranchGraph(createSceneGraph());
 
         eyeHeight = upperEyeLimit;
@@ -93,8 +94,8 @@ class Castle implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-        treeTransform.rotZ(angle);
-        treeGroup.setTransform(treeTransform);
+        TREE_TRANSFORM.rotZ(angle);
+        treeGroup.setTransform(TREE_TRANSFORM);
 
         angle += delta;
 
@@ -110,8 +111,8 @@ class Castle implements ActionListener {
         var center = new Point3d(.0f, .0f, 0.5f);
         var up = new Vector3d(.0f, .0f, 1.0f);
 
-        viewingTransform.lookAt(eye, center, up);
-        viewingTransform.invert();
-        viewingGroup.setTransform(viewingTransform);
+        VIEWING_TRANSFORM.lookAt(eye, center, up);
+        VIEWING_TRANSFORM.invert();
+        VIEWING_GROUP.setTransform(VIEWING_TRANSFORM);
     }
 }

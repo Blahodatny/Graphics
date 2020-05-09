@@ -15,10 +15,10 @@ class ShapeDrawer extends GraphicsHelper {
             Color square) {
         IntStream.range(0, params.length)
                 .forEach(i -> {
-                    getG2d().setColor(i == 0 ?
+                    getG2D().setColor(i == 0 ?
                             rectangle :
                             i == 1 ? house : square);
-                    getG2d().fillRect(
+                    getG2D().fillRect(
                             params[i][0],
                             params[i][1],
                             (i == 0 ? 2 : i == 1 ? 3 : 1) * params[i][2],
@@ -37,7 +37,7 @@ class ShapeDrawer extends GraphicsHelper {
         }).forEach(point -> triangle.lineTo(point[0], point[1]));
         triangle.closePath();
 
-        getG2d().setPaint(paint);
-        getG2d().fill(triangle);
+        getG2D().setPaint(paint);
+        getG2D().fill(triangle);
     }
 }
