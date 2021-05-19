@@ -44,4 +44,6 @@ public class Variant2 extends Program {
         triangle.setFill(Color.GRAY);
         root.getChildren().add(triangle);
     }
+
+    public static void main(String... args) { launch(); }
 }

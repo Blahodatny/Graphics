@@ -58,4 +58,6 @@ public class Variant3 extends Program {
                                 COLORS[i]
                         )));
     }
+
+    public static void main(String... args) { launch(); }
 }

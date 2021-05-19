@@ -42,4 +42,6 @@ public class ReadBMPWithJavaFX extends Application {
         stage.setScene(new Scene(root, image.getWidth(), image.getHeight()));
         stage.show();
     }
+
+    public static void main(String... args) { launch(); }
 }

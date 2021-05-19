@@ -32,12 +32,8 @@ public class GraphicsHelper {
     }
 
     public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (!(o instanceof GraphicsHelper))
-            return false;
-        var that = (GraphicsHelper) o;
-        return Objects.equals(G2D, that.G2D);
+        return this == o || o instanceof GraphicsHelper that &&
+                Objects.equals(G2D, that.G2D);
     }
 
     public int hashCode() { return Objects.hash(G2D); }

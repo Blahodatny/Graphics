@@ -33,8 +33,10 @@ ___
 ## Lab 4
 ### Windows configuration
 To configure Java3D on Windows OS:
-1. Copy *.jar* files from **lib/Java3D/1.5.1/lib/ext** directory to **C:\Program Files\Java\jdk-13.0.1\lib**.
-2. Copy *j3dcore-ogl.dll* file from **lib/Java3D/1.5.1/bin/windows** to **C:\Program Files\Java\jdk-13.0.1\bin**.
+1. Copy *.jar* files from **lib/Java3D/1.5.1/lib/ext** directory to 
+   **C:\Program Files\Java\jdk-16.0.1\lib**.
+2. Copy *j3dcore-ogl.dll* file from **lib/Java3D/1.5.1/bin/windows** to 
+   **C:\Program Files\Java\jdk-16.0.1\bin**.
 ### Linux configuration
 * Copy *.jar* files:
 ```jvm
