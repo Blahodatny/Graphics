@@ -38,7 +38,7 @@ To configure Java3D on Windows OS:
 ### Linux configuration
 * Copy *.jar* files:
 ```jvm
-(cd lib/Java3D/1.5.1/lib/ext; sudo cp j3dcore.jar j3dutils.jar vecmath.jar /usr/lib/jvm/java-13-oracle/lib)
+(cd lib/Java3D/1.5.1/lib/ext; sudo cp j3dcore.jar j3dutils.jar vecmath.jar /usr/lib/jvm/java-16-oracle/lib)
 ```
 * Copy config file:
 ```jvm
